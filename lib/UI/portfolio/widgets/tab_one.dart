@@ -34,6 +34,7 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
 
   @override
   void initState() {
+    setState(() {});
     apiService = ApiService();
     super.initState();
     _getSearch();
@@ -64,105 +65,107 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    Widget body;
-
-    if (searchController.text.isEmpty) {
-      body = buildContentWidget(width);
-    } else {
-      if (searchList.isEmpty) {
-        body = Text(
-          "No results found",
-          style: RegularTextStyle.regular18600(whiteColor),
-        );
-      } else {
-        body = buildSearchResults(width);
-      }
-    }
     return Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: GetBuilder<PortfolioController>(
-            builder: (controller) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Container(
-                    height: 50,
-                    padding: EdgeInsets.only(
-                      left: width * 0.05,
-                      right: width * 0.05,
+        body: Builder(builder: (context) {
+          return SingleChildScrollView(
+            child: GetBuilder<PortfolioController>(
+              builder: (controller) {
+                Widget body;
+
+                if (searchController.text.isEmpty) {
+                  body = buildContentWidget(width);
+                } else {
+                  if (searchList.isEmpty) {
+                    body = Text(
+                      "No results found",
+                      style: RegularTextStyle.regular18600(whiteColor),
+                    );
+                  } else {
+                    body = buildSearchResults(width);
+                  }
+                }
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: height * 0.02,
                     ),
-                    alignment: Alignment.center,
-                    child: TextField(
-                      controller: searchController,
-                      textAlign: TextAlign.start,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: RegularTextStyle.regular14400(whiteColor),
-                      decoration: InputDecoration(
-                        focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          borderSide:
-                              BorderSide(color: textfieldColor, width: 1.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          borderSide:
-                              BorderSide(color: textfieldColor, width: 1.0),
-                        ),
-                        hintText: "Browse",
-                        hintStyle: RegularTextStyle.regular14400(hintColor),
-                        filled: true,
-                        fillColor: textfieldColor,
-                        prefixIcon: const Icon(
-                          Icons.search_rounded,
-                          color: hintColor,
-                        ),
+                    Container(
+                      height: 50,
+                      padding: EdgeInsets.only(
+                        left: width * 0.05,
+                        right: width * 0.05,
                       ),
-                      textInputAction: TextInputAction.next,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: searchController,
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.center,
+                        style: RegularTextStyle.regular14400(whiteColor),
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(color: textfieldColor, width: 1.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(color: textfieldColor, width: 1.0),
+                          ),
+                          hintText: "Browse",
+                          hintStyle: RegularTextStyle.regular14400(hintColor),
+                          filled: true,
+                          fillColor: textfieldColor,
+                          prefixIcon: const Icon(
+                            Icons.search_rounded,
+                            color: hintColor,
+                          ),
+                        ),
+                        textInputAction: TextInputAction.next,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: width * 0.06),
-                        child: Text('Crypto',
-                            style: RegularTextStyle.regular15600(whiteColor)),
-                      ),
-                      Container(
-                          margin: EdgeInsets.only(right: width * 0.02),
-                          child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddAssetsDetail(
-                                            controller.portfolios,
-                                            _portfolio,
-                                            centerTitle: 'Add New Crypto',
-                                          )),
-                                );
-                              },
-                              child: const Icon(
-                                Icons.add,
-                                color: whiteColor,
-                              ))),
-                    ],
-                  ),
-                  Divider(
-                    thickness: 1,
-                    indent: 10,
-                    color: Colors.black.withOpacity(0.2),
-                    endIndent: 10,
-                  ),
-                  body
-                ],
-              );
-            },
-          ),
-        ));
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: width * 0.06),
+                          child: Text('Crypto',
+                              style: RegularTextStyle.regular15600(whiteColor)),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(right: width * 0.02),
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddAssetsDetail(
+                                              controller.portfolios,
+                                              _portfolio,
+                                              centerTitle: 'Add New Crypto',
+                                            )),
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.add,
+                                  color: whiteColor,
+                                ))),
+                      ],
+                    ),
+                    Divider(
+                      thickness: 1,
+                      indent: 10,
+                      color: Colors.black.withOpacity(0.2),
+                      endIndent: 10,
+                    ),
+                    body
+                  ],
+                );
+              },
+            ),
+          );
+        }));
   }
 
   Widget buildSearchResults(width) {
@@ -252,44 +255,34 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
                                 imageUrl:
                                     'https://www.${portfolios[index].imageUrl}',
                                 imageBuilder: (context, imageProvider) =>
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              19,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                              color: transparent,
-                                              image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover)),
-                                        ),
+                                    ClipOval(
+                                      // borderRadius: BorderRadius.circular(20.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                19,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            color: transparent,
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover)),
                                       ),
                                     ),
                                 progressIndicatorBuilder: (context, url,
                                         downloadProgress) =>
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              13,
-                                          height: 30,
-                                          decoration: const BoxDecoration(
-                                            color: whiteColor,
-                                          ),
-                                          child:
-                                              const CupertinoActivityIndicator(),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                19,
+                                        height: 30,
+                                        decoration: const BoxDecoration(
+                                          color: whiteColor,
                                         ),
+                                        child:
+                                            const CupertinoActivityIndicator(),
                                       ),
                                     ),
                                 errorWidget: (context, url, error) => Padding(

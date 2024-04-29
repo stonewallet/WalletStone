@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,9 @@ class SettingWalletLoadingController extends GetxController {
         name: settingwalletuserController.text,
         pass: settingwalletpassController.text,
       );
-      print(walletResponse.mnemonicSeed);
+      if (kDebugMode) {
+        print(walletResponse.mnemonicSeed);
+      }
 
       if (walletResponse.mnemonicSeed.isNotEmpty) {
         Get.offAll(() => const CreateNewWalletPage3());

@@ -1,6 +1,6 @@
 import 'package:walletstone/API/createWallet/createnewwallet.dart';
 
-const baseUrl = "https://54.234.68.88";
+const baseUrl = "https://134.209.126.44";
 
 const travelListUrl = "$baseUrl/travel/list/";
 const travelPostListUrl = "$baseUrl/travel/list/";

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,8 @@ import '../Constants/colors.dart';
 
 bool isBiometricEnabled = false;
 
+String selectedOption = '10 minutes';
+
 class SecurityAndBackupPage extends StatefulWidget {
   const SecurityAndBackupPage({super.key});
 
@@ -19,10 +22,29 @@ class SecurityAndBackupPage extends StatefulWidget {
 
 class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
   bool button = false;
+  final List<String> dropdownOptions = [
+    '5 minutes',
+    '10 minutes',
+    '15 minutes'
+  ];
 
   @override
   void initState() {
     super.initState();
+    _loadSelectedOption();
+  }
+
+  Future<void> _loadSelectedOption() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedOption = prefs.getString('selectedOption') ?? '10 minutes';
+    setState(() {
+      selectedOption = savedOption;
+    });
+  }
+
+  Future<void> _saveSelectedOption(String option) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedOption', option);
   }
 
   @override
@@ -264,10 +286,35 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Require PIN after",
-                              style: RegularTextStyle.regular15600(whiteColor)),
-                          Text("10 minutes",
-                              style: RegularTextStyle.regular14600(iconColor))
+                          Text(
+                            "Require PIN after",
+                            style: RegularTextStyle.regular15600(whiteColor),
+                          ),
+                          DropdownButton<String>(
+                            dropdownColor: drawerColor,
+                            value: selectedOption,
+                            items: dropdownOptions.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style:
+                                      RegularTextStyle.regular14600(whiteColor),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                setState(() {
+                                  selectedOption = newValue;
+                                  _saveSelectedOption(newValue);
+                                });
+                                if (kDebugMode) {
+                                  print("Selected option: $selectedOption");
+                                }
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),

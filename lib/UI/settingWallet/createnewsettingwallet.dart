@@ -226,7 +226,7 @@ class _SettingCreateNewWalletState extends State<SettingCreateNewWallet> {
                                   style: RegularTextStyle.regular18600(
                                       whiteColor))),
                       onTap: () async {
-                        Get.to(() => SettingWalletLoadingView());
+                        Get.off(() => SettingWalletLoadingView());
                         // setState(() {
                         //   isLoading = true;
                         // });

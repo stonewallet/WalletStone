@@ -226,7 +226,7 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                                   style: RegularTextStyle.regular18600(
                                       whiteColor))),
                       onTap: () async {
-                        Get.to(() => LoadingView());
+                        Get.off(() => LoadingView());
                         // setState(() {
                         //   isLoading = true;
                         // });

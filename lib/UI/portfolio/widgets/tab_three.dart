@@ -62,25 +62,24 @@ class _TabBarScreenThreeState extends State<TabBarScreenThree> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    Widget body;
-
-    if (searchController.text.isEmpty) {
-      body = buildContentWidget(width);
-    } else {
-      if (searchList.isEmpty) {
-        body = Text(
-          "No results found",
-          style: RegularTextStyle.regular18600(whiteColor),
-        );
-      } else {
-        body = buildSearchResults(width);
-      }
-    }
-
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(child: GetBuilder<PortfolioController3>(
           builder: (controller) {
+            Widget body;
+
+            if (searchController.text.isEmpty) {
+              body = buildContentWidget(width);
+            } else {
+              if (searchList.isEmpty) {
+                body = Text(
+                  "No results found",
+                  style: RegularTextStyle.regular18600(whiteColor),
+                );
+              } else {
+                body = buildSearchResults(width);
+              }
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

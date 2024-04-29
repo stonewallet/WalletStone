@@ -439,7 +439,7 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
                   onTap: () async {
                     // ApiServiceForADDAssets().createPortfolio1();
 
-                    Get.to(() => const BottomNavigationPage());
+                    Get.off(() => const BottomNavigationPage());
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(

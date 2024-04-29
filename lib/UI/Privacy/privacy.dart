@@ -305,37 +305,37 @@ class _PrivacyPageState extends State<PrivacyPage> {
           const SizedBox(
             height: 10,
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Prevent screenshots & screen recording",
-                      style: RegularTextStyle.regular14600(whiteColor),
-                    ),
-                    Switch.adaptive(
-                      value: prevent,
-                      onChanged: (value) {
-                        setState(() => prevent = value);
-                        saveScreenShotState(value);
-                      },
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: width,
-                height: 1,
-                color: drawerColor,
-              )
-            ],
-          ),
+          // Column(
+          //   children: [
+          //     Padding(
+          //       paddin g: const EdgeInsets.symmetric(horizontal: 20),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             "Prevent screenshots & screen recording",
+          //             style: RegularTextStyle.regular14600(whiteColor),
+          //           ),
+          //           Switch.adaptive(
+          //             value: prevent,
+          //             onChanged: (value) {
+          //               setState(() => prevent = value);
+          //               saveScreenShotState(value);
+          //             },
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       height: 10,
+          //     ),
+          //     Container(
+          //       width: width,
+          //       height: 1,
+          //       color: drawerColor,
+          //     )
+          //   ],
+          // ),
           const SizedBox(
             height: 10,
           ),

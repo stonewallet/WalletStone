@@ -1,20 +1,26 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/Auth/auth_check.dart';
 import 'package:walletstone/API/Auth/auth_create.dart';
 import 'package:walletstone/API/Auth/auth_otp_login.dart';
 import 'package:walletstone/API/change_password/change_user_password.dart';
 import 'package:walletstone/API/contact/post_contact.dart';
 import 'package:walletstone/API/createNotification/createnotification.dart';
+import 'package:walletstone/API/logout/logout.dart';
 import 'package:walletstone/API/seed/key/get_seed_key.dart';
 import 'package:walletstone/API/send_wallet/send_wallet.dart';
 import 'package:walletstone/UI/Home/provider/notification_provider.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dart';
+import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/splash/splash_view.dart/splash_view.dart';
+import 'package:walletstone/UI/welcome_page.dart';
 import 'package:walletstone/controller/local/local_database.dart';
+import 'package:walletstone/widgets/session_listener.dart';
 import 'UI/Constants/colors.dart';
 import 'dart:io';
 
@@ -46,73 +52,131 @@ void main() async {
 //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 // }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-//  Future<void> loadBiometricState() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     setState(() {
-//       prevent = prefs.getBool('prevent') ?? false;
-//     });
-//   }
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-//   disableCapture() async {
-//     if (prevent) {
-//       await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-//     } else {
-//       await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
-//     }
-//   }
+class _MyAppState extends State<MyApp> {
+  final _navKey = GlobalKey<NavigatorState>();
+
+  Future<void> _loadSelectedOption() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedOption = prefs.getString('selectedOption')??'10 minutes';
+    setState(() {
+      selectedOption = savedOption ;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedOption();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => NewTripProvider(),
+    int durationInMinutes = int.parse(selectedOption.split(' ')[0]);
+    return SessionTimeOutListener(
+      duration: Duration(minutes: durationInMinutes),
+      onTimeOut: () async {
+        if (kDebugMode) {
+          print("Time Out");
+        }
+        final SharedPreferences sharedPref =
+            await SharedPreferences.getInstance();
+        sharedPref.remove('name');
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove('selectedOption');
+        var response = await ApiServiceForLogOut().logOut();
+
+        if (response.message != null) {
+          Navigator.of(_navKey.currentState!.context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const WelcomePage(),
+              ),
+              (route) => false);
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.remove('csrfToken');
+          sharedPreferences.remove('sessionId');
+          // Get.snackbar(
+          //   "Logout successfully",
+          //   '',
+          //   backgroundColor: newGradient6,
+          //   colorText: whiteColor,
+          //   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+          //   duration: const Duration(milliseconds: 4000),
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
+          // var snackBar = SnackBar(
+          //     content: Text(
+          //         "Assets created successfully"));
+          // ScaffoldMessenger.of(context)
+          //     .showSnackBar(snackBar);
+        } else {
+          // Get.snackbar(
+          //   "Something gone wrong",
+          //   '',
+          //   backgroundColor: newGradient6,
+          //   colorText: whiteColor,
+          //   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+          //   duration: const Duration(milliseconds: 4000),
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
+        }
+      },
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => NewTripProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiServiceForCreateNotification(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => NotificationProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TripProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiServiceForSEEDKey(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiServiceForContact(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiChangePassword(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiCheckAuth(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiCreateAuth(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TwoFactorProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => APiAuthOTPLogin(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiForSendWallet(),
+          )
+        ],
+        child: GetMaterialApp(
+          navigatorKey: _navKey,
+          debugShowCheckedModeBanner: false,
+          title: 'Stone Wallet',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: purpleColor),
+            useMaterial3: true,
+          ),
+          home: SplashView(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => ApiServiceForCreateNotification(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => NotificationProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => TripProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiServiceForSEEDKey(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiServiceForContact(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiChangePassword(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiCheckAuth(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiCreateAuth(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => TwoFactorProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => APiAuthOTPLogin(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ApiForSendWallet(),
-        )
-      ],
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Stone Wallet',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: purpleColor),
-          useMaterial3: true,
-        ),
-        home: SplashView(),
       ),
     );
   }

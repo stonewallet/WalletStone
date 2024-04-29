@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
@@ -23,10 +24,11 @@ class ApiServiceForGetSettingWallets {
           receiveTimeout: const Duration(seconds: 10),
         ),
       );
-
+      if (kDebugMode) {
+        print("response is : ${response.data}");
+      }
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
-
         List<GetWallet> getWallets =
             data.map((item) => GetWallet.fromJson(item)).toList();
 

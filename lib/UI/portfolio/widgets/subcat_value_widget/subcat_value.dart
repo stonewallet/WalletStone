@@ -14,7 +14,7 @@ class SubCatListView extends StatefulWidget {
 }
 
 class _SubCatListViewState extends State<SubCatListView> {
-  late Future<Map<int, double>> _subCatTotalValues;
+  // late Future<Map<int, double>> _subCatTotalValues;
   final List<IconData> icons = [
     FontAwesome.bitcoin,
     Foundation.home,
@@ -27,81 +27,84 @@ class _SubCatListViewState extends State<SubCatListView> {
   @override
   void initState() {
     super.initState();
-    _subCatTotalValues = controller.getTotalValuesBySubCat();
+    // _subCatTotalValues = controller.getTotalValuesBySubCat();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<int, double>>(
-        future: _subCatTotalValues,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
-            );
-          } else if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
-            );
-          } else {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final subCat = snapshot.data!.keys.elementAt(index);
-                final totalValue = snapshot.data![subCat];
-                if (subCat == 0) {
-                  icon = icons[0];
-                } else if (subCat == 1) {
-                  icon = icons[1];
-                } else if (subCat == 2) {
-                  icon = icons[2];
-                }
-                return SizedBox(
-                  width: MediaQuery.sizeOf(context).width / 2.1,
-                  height: 50,
-                  child: Card(
-                    color: transparent,
-                    child: ListTile(
-                      title: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Icon(
-                              icon,
-                              size: 20,
-                              color: whiteColor,
+    return GetBuilder<PortfolioController>(builder: (controller) {
+      return FutureBuilder<Map<int, double>>(
+          future: controller.getTotalValuesBySubCat(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  "No data",
+                  style: LargeTextStyle.large18800(whiteColor),
+                ),
+              );
+            } else if (!snapshot.hasData) {
+              return Center(
+                child: Text(
+                  "No data",
+                  style: LargeTextStyle.large18800(whiteColor),
+                ),
+              );
+            } else {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final subCat = snapshot.data!.keys.elementAt(index);
+                  final totalValue = snapshot.data![subCat];
+                  if (subCat == 0) {
+                    icon = icons[0];
+                  } else if (subCat == 1) {
+                    icon = icons[1];
+                  } else if (subCat == 2) {
+                    icon = icons[2];
+                  }
+                  return SizedBox(
+                    width: MediaQuery.sizeOf(context).width / 2.1,
+                    height: 50,
+                    child: Card(
+                      color: transparent,
+                      child: ListTile(
+                        title: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Icon(
+                                icon,
+                                size: 20,
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              totalValue!.toStringAsFixed(2),
-                              style: RegularTextStyle.regular15700(whiteColor),
+                            const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                totalValue!.toStringAsFixed(2),
+                                style:
+                                    RegularTextStyle.regular15700(whiteColor),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        });
+                  );
+                },
+              );
+            }
+          });
+    });
   }
 }
