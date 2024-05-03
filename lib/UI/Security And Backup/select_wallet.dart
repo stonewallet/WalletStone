@@ -115,7 +115,7 @@ class _SelectWalletPageState extends State<SelectWalletPage> {
                             onTap: () async {
                               print(wallets[index].mnemonic);
                               var response = await apiServiceForSEEDKey
-                                  .seedkey(wallets[index].mnemonic);
+                                  .seedkey(wallets[index].mnemonic!);
 
                               if (response.publicSpendKey!.isNotEmpty) {
                                 final value = response;
@@ -147,7 +147,7 @@ class _SelectWalletPageState extends State<SelectWalletPage> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(wallets[index].mnemonic,
+                                      Text(wallets[index].mnemonic!,
                                           style: LargeTextStyle.large18800(
                                               whiteColor)),
                                     ],

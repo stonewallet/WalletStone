@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -496,56 +495,56 @@ class _SettingPageState extends State<SettingPage> {
                                     ),
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    if (kDebugMode) {
-                                      print("Generate the Key");
-                                    }
-                                    // showBottomSheetText(context);
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(bottom: 20),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.05,
-                                            ),
-                                            const Icon(
-                                              Icons.key,
-                                              color: iconColor,
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.05,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () => setState(
-                                                  () => isVisible = !isVisible),
-                                              child: Text(
-                                                "Generate Your Key",
-                                                style: RegularTextStyle
-                                                    .regular15700(whiteColor),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        if (isVisible) buildTextForm(),
-                                        const SizedBox(
-                                          height: 0,
-                                        ),
-                                        Container(
-                                          width: width,
-                                          height: 1,
-                                          color: drawerColor,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                // InkWell(
+                                //   onTap: () {
+                                //     if (kDebugMode) {
+                                //       print("Generate the Key");
+                                //     }
+                                //     // showBottomSheetText(context);
+                                //   },
+                                //   child: Container(
+                                //     margin: const EdgeInsets.only(bottom: 20),
+                                //     child: Column(
+                                //       children: [
+                                //         Row(
+                                //           children: [
+                                //             SizedBox(
+                                //               width: width * 0.05,
+                                //             ),
+                                //             const Icon(
+                                //               Icons.key,
+                                //               color: iconColor,
+                                //             ),
+                                //             SizedBox(
+                                //               width: width * 0.05,
+                                //             ),
+                                //             GestureDetector(
+                                //               onTap: () => setState(
+                                //                   () => isVisible = !isVisible),
+                                //               child: Text(
+                                //                 "Generate Your Key",
+                                //                 style: RegularTextStyle
+                                //                     .regular15700(whiteColor),
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //         const SizedBox(
+                                //           height: 20,
+                                //         ),
+                                //         if (isVisible) buildTextForm(),
+                                //         const SizedBox(
+                                //           height: 0,
+                                //         ),
+                                //         Container(
+                                //           width: width,
+                                //           height: 1,
+                                //           color: drawerColor,
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 InkWell(
                                   onTap: () {
                                     _showLogoutConfirmationDialog(context);

@@ -1,28 +1,26 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
-import 'package:walletstone/Responses/travel_post_response.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 
-class ApiForSendWallet extends ChangeNotifier {
+class ApiPublicAddress extends ChangeNotifier {
   final Dio _dio = Dio();
-  Future<TravelPostResponse> sendWalletPost(
-      String name, String password, String address, String amount1) async {
-   
+  String value = 'm';
+
+  Future<dynamic> getPublicAddress({
+    required String mnemonic,
+  }) async {
     try {
       if (kDebugMode) {
-        print("send wallet api hit");
+        print("Add Post api hit");
       }
       Response response = await _dio.post(
-        sendWallet,
+        publicAddress,
         data: {
-          "mnemonic": name,
-          "password": password,
-          "recipient_address": address,
-          "amount": double.parse(amount1),
+          "mnemonic": mnemonic,
         },
         options: Options(
           headers: {
@@ -31,19 +29,28 @@ class ApiForSendWallet extends ChangeNotifier {
             "X-CSRFToken": MySharedPreferences()
                 .getCsrfToken(await SharedPreferences.getInstance())
           },
-          sendTimeout: const Duration(seconds: 1),
-          receiveTimeout: const Duration(seconds: 30 * 1000),
+          sendTimeout: const Duration(seconds: 3000 * 1000),
+          receiveTimeout: const Duration(seconds: 3000 * 1000),
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        print("Address ${response.data}");
       }
       if (response.statusCode == 200) {
-        TravelPostResponse travelPostResponse =
-            TravelPostResponse.fromJson(json.decode(response.toString()));
-        return travelPostResponse;
+        dynamic responseData = response.data;
+        if (responseData is String) {
+          responseData = jsonDecode(responseData);
+        }
+
+        String balance = responseData['address'];
+
+        value = balance;
+        log(value.toString());
+        notifyListeners();
+        return value;
       } else {
-        throw Exception("Error to Load the data");
+        throw Exception(
+            "Error: ${response.statusCode} - ${response.statusMessage}");
       }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {

@@ -22,7 +22,7 @@ class ApiForGetPdf {
           receiveTimeout: const Duration(seconds: 30 * 1000),
         ),
       );
-
+      print("pdf url${response.data}");
       if (response.statusCode == 200) {
         final responseData = response.data;
         return GetPdf.fromJson(responseData);

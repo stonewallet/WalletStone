@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
@@ -27,6 +28,7 @@ class _SendPageState extends State<SendPage> {
   late TextEditingController amountController = TextEditingController();
   late TextEditingController noteController = TextEditingController();
   bool visibility = false;
+  bool isLoading = false;
   late int selectedUserId;
   late String selectedUserName;
   @override
@@ -343,6 +345,9 @@ class _SendPageState extends State<SendPage> {
                       borderSide: BorderSide(color: cursorColor),
                     ),
                   ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+                  ],
                 ),
               ),
               const SizedBox(
@@ -357,16 +362,11 @@ class _SendPageState extends State<SendPage> {
                         style: RegularTextStyle.regular16600(whiteColor)),
                     Row(
                       children: [
-                        Text("0.000005032 BTC",
+                        Text("2 % XMR",
                             style: RegularTextStyle.regular16600(whiteColor)),
                         const SizedBox(
                           width: 5,
                         ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                          color: whiteColor,
-                        )
                       ],
                     )
                   ],
@@ -375,21 +375,21 @@ class _SendPageState extends State<SendPage> {
               const SizedBox(
                 height: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Coin control (optional)",
-                        style: RegularTextStyle.regular16600(whiteColor)),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 15,
-                      color: whiteColor,
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 25),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text("Coin control (optional)",
+              //           style: RegularTextStyle.regular16600(whiteColor)),
+              //       const Icon(
+              //         Icons.arrow_forward_ios,
+              //         size: 15,
+              //         color: whiteColor,
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -397,6 +397,9 @@ class _SendPageState extends State<SendPage> {
       floatingActionButton: Consumer<ApiForSendWallet>(
         builder: (context, value, child) => InkWell(
           onTap: () async {
+            setState(() {
+              isLoading = true;
+            });
             var response = await value.sendWalletPost(
               selectedUserName,
               passbController.text,
@@ -404,6 +407,10 @@ class _SendPageState extends State<SendPage> {
               amountController.text,
             );
             if (response.message != null) {
+              setState(() {
+                isLoading = false;
+              });
+              Get.back();
               Get.snackbar(
                 response.message!,
                 '',
@@ -442,7 +449,11 @@ class _SendPageState extends State<SendPage> {
               ),
             ),
             alignment: Alignment.center,
-            child: Text("Send", style: LargeTextStyle.large20700(whiteColor)),
+            child: isLoading == true
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : Text("Send", style: LargeTextStyle.large20700(whiteColor)),
           ),
         ),
       ),

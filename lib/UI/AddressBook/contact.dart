@@ -108,19 +108,19 @@ class _AddContactPageState extends State<AddContactPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15, bottom: 40),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: width * 0.4,
-              child: ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  onPressed: () {},
-                  child: Text(
-                    "Reset",
-                    style: RegularTextStyle.regular18600(whiteColor),
-                  )),
-            ),
+            // SizedBox(
+            //   width: width * 0.4,
+            //   child: ElevatedButton(
+            //       style:
+            //           ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+            //       onPressed: () {},
+            //       child: Text(
+            //         "Reset",
+            //         style: RegularTextStyle.regular18600(whiteColor),
+            //       )),
+            // ),
             SizedBox(
               width: width * 0.4,
               child: Consumer<ApiServiceForContact>(

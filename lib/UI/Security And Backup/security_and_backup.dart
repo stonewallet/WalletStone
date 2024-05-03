@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/changeuser_pass.dart';
@@ -160,87 +159,87 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  screenLockCreate(
-                    context: context,
-                    title: const Text('Enter your PIN'),
-                    confirmTitle: const Text('Enter your pin again'),
-                    onConfirmed: (value) => Navigator.of(context).pop(),
-                    config: const ScreenLockConfig(
-                      backgroundColor: appBarBackgroundColor,
-                    ),
-                    secretsConfig: const SecretsConfig(
-                      spacing: 15, // or spacingRatio
-                      padding: EdgeInsets.all(40),
-                      secretConfig: SecretConfig(
-                          // borderColor: Colors.amber,
-                          borderSize: 2.0,
-                          disabledColor: Colors.black,
-                          enabledColor: whiteColor
-                          // enabledColor: Colors.amber,
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // // InkWell(
+              // //   onTap: () {
+              // //     screenLockCreate(
+              // //       context: context,
+              // //       title: const Text('Enter your PIN'),
+              // //       confirmTitle: const Text('Enter your pin again'),
+              // //       onConfirmed: (value) => Navigator.of(context).pop(),
+              // //       config: const ScreenLockConfig(
+              // //         backgroundColor: appBarBackgroundColor,
+              // //       ),
+              // //       secretsConfig: const SecretsConfig(
+              // //         spacing: 15, // or spacingRatio
+              // //         padding: EdgeInsets.all(40),
+              // //         secretConfig: SecretConfig(
+              // //             // borderColor: Colors.amber,
+              // //             borderSize: 2.0,
+              // //             disabledColor: Colors.black,
+              // //             enabledColor: whiteColor
+              // //             // enabledColor: Colors.amber,
 
-                          ),
-                    ),
-                    keyPadConfig: const KeyPadConfig(
-                      buttonConfig: KeyPadButtonConfig(
-                          backgroundColor: Colors.transparent,
-                          fontSize: 20,
-                          foregroundColor: whiteColor),
-                      displayStrings: [
-                        '0',
-                        '1',
-                        '2',
-                        '3',
-                        '4',
-                        '5',
-                        '6',
-                        '7',
-                        '8',
-                        '9'
-                      ],
-                    ),
-                    cancelButton: const Icon(Icons.close),
-                    // deleteButton: const Icon(Icons.delete),
-                  );
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context)
-                  //   =>  const ChangePinPage()),
-                  // );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Change Wallet PIN",
-                              style: RegularTextStyle.regular15600(whiteColor)),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 20,
-                            color: iconColor,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: width,
-                      height: 1,
-                      color: drawerColor,
-                    )
-                  ],
-                ),
-              ),
+              // //             ),
+              // //       ),
+              // //       keyPadConfig: const KeyPadConfig(
+              // //         buttonConfig: KeyPadButtonConfig(
+              // //             backgroundColor: Colors.transparent,
+              // //             fontSize: 20,
+              // //             foregroundColor: whiteColor),
+              // //         displayStrings: [
+              // //           '0',
+              // //           '1',
+              // //           '2',
+              // //           '3',
+              // //           '4',
+              // //           '5',
+              // //           '6',
+              // //           '7',
+              // //           '8',
+              // //           '9'
+              // //         ],
+              // //       ),
+              // //       cancelButton: const Icon(Icons.close),
+              // //       // deleteButton: const Icon(Icons.delete),
+              // //     );
+              // //     // Navigator.push(
+              // //     //   context,
+              // //     //   MaterialPageRoute(builder: (context)
+              // //     //   =>  const ChangePinPage()),
+              // //     // );
+              // //   },
+              // //   child: Column(
+              // //     children: [
+              // //       Container(
+              // //         height: 40,
+              // //         padding: const EdgeInsets.symmetric(horizontal: 20),
+              // //         child: Row(
+              // //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // //           children: [
+              // //             Text("Change Wallet PIN",
+              // //                 style: RegularTextStyle.regular15600(whiteColor)),
+              // //             const Icon(
+              // //               Icons.arrow_forward_ios,
+              // //               size: 20,
+              // //               color: iconColor,
+              // //             )
+              // //           ],
+              // //         ),
+              // //       ),
+              //       const SizedBox(
+              //         height: 10,
+              //       ),
+              //       Container(
+              //         width: width,
+              //         height: 1,
+              //         color: drawerColor,
+              //       )
+              //     ],
+              //   ),
+              // ),
               Column(
                 children: [
                   const SizedBox(

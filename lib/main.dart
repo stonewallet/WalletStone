@@ -10,8 +10,11 @@ import 'package:walletstone/API/change_password/change_user_password.dart';
 import 'package:walletstone/API/contact/post_contact.dart';
 import 'package:walletstone/API/createNotification/createnotification.dart';
 import 'package:walletstone/API/logout/logout.dart';
+import 'package:walletstone/API/receive_address/receive_address.dart';
+import 'package:walletstone/API/restore/restore_wallet.dart';
 import 'package:walletstone/API/seed/key/get_seed_key.dart';
 import 'package:walletstone/API/send_wallet/send_wallet.dart';
+import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Home/provider/notification_provider.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
@@ -64,9 +67,9 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _loadSelectedOption() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedOption = prefs.getString('selectedOption')??'10 minutes';
+    final savedOption = prefs.getString('selectedOption') ?? '10 minutes';
     setState(() {
-      selectedOption = savedOption ;
+      selectedOption = savedOption;
     });
   }
 
@@ -165,6 +168,15 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (context) => ApiForSendWallet(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiRestorePassWord(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiWalletBalance(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiPublicAddress(),
           )
         ],
         child: GetMaterialApp(

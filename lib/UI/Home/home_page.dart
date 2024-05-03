@@ -184,14 +184,23 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: Icon(
-                          Icons.account_circle_rounded,
-                          size: width * 0.1,
-                          color: buttonColor,
-                        ),
-                      ),
+                      Consumer<NewTripProvider>(
+                          builder: (context, value, child) {
+                        final firstLetter =
+                            value.user.isNotEmpty ? value.user[0] : '';
+
+                        return Container(
+                            margin: const EdgeInsets.only(left: 20),
+                            child: CircleAvatar(
+                              radius: width * 0.04,
+                              backgroundColor: gradientColor2,
+                              child: Text(
+                                firstLetter.toUpperCase(),
+                                style:
+                                    RegularTextStyle.regular14600(whiteColor),
+                              ),
+                            ));
+                      }),
                       const SizedBox(
                         width: 10,
                       ),

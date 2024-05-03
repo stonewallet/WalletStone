@@ -307,7 +307,7 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
                                                     image: AssetImage(
                                                         'assets/Dollar.png'))),
                                             child: Image.asset(
-                                                'assets/Dollar.png')),
+                                                'assets/Dollar.png'),),
                                       ),
                                     )),
                             SizedBox(

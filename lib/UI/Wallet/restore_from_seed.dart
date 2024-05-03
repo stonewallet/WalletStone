@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:walletstone/API/restore/restore_wallet.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/Wallet/restore_wallet_loading/controller/restore_load_controller.dart';
+import 'package:walletstone/UI/Wallet/restore_wallet_loading/loading_view/restore_loading.dart';
 
 import '../Constants/colors.dart';
+
+TextEditingController walletNameController = TextEditingController();
+TextEditingController seedPhraseController = TextEditingController();
+TextEditingController passwordControllerForSeed = TextEditingController();
 
 class RestoreFromSeedPage extends StatefulWidget {
   const RestoreFromSeedPage({super.key});
@@ -11,23 +20,18 @@ class RestoreFromSeedPage extends StatefulWidget {
 }
 
 class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
-  TextEditingController walletNameController = TextEditingController();
-  TextEditingController seedPhraseController = TextEditingController();
-  TextEditingController languageController = TextEditingController();
-  TextEditingController restoreFromBlockHeightController =
-      TextEditingController();
-  TextEditingController restoreFromDateController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-    languageController = TextEditingController(text: "English (Seed language)");
+    walletNameController.clear();
+    seedPhraseController.clear();
+    passwordControllerForSeed.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: appBarBackgroundColor,
@@ -38,7 +42,7 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: whiteColor,
           ),
@@ -55,7 +59,6 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                 const SizedBox(
                   height: 30,
                 ),
-
                 Container(
                   height: 45,
                   width: width * 0.95,
@@ -69,7 +72,7 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                     textAlignVertical: TextAlignVertical.center,
                     style: RegularTextStyle.regular16bold(whiteColor),
                     decoration: InputDecoration(
-                      hintText: "Wallet name",
+                      hintText: "New Wallet name",
                       hintStyle: RegularTextStyle.regular16bold(cursorColor),
                       enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: cursorColor),
@@ -80,13 +83,13 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                   // height: 45,
                   width: width * 0.95,
-                  padding: EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   alignment: Alignment.center,
                   child: TextField(
                     autofocus: true,
@@ -113,33 +116,6 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                   height: 10,
                 ),
                 Container(
-                  // height: 45,
-                  width: width * 0.95,
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    autofocus: true,
-                    cursorColor: cursorColor,
-                    controller: languageController,
-                    textAlign: TextAlign.start,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: RegularTextStyle.regular16bold(whiteColor),
-                    decoration: InputDecoration(
-                      hintText: "English",
-                      hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: cursorColor),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: cursorColor),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
                   height: 45,
                   width: width * 0.95,
                   padding: const EdgeInsets.only(left: 15, right: 15),
@@ -147,12 +123,12 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                   child: TextField(
                     autofocus: true,
                     cursorColor: cursorColor,
-                    controller: restoreFromBlockHeightController,
+                    controller: passwordControllerForSeed,
                     textAlign: TextAlign.start,
                     textAlignVertical: TextAlignVertical.center,
                     style: RegularTextStyle.regular16bold(whiteColor),
                     decoration: InputDecoration(
-                      hintText: "Restore from blockheight",
+                      hintText: " New Wallet Password",
                       hintStyle: RegularTextStyle.regular16bold(cursorColor),
                       enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: cursorColor),
@@ -162,57 +138,6 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text("or",
-                      style: RegularTextStyle.regular18600(Colors.white)),
-                ),
-                // SizedBox(height: 10,),
-                Container(
-                  height: 45,
-                  width: width * 0.95,
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    autofocus: true,
-                    cursorColor: cursorColor,
-                    controller: restoreFromDateController,
-                    textAlign: TextAlign.start,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: RegularTextStyle.regular16bold(whiteColor),
-                    decoration: InputDecoration(
-                      hintText: "Restore from date",
-                      hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: cursorColor),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: cursorColor),
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: width * 0.7,
-                      child: Text(
-                        "Please enter a date a few days before you created this wallet. Or if you kn0w the blockheight, please enter it instead",
-                        style: LightTextStyle.light12300(cursorColor),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -220,39 +145,60 @@ class _RestoreFromSeedPageState extends State<RestoreFromSeedPage> {
           Expanded(
             flex: 3,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context)
-                          //   =>  const CreateNewWalletPage()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColor2,
-                            surfaceTintColor: Colors.black,
-                            shadowColor: whiteColor,
-                            elevation: 4),
-                        child: Text("Restore",
-                            style: LargeTextStyle.large20700(whiteColor))),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
+              child: Consumer<ApiRestorePassWord>(
+                builder: (context, value, child) => Column(
+                  children: [
+                    SizedBox(
                       height: 50,
                       width: MediaQuery.of(context).size.width * 0.8,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text("Advanced Privacy Settings",
-                            style: RegularTextStyle.regular15700(whiteColor)),
-                      ))
-                ],
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context)
+                            //   =>  const CreateNewWalletPage()),
+                            // );
+                            // var response = await value.changeRestorePassword(
+                            //     name: walletNameController.text,
+                            //     seed: seedPhraseController.text,
+                            //     password: passwordControllerForSeed.text);
+                            // if (response.message != null) {
+                            //   Get.back();
+                            //   Get.snackbar(
+                            //     "Password Changed successfully",
+                            //     '',
+                            //     backgroundColor: newGradient6,
+                            //     colorText: whiteColor,
+                            //     padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                            //     duration: const Duration(milliseconds: 4000),
+                            //     snackPosition: SnackPosition.BOTTOM,
+                            //   );
+                            // } else {
+                            //   Get.snackbar(
+                            //     "Something Went Wrong",
+                            //     '',
+                            //     backgroundColor: newGradient6,
+                            //     colorText: whiteColor,
+                            //     padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                            //     duration: const Duration(milliseconds: 4000),
+                            //     snackPosition: SnackPosition.BOTTOM,
+                            //   );
+                            // }
+                            Get.off(() => RestoreWalletLoadingView());
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: buttonColor2,
+                              surfaceTintColor: Colors.black,
+                              shadowColor: whiteColor,
+                              elevation: 4),
+                          child: Text("Restore",
+                              style: LargeTextStyle.large20700(whiteColor))),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

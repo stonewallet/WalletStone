@@ -1,6 +1,6 @@
 import 'package:walletstone/API/createWallet/createnewwallet.dart';
 
-const baseUrl = "https://134.209.126.44";
+const baseUrl = "https://stonewallet.com/";
 
 const travelListUrl = "$baseUrl/travel/list/";
 const travelPostListUrl = "$baseUrl/travel/list/";
@@ -39,6 +39,9 @@ const authDisable = "$baseUrl/travel/disable/twofa/";
 const checkAuthStatusValue = "$baseUrl/travel/check/twofa/";
 const sendOTPLogin = "$baseUrl/travel/totp/login";
 const deleteAuth = "$baseUrl/travel/delete/totp/device/";
+const restoreWallet = "$baseUrl/travel/restore/wallet/";
+const walletBalance = "$baseUrl/travel/get/wallet/balance/";
+const publicAddress = "$baseUrl/travel/get/wallet/public/address/";
 
 late WalletResponse walletResponse;
 late String tripId;

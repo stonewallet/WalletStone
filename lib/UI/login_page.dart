@@ -172,9 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             final SharedPreferences sharedPref =
                                 await SharedPreferences.getInstance();
-                            setState(() {
-                              isLoading = true;
-                            });
+                          
                             if (kDebugMode) {
                               print(userNameController.text);
                               print(passwordController.text);

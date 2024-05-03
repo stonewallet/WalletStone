@@ -1,16 +1,16 @@
 class GetWallet {
-  final int id;
-  final String mnemonic;
-  final String publicAddress;
+  final int? id;
+  final String? mnemonic;
+  final String? publicAddress;
   final String? balance;
-  final int user;
+  final int? user;
 
   GetWallet({
-    required this.id,
-    required this.mnemonic,
-    required this.publicAddress,
+     this.id,
+     this.mnemonic,
+     this.publicAddress,
     this.balance,
-    required this.user,
+     this.user,
   });
 
   factory GetWallet.fromJson(Map<String, dynamic> json) => GetWallet(

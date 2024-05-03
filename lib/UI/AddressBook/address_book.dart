@@ -133,7 +133,7 @@ class _AddressBookPageState extends State<AddressBookPage> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Text(wallets[index].mnemonic,
+                                  Text(wallets[index].mnemonic!,
                                       style: LargeTextStyle.large18800(
                                           whiteColor)),
                                 ],

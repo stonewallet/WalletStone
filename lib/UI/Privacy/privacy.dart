@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
-import 'package:walletstone/UI/Privacy/domain_lookups.dart';
-import 'package:walletstone/UI/Privacy/trocador_providers.dart';
 
 bool prevent = false;
 
@@ -401,87 +399,87 @@ class _PrivacyPageState extends State<PrivacyPage> {
           const SizedBox(
             height: 10,
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const DomainLookupPage()),
-              );
-            },
-            child: Column(
-              children: [
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Domain lookups",
-                        style: RegularTextStyle.regular14600(whiteColor),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20,
-                        color: iconColor,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: width,
-                  height: 1,
-                  color: drawerColor,
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const TrocadorProvidersPage()),
-              );
-            },
-            child: Column(
-              children: [
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Trocador providers",
-                        style: RegularTextStyle.regular14600(whiteColor),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20,
-                        color: iconColor,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: width,
-                  height: 1,
-                  color: drawerColor,
-                )
-              ],
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => const DomainLookupPage()),
+          //     );
+          //   },
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //         height: 40,
+          //         padding: const EdgeInsets.symmetric(horizontal: 20),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Text(
+          //               "Domain lookups",
+          //               style: RegularTextStyle.regular14600(whiteColor),
+          //             ),
+          //             const Icon(
+          //               Icons.arrow_forward_ios,
+          //               size: 20,
+          //               color: iconColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         height: 10,
+          //       ),
+          //       Container(
+          //         width: width,
+          //         height: 1,
+          //         color: drawerColor,
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => const TrocadorProvidersPage()),
+          //     );
+          //   },
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //         height: 40,
+          //         padding: const EdgeInsets.symmetric(horizontal: 20),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Text(
+          //               "Trocador providers",
+          //               style: RegularTextStyle.regular14600(whiteColor),
+          //             ),
+          //             const Icon(
+          //               Icons.arrow_forward_ios,
+          //               size: 20,
+          //               color: iconColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         height: 10,
+          //       ),
+          //       Container(
+          //         width: width,
+          //         height: 1,
+          //         color: drawerColor,
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

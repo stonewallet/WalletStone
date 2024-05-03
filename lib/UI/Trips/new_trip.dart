@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/Endtrip/endtrip.dart';
 import 'package:walletstone/API/api_provider.dart';
 import 'package:walletstone/API/pdf/getpdf.dart';
+import 'package:walletstone/API/shared_preferences.dart';
 import 'package:walletstone/Responses/travel2_response.dart' as trip;
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
@@ -671,12 +671,31 @@ class _NewTripPageState extends State<NewTripPage> {
                                                       //output:  /storage/emulated/0/Download/banner.png
 
                                                       try {
-                                                        await Dio().download(
-                                                            "$baseUrl${pdfUrl.url}",
-                                                            savePath,
-                                                            onReceiveProgress:
-                                                                (received,
-                                                                    total) {
+                                                        var response =
+                                                            await Dio().download(
+                                                                "$baseUrl${pdfUrl.url}",
+                                                                savePath,
+                                                                options:
+                                                                    Options(
+                                                                  headers: {
+                                                                    "Cookie":
+                                                                        "csrftoken=${MySharedPreferences().getCsrfToken(await SharedPreferences.getInstance())}; sessionid=${MySharedPreferences().getSessionId(await SharedPreferences.getInstance())}",
+                                                                    "X-CSRFToken":
+                                                                        MySharedPreferences()
+                                                                            .getCsrfToken(await SharedPreferences.getInstance())
+                                                                  },
+                                                                  sendTimeout:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                  receiveTimeout:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              30 * 1000),
+                                                                ),
+                                                                onReceiveProgress:
+                                                                    (received,
+                                                                        total) {
                                                           if (received != -1) {
                                                             print(
                                                                 "${(received / total * 100).toStringAsFixed(0)}%");
@@ -684,39 +703,60 @@ class _NewTripPageState extends State<NewTripPage> {
                                                             //you can build progressbar feature too
                                                           }
                                                         });
-                                                        print(
-                                                            "File is saved to download folder.");
+                                                        if (response
+                                                                .statusCode ==
+                                                            200) {
+                                                          print(
+                                                              "File is saved to download folder.");
 
-                                                        Get.snackbar(
-                                                          "File Downloaded",
-                                                          '',
-                                                          backgroundColor:
-                                                              newGradient6,
-                                                          colorText: whiteColor,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  20, 5, 0, 0),
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      4000),
-                                                          snackPosition:
-                                                              SnackPosition
-                                                                  .BOTTOM,
-                                                        );
-                                                        if (Platform
-                                                            .isAndroid) {
-                                                          OpenFile.open(
-                                                              savePath);
-                                                        } else if (Platform
-                                                            .isIOS) {
-                                                          await launchUrl(
-                                                              Uri.file(
-                                                                  savePath));
+                                                          Get.snackbar(
+                                                            "File Downloaded",
+                                                            '',
+                                                            backgroundColor:
+                                                                newGradient6,
+                                                            colorText:
+                                                                whiteColor,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    20,
+                                                                    5,
+                                                                    0,
+                                                                    0),
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                            snackPosition:
+                                                                SnackPosition
+                                                                    .BOTTOM,
+                                                          );
+                                                          if (Platform
+                                                              .isAndroid) {
+                                                            OpenFile.open(
+                                                                savePath);
+                                                          } else if (Platform
+                                                              .isIOS) {
+                                                            await launchUrl(
+                                                                Uri.file(
+                                                                    savePath));
+                                                          }
                                                         }
                                                       } on DioException catch (e) {
-                                                        print(e.message);
+                                                        if (e.response !=
+                                                                null &&
+                                                            e.response!
+                                                                    .statusCode ==
+                                                                403) {
+                                                          print(
+                                                              "403 Forbidden: ${e.message}");
+                                                        } else {
+                                                          print(
+                                                              "Dio error: $e");
+                                                        }
+                                                      } catch (e) {
+                                                        print(
+                                                            "Unexpected error: $e");
                                                       }
                                                     }
                                                   } else {

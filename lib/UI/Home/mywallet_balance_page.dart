@@ -1,8 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/homeServices/homecoins.dart';
+import 'package:walletstone/API/receive_address/receive_address.dart';
+import 'package:walletstone/API/settingwallet/get_setting_wallet.dart';
+import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/homeCoin/home_coin_model.dart';
+import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
+import 'package:walletstone/widgets/customspinkit_widget.dart';
+import 'package:walletstone/widgets/dropdown._widget.dart';
 import '../../API/shared_preferences.dart';
 import '../Constants/colors.dart';
 import '../Model/coin_model.dart';
@@ -17,6 +28,7 @@ class MyWalletBalancePage extends StatefulWidget {
 
 class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
   bool selectCoins = true;
+  bool isLoading = false;
   TextEditingController searchController = TextEditingController();
   List<CoinModel> coinsList = [
     CoinModel(
@@ -110,11 +122,14 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
         amount: "1",
         usdAmount: "\$1240"),
   ];
+
+  late ApiServiceForGetSettingWallets apiServiceForGetSettingWallets;
   late ApiServiceForHomeCoins apiServiceForHomeCoins;
 
   @override
   void initState() {
     apiServiceForHomeCoins = ApiServiceForHomeCoins();
+    apiServiceForGetSettingWallets = ApiServiceForGetSettingWallets();
     super.initState();
   }
 
@@ -122,7 +137,6 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -130,26 +144,62 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.001,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('My Wallet',
-                      textAlign: TextAlign.center,
-                      style: RegularTextStyle.regular15600(termsColor)),
-                  const Icon(
-                    Icons.arrow_drop_down,
-                    color: termsColor,
-                  )
-                ],
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text('My Wallet',
+              //         textAlign: TextAlign.center,
+              //         style: RegularTextStyle.regular15600(termsColor)),
+              //     const Icon(
+              //       Icons.arrow_drop_down,
+              //       color: termsColor,
+              //     )
+              //   ],
+              // ),
+              FutureBuilder<List<GetWallet>>(
+                future:
+                    apiServiceForGetSettingWallets.getDataForSettingWallet(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No data",
+                        style: LargeTextStyle.large18800(whiteColor),
+                      ),
+                    );
+                  } else if (!snapshot.hasData) {
+                    return Center(
+                      child: Text(
+                        "No data",
+                        style: LargeTextStyle.large18800(whiteColor),
+                      ),
+                    );
+                  } else {
+                    final List<GetWallet> wallets = snapshot.data!;
+                    // final List<DropDownValueModel> dropDownList = wallets
+                    //     .map((wallet) => DropDownValueModel(
+                    //         name: wallet.mnemonic!, value: wallet.mnemonic))
+                    //     .toList();
+
+                    return DropDownTextFieldWidget(
+                        dropDownList: wallets,
+                        onWalletSelected: (GetWallet selectedWallet) {});
+                  }
+                },
               ),
               SizedBox(
                 height: height * 0.02,
               ),
-              Text('Balance',
-                  textAlign: TextAlign.center,
-                  style: RegularTextStyle.regular15600(whiteColor)),
+              Consumer<ApiWalletBalance>(
+                builder: (context, value, child) => Text(
+                    'Balance :${value.value}',
+                    textAlign: TextAlign.center,
+                    style: RegularTextStyle.regular15600(whiteColor)),
+              ),
               SizedBox(
                 height: height * 0.04,
               ),
@@ -173,6 +223,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                                 await SharedPreferences.getInstance()));
                             print(MySharedPreferences().getSessionId(
                                 await SharedPreferences.getInstance()));
+                            _showBottomSheet();
                           },
                           child: Image.asset("assets/Icons/download.png",
                               width: 25, height: 25, color: whiteColor)),
@@ -569,4 +620,224 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
           ),
         ));
   }
+
+  final _formKey = GlobalKey<FormState>();
+  final _textController = TextEditingController();
+  void _showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+              color: gradientColor1,
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Enter Wallet Name',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: whiteColor,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Form(
+                  key: _formKey,
+                  child: Container(
+                    height: 45,
+                    width: MediaQuery.sizeOf(context).width * 0.95,
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    alignment: Alignment.center,
+                    child: TextFormField(
+                      autofocus: true,
+                      cursorColor: cursorColor,
+                      controller: _textController,
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: const TextStyle(
+                          color: whiteColor, fontWeight: FontWeight.bold),
+                      decoration: InputDecoration(
+                        hintText: "Enter Wallet Name",
+                        hintStyle: RegularTextStyle.regular16600(whiteColor),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: cursorColor),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: cursorColor),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some data';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Consumer<ApiPublicAddress>(
+                  builder: (context, value, child) => ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        if (kDebugMode) {
+                          print('Entered data: ${_textController.text}');
+                        }
+                        var response = await value.getPublicAddress(
+                            mnemonic: _textController.text);
+                        if (response != null) {
+                          _showAlertBox(response);
+                          _textController.clear();
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showAlertBox(String response) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return CupertinoAlertDialog(
+              title: const Text("Selected Wallet"),
+              content: Text("Your Response: $response"),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: blackColor.withOpacity(0.01),
+                        surfaceTintColor: blackColor,
+                        shadowColor: whiteColor,
+                        shape: const BeveledRectangleBorder(),
+                        elevation: 4,
+                      ),
+                      onPressed: () {
+                        copyFile(response);
+                        Get.close(2);
+                      },
+                      child:  const Text("Copy"),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: blackColor.withOpacity(0.01),
+                        surfaceTintColor: blackColor,
+                        shadowColor: whiteColor,
+                        shape: const BeveledRectangleBorder(),
+                        elevation: 4,
+                      ),
+                      onPressed: 
+                         () {
+                           Get.close(2);
+                         },
+                      child:  const Text("OK"),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  copyFile(String response) async {
+    Clipboard.setData(ClipboardData(text: response)).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("your Address copied to clipboard")));
+    });
+  }
 }
+
+
+
+/*
+DropdownButtonFormField<GetWallet>(
+      value: _selectedWallet,
+      iconSize: 0,
+      decoration: const InputDecoration(
+          hintText: 'Select',
+          hintTextDirection: TextDirection.ltr,
+          hintStyle: TextStyle(
+            color: whiteColor,
+          )),
+      items: widget.dropDownList.map((GetWallet wallet) {
+        return DropdownMenuItem<GetWallet>(
+          value: wallet,
+          child: Text(wallet.mnemonic),
+        );
+      }).toList(),
+      onChanged: (GetWallet? newValue) {
+        setState(() {
+          _selectedWallet = newValue;
+          if (newValue != null) {
+            widget.onWalletSelected(newValue);
+          }
+        });
+      },
+      
+    );
+
+
+
+    DropDownTextField(
+            textStyle: const TextStyle(color: whiteColor),
+            textFieldDecoration: const InputDecoration(
+                hintText: ' Wallet', hintStyle: TextStyle(color: whiteColor)),
+            controller: _controller,
+            clearOption: false,
+            dropDownItemCount: 6,
+            dropDownList: widget.dropDownList,
+            onChanged: (val) {
+              setState(() {
+                // _selectedWallet = val;
+                _selectedWallet = GetWallet(mnemonic: val!.value);
+              });
+              widget.onWalletSelected(_selectedWallet!);
+              // _showSelectedWalletAlert(_selectedWallet!);
+            },
+          ),
+ */
