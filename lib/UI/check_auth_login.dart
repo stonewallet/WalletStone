@@ -17,7 +17,7 @@ class CheckAuthLogin extends StatefulWidget {
 class _CheckAuthLoginState extends State<CheckAuthLogin> {
   TextEditingController loginAuthController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -74,27 +74,41 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                 padding:
                     EdgeInsets.only(left: width * 0.15, right: width * 0.15),
                 alignment: Alignment.center,
-                child: TextField(
-                  // autofocus: true,
-                  cursorColor: Colors.blue,
-                  controller: loginAuthController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: RegularTextStyle.regular16600(whiteColor),
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      borderSide: BorderSide(color: borderColor, width: 1.0),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    autofocus: true,
+                    cursorColor: Colors.blue,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: loginAuthController,
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: RegularTextStyle.regular16600(whiteColor),
+                    decoration: InputDecoration(
+                      fillColor: fillColor,
+                      filled: true,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: borderColor, width: 1.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      errorStyle: const TextStyle(height: 0.1),
+                      errorMaxLines: 2,
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, bottom: 10),
                     ),
-                    fillColor: fillColor,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      borderSide: BorderSide(color: borderColor, width: 1.0),
-                    ),
-                    contentPadding: EdgeInsets.only(left: 20),
+                    textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Your Username';
+                      }
+                      return null;
+                    },
                   ),
-                  textInputAction: TextInputAction.next,
                 ),
               ),
             ],
@@ -141,15 +155,19 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent),
                     onPressed: () async {
-                      var response = await value.check2FAuth(
-                        name: loginAuthController.text,
-                      );
-                      if (response.message!) {
-                        print(response.message);
-                        Get.offAll(() => const TWOFactorLogin());
-                      } else {
-                        Get.offAll(() => const LoginPage());
-                        print("it is false ${response.message}");
+                      if (_formKey.currentState!.validate()) {
+                        var response = await value.check2FAuth(
+                          name: loginAuthController.text,
+                        );
+                        if (loginAuthController.text.isNotEmpty) {
+                          if (response.message!) {
+                            print(response.message);
+                            Get.offAll(() => const TWOFactorLogin());
+                          } else {
+                            Get.offAll(() => const LoginPage());
+                            print("it is false ${response.message}");
+                          }
+                        }
                       }
                     },
                     child: Text(

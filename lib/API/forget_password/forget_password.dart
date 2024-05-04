@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,22 +6,19 @@ import 'package:walletstone/API/shared_preferences.dart';
 import 'package:walletstone/Responses/travel_post_response.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 
-class ApiForSendWallet extends ChangeNotifier {
+class ApiForgetPassword extends ChangeNotifier {
   final Dio _dio = Dio();
-  Future<TravelPostResponse> sendWalletPost(
-      String name, String password, String address, double amount1) async {
+
+  Future<TravelPostResponse> forgetPassword({
+    required String userName,
+  }) async {
     try {
       if (kDebugMode) {
-        print("send wallet api hit");
+        print("Add Post api hit");
       }
       Response response = await _dio.post(
-        sendWallet,
-        data: {
-          "mnemonic": name,
-          "password": password,
-          "recipient_address": address,
-          "amount": amount1,
-        },
+        changeUserPassword,
+        data: {"username": userName},
         options: Options(
           headers: {
             "Cookie":
@@ -40,9 +36,11 @@ class ApiForSendWallet extends ChangeNotifier {
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
+
         return travelPostResponse;
       } else {
-        throw Exception("Error to Load the data");
+        throw Exception(
+            "Error: ${response.statusCode} - ${response.statusMessage}");
       }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {

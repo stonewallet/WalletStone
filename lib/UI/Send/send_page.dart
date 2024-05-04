@@ -26,7 +26,7 @@ class _SendPageState extends State<SendPage> {
   late TextEditingController addressController = TextEditingController();
   late TextEditingController passbController = TextEditingController();
   late TextEditingController amountController = TextEditingController();
-  late TextEditingController noteController = TextEditingController();
+  
   bool visibility = false;
   bool isLoading = false;
   late int selectedUserId;
@@ -331,7 +331,7 @@ class _SendPageState extends State<SendPage> {
                 child: TextField(
                   autofocus: true,
                   cursorColor: cursorColor,
-                  controller: noteController,
+                  controller: amountController,
                   textAlign: TextAlign.start,
                   textAlignVertical: TextAlignVertical.center,
                   style: RegularTextStyle.regular16600(whiteColor),
@@ -400,11 +400,12 @@ class _SendPageState extends State<SendPage> {
             setState(() {
               isLoading = true;
             });
+            //  String formated = t.replace(",", ".");
             var response = await value.sendWalletPost(
               selectedUserName,
               passbController.text,
               addressController.text,
-              amountController.text,
+              double.parse(amountController.text),
             );
             if (response.message != null) {
               setState(() {

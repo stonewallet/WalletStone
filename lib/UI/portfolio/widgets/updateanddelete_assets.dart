@@ -40,12 +40,12 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
   TextEditingController assestAmountController = TextEditingController();
   List<TextEditingController> expenseController = [];
 
-  final controller = Get.find<PortfolioController>();
-  final cashcontroller = Get.find<PortfolioController3>();
-  final assetscontroller = Get.find<PortfolioController2>();
+  final controller = Get.put(PortfolioController());
+  final cashcontroller = Get.put(PortfolioController3());
+  final assetscontroller = Get.put(PortfolioController2());
 
-  final loancontroller = Get.find<PortfolioControllerLoan>();
-  final tripcontroller = Get.find<PortfolioControllerTrip>();
+  final loancontroller = Get.put(PortfolioControllerLoan());
+  final tripcontroller = Get.put(PortfolioControllerTrip());
 
   @override
   void initState() {

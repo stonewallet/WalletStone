@@ -284,14 +284,15 @@ class ApiProvider {
     }
   }
 
-  Future<TravelPostResponse> processRegister(String name, String pass) async {
+  Future<TravelPostResponse> processRegister(
+      String name, String email, String pass) async {
     try {
       if (kDebugMode) {
         print("Register api hit");
       }
       Response response = await _dio.post(
         travelRegisterUrl,
-        data: {"username": name, "password": pass},
+        data: {"username": name, "email": email, "password": pass},
       );
       if (kDebugMode) {
         print("travelPost ${response.data}");

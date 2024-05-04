@@ -9,6 +9,7 @@ import 'package:walletstone/API/Auth/auth_otp_login.dart';
 import 'package:walletstone/API/change_password/change_user_password.dart';
 import 'package:walletstone/API/contact/post_contact.dart';
 import 'package:walletstone/API/createNotification/createnotification.dart';
+import 'package:walletstone/API/forget_password/forget_password.dart';
 import 'package:walletstone/API/logout/logout.dart';
 import 'package:walletstone/API/receive_address/receive_address.dart';
 import 'package:walletstone/API/restore/restore_wallet.dart';
@@ -177,6 +178,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (context) => ApiPublicAddress(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ApiForgetPassword(),
           )
         ],
         child: GetMaterialApp(

@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/api_provider.dart';
 import 'package:walletstone/Responses/travel_post_response.dart';
 import 'package:walletstone/UI/Constants/strings.dart';
 import 'package:walletstone/UI/Home/home_page.dart';
+import 'package:walletstone/widgets/forget_password.dart';
 
 import 'Constants/colors.dart';
 import 'Constants/text_styles.dart';
@@ -113,6 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 10,
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -172,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             final SharedPreferences sharedPref =
                                 await SharedPreferences.getInstance();
-                          
+
                             if (kDebugMode) {
                               print(userNameController.text);
                               print(passwordController.text);
@@ -235,12 +241,36 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 10,
                     ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => const ForgetPassword());
+                      },
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Forget Password ?',
+                            style: RegularTextStyle.regular15700(whiteColor),
+                            children: const <TextSpan>[
+                              // TextSpan(
+                              //     text: 'bold',
+                              //     style: TextStyle(
+                              //         fontWeight: FontWeight.bold,
+                              //         color: blackColor)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               ),
               Positioned(
-                  top: height * 0.14,
-                  left: width * 0.55,
+                  top: height * 0.12,
+                  left: width * 0.15,
                   child: Image.asset(
                     "assets/Icons/eth.png",
                     height: 25,
@@ -248,7 +278,7 @@ class _LoginPageState extends State<LoginPage> {
                   )),
               Positioned(
                   top: height * 0.05,
-                  left: width * 0.3,
+                  left: width * 0.4,
                   child: Image.asset(
                     "assets/Icons/btc.png",
                     height: 40,

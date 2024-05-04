@@ -53,7 +53,7 @@ class _CreateNewWalletRegisterPageState
                 child: Column(
                   children: [
                     SizedBox(
-                      height: height * 0.2,
+                      height: height * 0.1,
                     ),
                     Image.asset(
                       "assets/images/welcome_logo.png",
@@ -87,6 +87,52 @@ class _CreateNewWalletRegisterPageState
                             // autofocus: true,
                             cursorColor: Colors.blue,
                             controller: userNameController,
+                            textAlign: TextAlign.start,
+                            textAlignVertical: TextAlignVertical.center,
+                            style: RegularTextStyle.regular16600(whiteColor),
+                            decoration: const InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                borderSide:
+                                    BorderSide(color: borderColor, width: 1.0),
+                              ),
+                              fillColor: fillColor,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                borderSide:
+                                    BorderSide(color: borderColor, width: 1.0),
+                              ),
+                              contentPadding: EdgeInsets.only(left: 20),
+                            ),
+                            textInputAction: TextInputAction.next,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Enter Email",
+                          style: RegularTextStyle.regular16600(whiteColor),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          height: 45,
+                          padding: EdgeInsets.only(
+                              left: width * 0.15, right: width * 0.15),
+                          alignment: Alignment.center,
+                          child: TextField(
+                            // autofocus: true,
+                            cursorColor: Colors.blue,
+                            controller: emailController,
                             textAlign: TextAlign.start,
                             textAlignVertical: TextAlignVertical.center,
                             style: RegularTextStyle.regular16600(whiteColor),
@@ -181,12 +227,14 @@ class _CreateNewWalletRegisterPageState
                             }
                             var response = await ApiProvider().processRegister(
                               userNameController.text,
+                              emailController.text,
                               passwordController.text,
                             );
 
                             if (response.message ==
                                 "User registered successfully") {
                               userNameController.clear();
+                              emailController.clear();
                               passwordController.clear();
                               setState(() {
                                 isLoading = false;
@@ -255,8 +303,8 @@ class _CreateNewWalletRegisterPageState
                 ),
               ),
               Positioned(
-                  top: height * 0.14,
-                  left: width * 0.55,
+                  top: height * 0.1,
+                  left: width * 0.12,
                   child: Image.asset(
                     "assets/Icons/eth.png",
                     height: 25,
