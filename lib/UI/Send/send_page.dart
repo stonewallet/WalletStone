@@ -26,11 +26,11 @@ class _SendPageState extends State<SendPage> {
   late TextEditingController addressController = TextEditingController();
   late TextEditingController passbController = TextEditingController();
   late TextEditingController amountController = TextEditingController();
-  
+  final _formKey = GlobalKey<FormState>();
   bool visibility = false;
   bool isLoading = false;
   late int selectedUserId;
-  late String selectedUserName;
+  String selectedUserName = '';
   @override
   void initState() {
     super.initState();
@@ -142,298 +142,333 @@ class _SendPageState extends State<SendPage> {
             image: AssetImage("assets/background_new_wallet.png"),
             fit: BoxFit.fill,
           )),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
-                height: 45,
-                width: width * 0.95,
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                alignment: Alignment.center,
-                child: SearchField(
-                  controller: searchController,
-                  suggestionDirection: SuggestionDirection.flex,
-                  onSearchTextChanged: (query) {
-                    final filter = searchList
-                        .where((element) => element.mnemonic
-                            .toLowerCase()
-                            .contains(query.toLowerCase()))
-                        .toList();
-                    return filter
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Container(
+                  height: 45,
+                  width: width * 0.95,
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  alignment: Alignment.center,
+                  child: SearchField(
+                    controller: searchController,
+                    suggestionDirection: SuggestionDirection.flex,
+                    onSearchTextChanged: (query) {
+                      final filter = searchList
+                          .where((element) => element.mnemonic
+                              .toLowerCase()
+                              .contains(query.toLowerCase()))
+                          .toList();
+                      return filter
+                          .map((e) => SearchFieldListItem<String>(e.mnemonic,
+                              child: searchChild(e.mnemonic)))
+                          .toList();
+                    },
+                    onTap: () {},
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: const Key('searchfield'),
+                    itemHeight: 50,
+                    scrollbarDecoration: ScrollbarDecoration(),
+                    onTapOutside: (x) {
+                      focus.unfocus();
+                    },
+                    suggestionStyle: RegularTextStyle.regular16600(whiteColor),
+                    searchStyle: RegularTextStyle.regular16600(whiteColor),
+                    searchInputDecoration: InputDecoration(
+                      hintText: "Wallet Name",
+                      hintStyle: RegularTextStyle.regular16600(cursorColor),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                    ),
+                    suggestionsDecoration: SuggestionDecoration(
+                      color: blackColor,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    suggestions: searchList
                         .map((e) => SearchFieldListItem<String>(e.mnemonic,
                             child: searchChild(e.mnemonic)))
-                        .toList();
-                  },
-                  onTap: () {},
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: const Key('searchfield'),
-                  itemHeight: 50,
-                  scrollbarDecoration: ScrollbarDecoration(),
-                  onTapOutside: (x) {
-                    focus.unfocus();
-                  },
-                  suggestionStyle: RegularTextStyle.regular16600(whiteColor),
-                  searchStyle: RegularTextStyle.regular16600(whiteColor),
-                  searchInputDecoration: InputDecoration(
-                    hintText: "Wallet Name",
-                    hintStyle: RegularTextStyle.regular16600(cursorColor),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
-                  ),
-                  suggestionsDecoration: SuggestionDecoration(
-                    color: blackColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  suggestions: searchList
-                      .map((e) => SearchFieldListItem<String>(e.mnemonic,
-                          child: searchChild(e.mnemonic)))
-                      .toList(),
-                  focusNode: focus,
-                  suggestionState: Suggestion.expand,
-                  onSuggestionTap: (SearchFieldListItem<String>? x) {
-                    if (x != null) {
-                      final suggestionText = x.searchKey;
-                      searchController.text = suggestionText;
-                      selectedUserName = suggestionText;
-                      selectedUserId = searchList
-                          .firstWhere(
-                              (element) => element.mnemonic == suggestionText)
-                          .id;
-                      if (kDebugMode) {
-                        print(
-                            "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                        .toList(),
+                    focusNode: focus,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Wallet Name';
                       }
-                    }
-                    focus.unfocus();
-                  },
-                ),
-              ),
-              // Container(
-              //   height: 45,
-              //   width: width * 0.95,
-              //   padding: const EdgeInsets.only(left: 15, right: 15),
-              //   alignment: Alignment.center,
-              //   child: TextField(
-              //     autofocus: true,
-              //     cursorColor: cursorColor,
-              //     controller: walletNameController,
-              //     textAlign: TextAlign.start,
-              //     textAlignVertical: TextAlignVertical.center,
-              //     style: RegularTextStyle.regular16600(whiteColor),
-              //     decoration: InputDecoration(
-              //       hintText: "Wallet Name",
-              //       hintStyle: RegularTextStyle.regular16600(cursorColor),
-              //       enabledBorder: const UnderlineInputBorder(
-              //         borderSide: BorderSide(color: cursorColor),
-              //       ),
-              //       focusedBorder: const UnderlineInputBorder(
-              //         borderSide: BorderSide(color: cursorColor),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                width: width * 0.95,
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                alignment: Alignment.center,
-                child: TextField(
-                  autofocus: true,
-                  cursorColor: cursorColor,
-                  controller: addressController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: RegularTextStyle.regular16600(whiteColor),
-                  decoration: InputDecoration(
-                    hintText: "Address",
-                    hintStyle: RegularTextStyle.regular16600(cursorColor),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
+                      return null;
+                    },
+                    suggestionState: Suggestion.expand,
+                    onSuggestionTap: (SearchFieldListItem<String>? x) {
+                      if (x != null) {
+                        final suggestionText = x.searchKey;
+                        searchController.text = suggestionText;
+                        selectedUserName = suggestionText;
+                        selectedUserId = searchList
+                            .firstWhere(
+                                (element) => element.mnemonic == suggestionText)
+                            .id;
+                        if (kDebugMode) {
+                          print(
+                              "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                        }
+                      }
+                      focus.unfocus();
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                width: width * 0.95,
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                alignment: Alignment.center,
-                child: TextField(
-                  autofocus: true,
-                  cursorColor: cursorColor,
-                  controller: passbController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: RegularTextStyle.regular16600(whiteColor),
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    hintStyle: RegularTextStyle.regular16600(cursorColor),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
+                // Container(
+                //   height: 45,
+                //   width: width * 0.95,
+                //   padding: const EdgeInsets.only(left: 15, right: 15),
+                //   alignment: Alignment.center,
+                //   child: TextField(
+                //     autofocus: true,
+                //     cursorColor: cursorColor,
+                //     controller: walletNameController,
+                //     textAlign: TextAlign.start,
+                //     textAlignVertical: TextAlignVertical.center,
+                //     style: RegularTextStyle.regular16600(whiteColor),
+                //     decoration: InputDecoration(
+                //       hintText: "Wallet Name",
+                //       hintStyle: RegularTextStyle.regular16600(cursorColor),
+                //       enabledBorder: const UnderlineInputBorder(
+                //         borderSide: BorderSide(color: cursorColor),
+                //       ),
+                //       focusedBorder: const UnderlineInputBorder(
+                //         borderSide: BorderSide(color: cursorColor),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 45,
+                  width: width * 0.95,
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  alignment: Alignment.center,
+                  child: TextFormField(
+                    autofocus: true,
+                    cursorColor: cursorColor,
+                    controller: addressController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: RegularTextStyle.regular16600(whiteColor),
+                    decoration: InputDecoration(
+                      hintText: "Address",
+                      hintStyle: RegularTextStyle.regular16600(cursorColor),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Address';
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // Container(
-              //   height: 45,
-              //   width: width * 0.95,
-              //   padding: const EdgeInsets.only(left: 15, right: 15),
-              //   alignment: Alignment.center,
-              //   child: TextField(
-              //     autofocus: true,
-              //     cursorColor: cursorColor,
-              //     controller: usdController,
-              //     textAlign: TextAlign.start,
-              //     textAlignVertical: TextAlignVertical.center,
-              //     style: RegularTextStyle.regular16600(whiteColor),
-              //     decoration: InputDecoration(
-              //       hintText: "USD",
-              //       hintStyle: RegularTextStyle.regular16600(cursorColor),
-              //       enabledBorder: const UnderlineInputBorder(
-              //         borderSide: BorderSide(color: cursorColor),
-              //       ),
-              //       focusedBorder: const UnderlineInputBorder(
-              //         borderSide: BorderSide(color: cursorColor),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                width: width * 0.95,
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                alignment: Alignment.center,
-                child: TextField(
-                  autofocus: true,
-                  cursorColor: cursorColor,
-                  controller: amountController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: RegularTextStyle.regular16600(whiteColor),
-                  decoration: InputDecoration(
-                    hintText: "Amount",
-                    hintStyle: RegularTextStyle.regular16600(cursorColor),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 45,
+                  width: width * 0.95,
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  alignment: Alignment.center,
+                  child: TextFormField(
+                    autofocus: true,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    cursorColor: cursorColor,
+                    controller: passbController,
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: RegularTextStyle.regular16600(whiteColor),
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      hintStyle: RegularTextStyle.regular16600(cursorColor),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: cursorColor),
-                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Your Password';
+                      }
+                      return null;
+                    },
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
-                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Estimated fee:",
-                        style: RegularTextStyle.regular16600(whiteColor)),
-                    Row(
-                      children: [
-                        Text("2 % XMR",
-                            style: RegularTextStyle.regular16600(whiteColor)),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                      ],
-                    )
-                  ],
+                const SizedBox(
+                  height: 15,
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 25),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text("Coin control (optional)",
-              //           style: RegularTextStyle.regular16600(whiteColor)),
-              //       const Icon(
-              //         Icons.arrow_forward_ios,
-              //         size: 15,
-              //         color: whiteColor,
-              //       )
-              //     ],
-              //   ),
-              // ),
-            ],
+                // Container(
+                //   height: 45,
+                //   width: width * 0.95,
+                //   padding: const EdgeInsets.only(left: 15, right: 15),
+                //   alignment: Alignment.center,
+                //   child: TextField(
+                //     autofocus: true,
+                //     cursorColor: cursorColor,
+                //     controller: usdController,
+                //     textAlign: TextAlign.start,
+                //     textAlignVertical: TextAlignVertical.center,
+                //     style: RegularTextStyle.regular16600(whiteColor),
+                //     decoration: InputDecoration(
+                //       hintText: "USD",
+                //       hintStyle: RegularTextStyle.regular16600(cursorColor),
+                //       enabledBorder: const UnderlineInputBorder(
+                //         borderSide: BorderSide(color: cursorColor),
+                //       ),
+                //       focusedBorder: const UnderlineInputBorder(
+                //         borderSide: BorderSide(color: cursorColor),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 45,
+                  width: width * 0.95,
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  alignment: Alignment.center,
+                  child: TextFormField(
+                    autofocus: true,
+                    cursorColor: cursorColor,
+                    controller: amountController,
+                    textAlign: TextAlign.start,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: RegularTextStyle.regular16600(whiteColor),
+                    decoration: InputDecoration(
+                      hintText: "Amount",
+                      hintStyle: RegularTextStyle.regular16600(cursorColor),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: cursorColor),
+                      ),
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Your Amount';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Estimated fee:",
+                          style: RegularTextStyle.regular16600(whiteColor)),
+                      Row(
+                        children: [
+                          Text("2 % XMR",
+                              style: RegularTextStyle.regular16600(whiteColor)),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text("Coin control (optional)",
+                //           style: RegularTextStyle.regular16600(whiteColor)),
+                //       const Icon(
+                //         Icons.arrow_forward_ios,
+                //         size: 15,
+                //         color: whiteColor,
+                //       )
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: Consumer<ApiForSendWallet>(
         builder: (context, value, child) => InkWell(
           onTap: () async {
-            setState(() {
-              isLoading = true;
-            });
             //  String formated = t.replace(",", ".");
-            var response = await value.sendWalletPost(
-              selectedUserName,
-              passbController.text,
-              addressController.text,
-              double.parse(amountController.text),
-            );
-            if (response.message != null) {
+            if (_formKey.currentState!.validate()) {
               setState(() {
-                isLoading = false;
+                isLoading = true;
               });
-              Get.back();
-              Get.snackbar(
-                response.message!,
-                '',
-                backgroundColor: newGradient6,
-                colorText: whiteColor,
-                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                duration: const Duration(milliseconds: 4000),
-                snackPosition: SnackPosition.BOTTOM,
+              var response = await value.sendWalletPost(
+                selectedUserName,
+                passbController.text,
+                addressController.text,
+                double.parse(amountController.text),
               );
-            } else {
-              var snackBar =
-                  const SnackBar(content: Text("Something gone wrong"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              print(response);
+              if (response.message != null) {
+                setState(() {
+                  isLoading = false;
+                });
+                Get.back();
+                Get.snackbar(
+                  response.message!,
+                  '',
+                  backgroundColor: newGradient6,
+                  colorText: whiteColor,
+                  padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                  duration: const Duration(milliseconds: 4000),
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              } else {
+                var snackBar =
+                    const SnackBar(content: Text("Something gone wrong"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-              // if (response.message != null) {
+                // if (response.message != null) {
 
-              //   // var snackBar = SnackBar(
-              //   //     content: Text(
-              //   //         "Assets created successfully"));
-              //   // ScaffoldMessenger.of(context)
-              //   //     .showSnackBar(snackBar);
-              // } else {
+                //   // var snackBar = SnackBar(
+                //   //     content: Text(
+                //   //         "Assets created successfully"));
+                //   // ScaffoldMessenger.of(context)
+                //   //     .showSnackBar(snackBar);
+                // } else {
+              }
             }
           },
           child: Container(

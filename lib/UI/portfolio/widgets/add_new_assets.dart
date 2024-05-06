@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchfield/searchfield.dart';
@@ -38,7 +39,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
 
   final cashcontroller = Get.put(PortfolioController3());
   List<dynamic> searchList = [];
-
+  final _formKey = GlobalKey<FormState>();
   final focus = FocusNode();
 
   bool isSearchidle = true;
@@ -317,55 +318,78 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Assets Amount",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextField(
-                                      // autofocus: true,
-                                      cursorColor: Colors.blue,
-                                      controller: assestAmountController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: const InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        contentPadding:
-                                            EdgeInsets.only(left: 20),
-                                      ),
-                                      textInputAction: TextInputAction.next,
+                            Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Assets Amount",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      height: 45,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        autofocus: true,
+                                        cursorColor: Colors.blue,
+                                        controller: assestAmountController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                                color: Colors.red, width: 1.0),
+                                          ),
+                                          errorStyle:
+                                              const TextStyle(height: 0.1),
+                                          errorMaxLines: 2,
+                                          contentPadding: const EdgeInsets.only(
+                                              left: 10, bottom: 10),
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.number,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please Enter Amount';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
 
@@ -434,67 +458,69 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                       //   "sub_cat": widget._portfolio,
                                       // });
 
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-
-                                      // Call the API service to add the asset
-                                      // await ApiServiceForADDAssets().addAsset(
-                                      //   expensesList
-                                      // );
-                                      print(widget._portfolio);
-                                      final amount = double.parse(
-                                          assestAmountController.text);
-                                      final lastamount =
-                                          amount.toStringAsFixed(3);
-                                      var response =
-                                          await ApiServiceForADDAssets()
-                                              .addAsset(
-                                        assestNameController.text,
-                                        double.parse(lastamount),
-                                        widget._portfolio,
-                                      );
-
-                                      controller.update();
-                                      assetscontroller.update();
-                                      cashcontroller.update();
-                                      // Handle each emitted response here
-                                      if (response.message != null) {
+                                      if (_formKey.currentState!.validate()) {
                                         setState(() {
-                                          isLoading = false;
+                                          isLoading = true;
                                         });
-                                        Get.back();
-                                        Get.snackbar(
-                                          "Assets created successfully",
-                                          '',
-                                          backgroundColor: newGradient6,
-                                          colorText: whiteColor,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 5, 0, 0),
-                                          duration: const Duration(
-                                              milliseconds: 4000),
-                                          snackPosition: SnackPosition.BOTTOM,
+
+                                        // Call the API service to add the asset
+                                        // await ApiServiceForADDAssets().addAsset(
+                                        //   expensesList
+                                        // );
+                                        print(widget._portfolio);
+                                        final amount = double.parse(
+                                            assestAmountController.text);
+                                        final lastamount =
+                                            amount.toStringAsFixed(3);
+                                        var response =
+                                            await ApiServiceForADDAssets()
+                                                .addAsset(
+                                          assestNameController.text,
+                                          double.parse(lastamount),
+                                          widget._portfolio,
                                         );
-                                      } else {
-                                        // Handle errors that occur during stream processing
 
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        var snackBar = const SnackBar(
-                                            content:
-                                                Text("Something gone wrong"));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
+                                        controller.update();
+                                        assetscontroller.update();
+                                        cashcontroller.update();
+                                        // Handle each emitted response here
+                                        if (response.message != null) {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          Get.back();
+                                          Get.snackbar(
+                                            response.message!,
+                                            '',
+                                            backgroundColor: newGradient6,
+                                            colorText: whiteColor,
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 5, 0, 0),
+                                            duration: const Duration(
+                                                milliseconds: 4000),
+                                            snackPosition: SnackPosition.BOTTOM,
+                                          );
+                                        } else {
+                                          // Handle errors that occur during stream processing
 
-                                        // if (response.message != null) {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          var snackBar = const SnackBar(
+                                              content:
+                                                  Text("Something gone wrong"));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
 
-                                        //   // var snackBar = SnackBar(
-                                        //   //     content: Text(
-                                        //   //         "Assets created successfully"));
-                                        //   // ScaffoldMessenger.of(context)
-                                        //   //     .showSnackBar(snackBar);
-                                        // } else {
+                                          // if (response.message != null) {
+
+                                          //   // var snackBar = SnackBar(
+                                          //   //     content: Text(
+                                          //   //         "Assets created successfully"));
+                                          //   // ScaffoldMessenger.of(context)
+                                          //   //     .showSnackBar(snackBar);
+                                          // } else {
+                                        }
                                       }
                                     },
                                     child: isLoading == true

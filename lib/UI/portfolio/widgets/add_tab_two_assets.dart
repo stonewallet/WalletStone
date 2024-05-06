@@ -40,6 +40,7 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
     super.initState();
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -109,278 +110,316 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                         SizedBox(
                           height: height * 0.05,
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // const SizedBox(height: 30,),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // const SizedBox(height: 30,),
 
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Assets Name",
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Assets Name",
                                       style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextField(
-                                      // autofocus: true,
-                                      cursorColor: Colors.blue,
-                                      controller: assestNameController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: const InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        contentPadding:
-                                            EdgeInsets.only(left: 20),
-                                      ),
-                                      textInputAction: TextInputAction.next,
+                                          Colors.white),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Assets Amount",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextField(
-                                      // autofocus: true,
-                                      cursorColor: Colors.blue,
-                                      controller: assestAmountController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: const InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        contentPadding:
-                                            EdgeInsets.only(left: 20),
-                                      ),
-                                      textInputAction: TextInputAction.next,
+                                    const SizedBox(
+                                      height: 6,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      height: 45,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: assestNameController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: const InputDecoration(
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsets.only(left: 20),
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please Enter Name';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-
-                            const SizedBox(
-                              height: 20,
-                            ),
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: SizedBox(
-                                height: 45,
-                                width: width * 0.8,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColor2,
-                                        surfaceTintColor: blackColor,
-                                        shadowColor: whiteColor,
-                                        elevation: 4),
-                                    onPressed: () async {
-                                      //  List <Map<String, dynamic>> productList = [];
-
-                                      //                                     List<Map<String, dynamic>> expensesList =
-                                      //                                         [];
-
-                                      // // Add assets from assetsportfolio
-                                      // expensesList.addAll(widget.assetsportfolio.map((asset) => {
-                                      //   "coin_name": asset.coinName,
-                                      //   "quantity": asset.quantity,
-                                      //   "sub_cat": asset.subCat,
-                                      // }));
-
-                                      // // Add assets from cashportfolio
-                                      // expensesList.addAll(widget.cashPortfolio.map((asset) => {
-                                      //   "coin_name": asset.coinName,
-                                      //   "quantity": asset.quantity,
-                                      //   "sub_cat": asset.subCat,
-                                      // }));
-
-                                      // // Add assets from portfolio
-                                      // expensesList.addAll(widget.portfolio.map((asset) => {
-                                      //   "coin_name": asset.coinName,
-                                      //   "quantity": asset.quantity,
-                                      //   "sub_cat": asset.subCat,
-                                      // }));
-                                      // for (int i = 0;
-                                      //     i <=
-                                      //         widget.assetsportfolio.length - 1;
-                                      //     i++) {
-                                      //   expensesList.add({
-                                      //     "coin_name": widget
-                                      //         .assetsportfolio[i].coinName,
-                                      //     "quantity": widget
-                                      //         .assetsportfolio[i].quantity,
-                                      //     "sub_cat":
-                                      //         widget.assetsportfolio[i].subCat,
-                                      //   });
-                                      // }
-                                      // for (int i = 0;
-                                      //     i <= widget.cashPortfolio.length - 1;
-                                      //     i++) {
-                                      //   expensesList.add({
-                                      //     "coin_name":
-                                      //         widget.cashPortfolio[i].coinName,
-                                      //     "quantity":
-                                      //         widget.cashPortfolio[i].quantity,
-                                      //     "sub_cat":
-                                      //         widget.cashPortfolio[i].subCat,
-                                      //   });
-                                      // }
-                                      // for (int i = 0;
-                                      //     i <= widget.portfolio.length - 1;
-                                      //     i++) {
-                                      //   expensesList.add({
-                                      //     "coin_name":
-                                      //         widget.portfolio[i].coinName,
-                                      //     "quantity":
-                                      //         widget.portfolio[i].quantity,
-                                      //     "sub_cat": widget.portfolio[i].subCat,
-                                      //   });
-                                      // }
-
-                                      // expensesList.add({
-                                      //   "coin_name": assestNameController.text,
-                                      //   "quantity": double.parse(
-                                      //       assestAmountController.text),
-                                      //   "sub_cat": widget._portfolio,
-                                      // });
-
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-
-                                      // Call the API service to add the asset
-                                      // await ApiServiceForADDAssets().addAsset(
-                                      //   expensesList
-                                      // );
-                                      if (kDebugMode) {
-                                        print(widget._portfolio);
-                                      }
-                                      ApiService().removeCachedData("Get_Cash");
-                                      ApiService().removeCachedData("Get_Loan");
-                                      ApiService()
-                                          .removeCachedData("Get_Assets");
-                                      var response =
-                                          await ApiServiceForADDAssets()
-                                              .addAsset(
-                                        assestNameController.text,
-                                        double.parse(
-                                            assestAmountController.text),
-                                        widget._portfolio,
-                                      );
-                                      controller.update();
-                                      cryptocontroller.update();
-                                      cashcontroller.update();
-                                      // Handle each emitted response here
-                                      if (response.message != null) {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        Get.back();
-                                        Get.snackbar(
-                                          "Assets created successfully",
-                                          '',
-                                          backgroundColor: newGradient6,
-                                          colorText: whiteColor,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 5, 0, 0),
-                                          duration: const Duration(
-                                              milliseconds: 4000),
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
-                                      } else {
-                                        // Handle errors that occur during stream processing
-
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        var snackBar = const SnackBar(
-                                            content:
-                                                Text("Something gone wrong"));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-
-                                        // if (response.message != null) {
-
-                                        //   // var snackBar = SnackBar(
-                                        //   //     content: Text(
-                                        //   //         "Assets created successfully"));
-                                        //   // ScaffoldMessenger.of(context)
-                                        //   //     .showSnackBar(snackBar);
-                                        // } else {
-                                      }
-                                    },
-                                    child: isLoading == true
-                                        ? const CircularProgressIndicator(
-                                            color: Colors.white,
-                                          )
-                                        : Text("Add Assets",
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                RegularTextStyle.regular14600(
-                                                    whiteColor))),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Assets Amount",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 45,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: assestAmountController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30)),
+                                            borderSide: BorderSide(
+                                                color: borderColor, width: 1.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                                color: Colors.red, width: 1.0),
+                                          ),
+                                          errorStyle:
+                                              const TextStyle(height: 0.1),
+                                          errorMaxLines: 2,
+                                          contentPadding: const EdgeInsets.only(
+                                              left: 10, bottom: 10),
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please Enter Amount';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          ],
+
+                              const SizedBox(
+                                height: 20,
+                              ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: SizedBox(
+                                  height: 45,
+                                  width: width * 0.8,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: buttonColor2,
+                                          surfaceTintColor: blackColor,
+                                          shadowColor: whiteColor,
+                                          elevation: 4),
+                                      onPressed: () async {
+                                        //  List <Map<String, dynamic>> productList = [];
+
+                                        //                                     List<Map<String, dynamic>> expensesList =
+                                        //                                         [];
+
+                                        // // Add assets from assetsportfolio
+                                        // expensesList.addAll(widget.assetsportfolio.map((asset) => {
+                                        //   "coin_name": asset.coinName,
+                                        //   "quantity": asset.quantity,
+                                        //   "sub_cat": asset.subCat,
+                                        // }));
+
+                                        // // Add assets from cashportfolio
+                                        // expensesList.addAll(widget.cashPortfolio.map((asset) => {
+                                        //   "coin_name": asset.coinName,
+                                        //   "quantity": asset.quantity,
+                                        //   "sub_cat": asset.subCat,
+                                        // }));
+
+                                        // // Add assets from portfolio
+                                        // expensesList.addAll(widget.portfolio.map((asset) => {
+                                        //   "coin_name": asset.coinName,
+                                        //   "quantity": asset.quantity,
+                                        //   "sub_cat": asset.subCat,
+                                        // }));
+                                        // for (int i = 0;
+                                        //     i <=
+                                        //         widget.assetsportfolio.length - 1;
+                                        //     i++) {
+                                        //   expensesList.add({
+                                        //     "coin_name": widget
+                                        //         .assetsportfolio[i].coinName,
+                                        //     "quantity": widget
+                                        //         .assetsportfolio[i].quantity,
+                                        //     "sub_cat":
+                                        //         widget.assetsportfolio[i].subCat,
+                                        //   });
+                                        // }
+                                        // for (int i = 0;
+                                        //     i <= widget.cashPortfolio.length - 1;
+                                        //     i++) {
+                                        //   expensesList.add({
+                                        //     "coin_name":
+                                        //         widget.cashPortfolio[i].coinName,
+                                        //     "quantity":
+                                        //         widget.cashPortfolio[i].quantity,
+                                        //     "sub_cat":
+                                        //         widget.cashPortfolio[i].subCat,
+                                        //   });
+                                        // }
+                                        // for (int i = 0;
+                                        //     i <= widget.portfolio.length - 1;
+                                        //     i++) {
+                                        //   expensesList.add({
+                                        //     "coin_name":
+                                        //         widget.portfolio[i].coinName,
+                                        //     "quantity":
+                                        //         widget.portfolio[i].quantity,
+                                        //     "sub_cat": widget.portfolio[i].subCat,
+                                        //   });
+                                        // }
+
+                                        // expensesList.add({
+                                        //   "coin_name": assestNameController.text,
+                                        //   "quantity": double.parse(
+                                        //       assestAmountController.text),
+                                        //   "sub_cat": widget._portfolio,
+                                        // });
+                                        if (_formKey.currentState!.validate()) {
+                                          setState(() {
+                                            isLoading = true;
+                                          });
+
+                                          // Call the API service to add the asset
+                                          // await ApiServiceForADDAssets().addAsset(
+                                          //   expensesList
+                                          // );
+                                          if (kDebugMode) {
+                                            print(widget._portfolio);
+                                          }
+                                          ApiService()
+                                              .removeCachedData("Get_Cash");
+                                          ApiService()
+                                              .removeCachedData("Get_Loan");
+                                          ApiService()
+                                              .removeCachedData("Get_Assets");
+                                          var response =
+                                              await ApiServiceForADDAssets()
+                                                  .addAsset(
+                                            assestNameController.text,
+                                            double.parse(
+                                                assestAmountController.text),
+                                            widget._portfolio,
+                                          );
+                                          controller.update();
+                                          cryptocontroller.update();
+                                          cashcontroller.update();
+                                          // Handle each emitted response here
+                                          if (response.message != null) {
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                            Get.back();
+                                            Get.snackbar(
+                                              response.message!,
+                                              '',
+                                              backgroundColor: newGradient6,
+                                              colorText: whiteColor,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 5, 0, 0),
+                                              duration: const Duration(
+                                                  milliseconds: 4000),
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                            );
+                                          } else {
+                                            // Handle errors that occur during stream processing
+
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                            var snackBar = const SnackBar(
+                                                content: Text(
+                                                    "Something gone wrong"));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+
+                                            // if (response.message != null) {
+
+                                            //   // var snackBar = SnackBar(
+                                            //   //     content: Text(
+                                            //   //         "Assets created successfully"));
+                                            //   // ScaffoldMessenger.of(context)
+                                            //   //     .showSnackBar(snackBar);
+                                            // } else {
+                                          }
+                                        }
+                                      },
+                                      child: isLoading == true
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                          : Text("Add Assets",
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  RegularTextStyle.regular14600(
+                                                      whiteColor))),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),

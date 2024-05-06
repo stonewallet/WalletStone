@@ -103,7 +103,11 @@ class ApiServiceForADDAssets {
       return travelPostResponse;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
-        // Handle DioError related to bad response
+        if (e.response!.statusCode == 400) {
+          TravelPostResponse travelPostResponse =
+              TravelPostResponse.fromJson(json.decode(e.response.toString()));
+          return travelPostResponse;
+        }
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||

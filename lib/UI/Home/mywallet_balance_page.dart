@@ -12,7 +12,6 @@ import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/homeCoin/home_coin_model.dart';
 import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
-import 'package:walletstone/widgets/customspinkit_widget.dart';
 import 'package:walletstone/widgets/dropdown._widget.dart';
 import '../../API/shared_preferences.dart';
 import '../Constants/colors.dart';
@@ -194,12 +193,12 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Consumer<ApiWalletBalance>(
-                builder: (context, value, child) => Text(
-                    'Balance :${value.value}',
-                    textAlign: TextAlign.center,
-                    style: RegularTextStyle.regular15600(whiteColor)),
-              ),
+              // Consumer<ApiWalletBalance>(
+              //   builder: (context, value, child) => Text(
+              //       'Balance :${value.value}',
+              //       textAlign: TextAlign.center,
+              //       style: RegularTextStyle.regular15600(whiteColor)),
+              // ),
               SizedBox(
                 height: height * 0.04,
               ),
@@ -697,8 +696,13 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                         if (kDebugMode) {
                           print('Entered data: ${_textController.text}');
                         }
-                        var response = await value.getPublicAddress(
-                            mnemonic: _textController.text);
+                        final String text = _textController.text.trim();
+                        var response =
+                            await value.getPublicAddress(mnemonic: text);
+                        // var snackBar = SnackBar(content: Text(response!));
+                        // if (context.mounted) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        // }
                         if (response != null) {
                           _showAlertBox(response);
                           _textController.clear();
@@ -740,8 +744,8 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
         return StatefulBuilder(
           builder: (context, setState) {
             return CupertinoAlertDialog(
-              title: const Text("Selected Wallet"),
-              content: Text("Your Response: $response"),
+              title: const Text("Public Address"),
+              content: Text(response),
               actions: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -758,7 +762,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                         copyFile(response);
                         Get.close(2);
                       },
-                      child:  const Text("Copy"),
+                      child: const Text("Copy"),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -768,11 +772,10 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                         shape: const BeveledRectangleBorder(),
                         elevation: 4,
                       ),
-                      onPressed: 
-                         () {
-                           Get.close(2);
-                         },
-                      child:  const Text("OK"),
+                      onPressed: () {
+                        Get.close(2);
+                      },
+                      child: const Text("OK"),
                     ),
                   ],
                 ),

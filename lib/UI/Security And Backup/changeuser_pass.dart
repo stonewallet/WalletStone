@@ -19,6 +19,7 @@ class _BackupPageState extends State<BackupPage> {
 
   TextEditingController conifirmPasswordController = TextEditingController();
   bool button = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -61,95 +62,119 @@ class _BackupPageState extends State<BackupPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height * 0.01,
-            ),
-            // Text("Change password",
-            //     style: LargeTextStyle.large20700(whiteColor)),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 45,
-              width: width * 0.95,
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              alignment: Alignment.center,
-              child: TextField(
-                autofocus: true,
-                cursorColor: cursorColor,
-                controller: oldPasswordController,
-                textAlign: TextAlign.start,
-                textAlignVertical: TextAlignVertical.center,
-                style: RegularTextStyle.regular16bold(whiteColor),
-                decoration: InputDecoration(
-                  hintText: "Old Password",
-                  hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SizedBox(
+                height: height * 0.01,
+              ),
+              // Text("Change password",
+              //     style: LargeTextStyle.large20700(whiteColor)),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 45,
+                width: width * 0.95,
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                alignment: Alignment.center,
+                child: TextFormField(
+                  autofocus: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  cursorColor: cursorColor,
+                  controller: oldPasswordController,
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: RegularTextStyle.regular16bold(whiteColor),
+                  decoration: InputDecoration(
+                    hintText: "Old Password",
+                    hintStyle: RegularTextStyle.regular16bold(cursorColor),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
                   ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
-                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter Password';
+                    }
+                    return null;
+                  },
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 45,
-              width: width * 0.95,
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              alignment: Alignment.center,
-              child: TextField(
-                autofocus: true,
-                cursorColor: cursorColor,
-                controller: newPasswordController,
-                textAlign: TextAlign.start,
-                textAlignVertical: TextAlignVertical.center,
-                style: RegularTextStyle.regular16bold(whiteColor),
-                decoration: InputDecoration(
-                  hintText: "New password",
-                  hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 45,
+                width: width * 0.95,
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                alignment: Alignment.center,
+                child: TextFormField(
+                  autofocus: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  cursorColor: cursorColor,
+                  controller: newPasswordController,
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: RegularTextStyle.regular16bold(whiteColor),
+                  decoration: InputDecoration(
+                    hintText: "New password",
+                    hintStyle: RegularTextStyle.regular16bold(cursorColor),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
                   ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
-                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter New Password';
+                    }
+                    return null;
+                  },
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 45,
-              width: width * 0.95,
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              alignment: Alignment.center,
-              child: TextField(
-                autofocus: true,
-                cursorColor: cursorColor,
-                controller: conifirmPasswordController,
-                textAlign: TextAlign.start,
-                textAlignVertical: TextAlignVertical.center,
-                style: RegularTextStyle.regular16bold(whiteColor),
-                decoration: InputDecoration(
-                  hintText: "Confirm paswword",
-                  hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 45,
+                width: width * 0.95,
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                alignment: Alignment.center,
+                child: TextFormField(
+                  autofocus: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  cursorColor: cursorColor,
+                  controller: conifirmPasswordController,
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: RegularTextStyle.regular16bold(whiteColor),
+                  decoration: InputDecoration(
+                    hintText: "Confirm paswword",
+                    hintStyle: RegularTextStyle.regular16bold(cursorColor),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: cursorColor),
+                    ),
                   ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: cursorColor),
-                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter Confirm Password';
+                    }
+                    return null;
+                  },
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: Consumer<ApiChangePassword>(
@@ -162,32 +187,34 @@ class _BackupPageState extends State<BackupPage> {
                 shadowColor: whiteColor,
                 elevation: 4),
             onPressed: () async {
-              var response = await value.changeUserPass(
-                old: oldPasswordController.text,
-                newPass: newPasswordController.text,
-                confirm: conifirmPasswordController.text,
-              );
-              if (response.message != null) {
-                Get.back();
-                Get.snackbar(
-                  "Password Changed successfully",
-                  '',
-                  backgroundColor: newGradient6,
-                  colorText: whiteColor,
-                  padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                  duration: const Duration(milliseconds: 4000),
-                  snackPosition: SnackPosition.BOTTOM,
+              if (_formKey.currentState!.validate()) {
+                var response = await value.changeUserPass(
+                  old: oldPasswordController.text,
+                  newPass: newPasswordController.text,
+                  confirm: conifirmPasswordController.text,
                 );
-              } else {
-                Get.snackbar(
-                  "Something Went Wrong",
-                  '',
-                  backgroundColor: newGradient6,
-                  colorText: whiteColor,
-                  padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                  duration: const Duration(milliseconds: 4000),
-                  snackPosition: SnackPosition.BOTTOM,
-                );
+                if (response.message != null) {
+                  Get.back();
+                  Get.snackbar(
+                    response.message!,
+                    '',
+                    backgroundColor: newGradient6,
+                    colorText: whiteColor,
+                    padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    duration: const Duration(milliseconds: 4000),
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                } else {
+                  Get.snackbar(
+                    "Something Went Wrong",
+                    '',
+                    backgroundColor: newGradient6,
+                    colorText: whiteColor,
+                    padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    duration: const Duration(milliseconds: 4000),
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                }
               }
             },
             child: Text("Change Password",

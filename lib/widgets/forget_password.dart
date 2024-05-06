@@ -21,6 +21,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     super.initState();
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   bool isLoading = false;
 
   TravelPostResponse travelPostResponse = TravelPostResponse();
@@ -75,36 +77,45 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         const SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: userNameController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
-                            style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
+                        Form(
+                          key: _formKey,
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15, right: width * 0.15),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: userNameController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
+                                ),
+                                fillColor: fillColor,
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
+                                ),
+                                contentPadding: EdgeInsets.only(left: 20),
                               ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: EdgeInsets.only(left: 20),
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please Enter UserName';
+                                }
+                                return null;
+                              },
                             ),
-                            textInputAction: TextInputAction.next,
                           ),
                         ),
                       ],
@@ -128,54 +139,56 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             onPressed: () async {
                               // final SharedPreferences sharedPref =
                               //     await SharedPreferences.getInstance();
-
-                              if (kDebugMode) {
-                                print(userNameController.text);
-                                // print(passwordController.text);
-                              }
-                              // sharedPref.setString(
-                              //     "name", userNameController.text);
-                              // var response = await ApiProvider().processLogin(
-                              //     userNameController.text,
-                              //     passwordController.text);
-                              var response = await value.forgetPassword(
-                                  userName: userNameController.text);
-
-                              if (response.message == "Login successful") {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                var snackBar =
-                                    SnackBar(content: Text(response.message!));
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomNavigationPage()),
-                                  );
+                              if (_formKey.currentState!.validate()) {
+                                if (kDebugMode) {
+                                  print(userNameController.text);
+                                  // print(passwordController.text);
                                 }
-                                userNameController.clear();
-                                passwordController.clear();
-                              } else if (response.message ==
-                                  " Invalid login credentials") {
-                                var snackBar =
-                                    SnackBar(content: Text(response.message!));
-                                if (context.mounted)
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                              } else {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                var snackBar = const SnackBar(
-                                    content: Text("Something went wrong"));
-                                if (context.mounted)
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
+                                // sharedPref.setString(
+                                //     "name", userNameController.text);
+                                // var response = await ApiProvider().processLogin(
+                                //     userNameController.text,
+                                //     passwordController.text);
+                                var response = await value.forgetPassword(
+                                    userName: userNameController.text);
+
+                                if (response.message == "Login successful") {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  var snackBar = SnackBar(
+                                      content: Text(response.message!));
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BottomNavigationPage()),
+                                    );
+                                  }
+                                  userNameController.clear();
+                                  passwordController.clear();
+                                } else if (response.message ==
+                                    " Invalid login credentials") {
+                                  var snackBar = SnackBar(
+                                      content: Text(response.message!));
+                                  if (context.mounted)
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  var snackBar = const SnackBar(
+                                      content: Text("Something went wrong"));
+                                  if (context.mounted)
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                }
                               }
+
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(builder: (context)

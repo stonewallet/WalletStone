@@ -16,7 +16,7 @@ class AddContactPage extends StatefulWidget {
 class _AddContactPageState extends State<AddContactPage> {
   TextEditingController contactNameController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -51,27 +51,37 @@ class _AddContactPageState extends State<AddContactPage> {
             height: height * 0.02,
           ),
 
-          Container(
-            height: 45,
-            width: width * 0.95,
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            alignment: Alignment.center,
-            child: TextField(
-              autofocus: true,
-              cursorColor: cursorColor,
-              controller: contactNameController,
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              style: RegularTextStyle.regular16bold(whiteColor),
-              decoration: InputDecoration(
-                hintText: "Contact Name",
-                hintStyle: RegularTextStyle.regular16bold(cursorColor),
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: cursorColor),
+          Form(
+            key: _formKey,
+            child: Container(
+              height: 45,
+              width: width * 0.95,
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              alignment: Alignment.center,
+              child: TextFormField(
+                autofocus: true,
+                cursorColor: cursorColor,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: contactNameController,
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                style: RegularTextStyle.regular16bold(whiteColor),
+                decoration: InputDecoration(
+                  hintText: "Contact Name",
+                  hintStyle: RegularTextStyle.regular16bold(cursorColor),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: cursorColor),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: cursorColor),
+                  ),
                 ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: cursorColor),
-                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please Enter Name';
+                  }
+                  return null;
+                },
               ),
             ),
           ),
@@ -128,11 +138,13 @@ class _AddContactPageState extends State<AddContactPage> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent),
                     onPressed: () async {
-                      var response =
-                          await value.addContact(contactNameController.text);
-                      if (response.message != null) {
-                        value.getContact();
-                        Get.back();
+                      if (_formKey.currentState!.validate()) {
+                        var response =
+                            await value.addContact(contactNameController.text);
+                        if (response.message != null) {
+                          value.getContact();
+                          Get.back();
+                        }
                       }
                     },
                     child: Text(

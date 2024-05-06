@@ -23,9 +23,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    passwordVisible = true;
   }
 
   bool isLoading = false;
+  bool passwordVisible = false;
 
   TravelPostResponse travelPostResponse = TravelPostResponse();
 
@@ -141,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                             textAlign: TextAlign.start,
                             textAlignVertical: TextAlignVertical.center,
                             style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
+                            decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30)),
                                 borderSide:
@@ -150,15 +152,32 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               fillColor: fillColor,
                               filled: true,
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30)),
                                 borderSide:
                                     BorderSide(color: borderColor, width: 1.0),
                               ),
-                              contentPadding: EdgeInsets.only(left: 20),
+                              contentPadding: const EdgeInsets.only(left: 20),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color:
+                                      passwordVisible ? whiteColor : greyColor,
+                                ),
+                                onPressed: () {
+                                  setState(
+                                    () {
+                                      passwordVisible = !passwordVisible;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                             textInputAction: TextInputAction.next,
+                            obscureText: passwordVisible,
                           ),
                         ),
                       ],

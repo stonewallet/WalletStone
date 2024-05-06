@@ -9,7 +9,7 @@ import 'package:walletstone/UI/Constants/urls.dart';
 
 class ApiForSendWallet extends ChangeNotifier {
   final Dio _dio = Dio();
-  Future<TravelPostResponse> sendWalletPost(
+  Future<dynamic> sendWalletPost(
       String name, String password, String address, double amount1) async {
     try {
       if (kDebugMode) {
@@ -41,12 +41,20 @@ class ApiForSendWallet extends ChangeNotifier {
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
         return travelPostResponse;
+      } else if (response.statusCode == 404) {
+        TravelPostResponse travelPostResponse =
+            TravelPostResponse.fromJson(json.decode(response.toString()));
+        return travelPostResponse;
       } else {
-        throw Exception("Error to Load the data");
+        print(response.statusCode);
       }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
-        // Handle DioError related to bad response
+        if (e.response!.statusCode == 404) {
+          TravelPostResponse travelPostResponse =
+              TravelPostResponse.fromJson(json.decode(e.response.toString()));
+          return travelPostResponse;
+        }
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||
