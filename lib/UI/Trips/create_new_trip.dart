@@ -165,7 +165,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                             borderSide: const BorderSide(
-                                                color: Colors.red, width: 4.0),
+                                                color: Colors.red, width: 1.0),
                                           ),
                                           errorStyle:
                                               const TextStyle(height: 0.1),

@@ -1,11 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:searchfield/searchfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:walletstone/API/shared_preferences.dart';
 import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/Constants/urls.dart';
 import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
 import 'package:walletstone/widgets/customspinkit_widget.dart';
 
@@ -26,76 +31,161 @@ class DropDownTextFieldWidget extends StatefulWidget {
 }
 
 class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
-  GetWallet? _selectedWallet;
   TextEditingController balanceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
+  late int selectedUserId;
+  String selectedUserName = '';
   @override
   void initState() {
     super.initState();
-
-    _selectedWallet = null;
+    _getSearch();
+    searchController.addListener(onSearchTextControlled);
   }
 
-  @override
-  void dispose() {
-    // balanceController.dispose();
-    super.dispose();
+  List<dynamic> searchList = [];
+  TextEditingController searchController = TextEditingController();
+  bool isSearchidle = true;
+  final focus = FocusNode();
+  _getSearch() async {
+    try {
+      final response = await Dio().get(
+        getSettingWallet,
+        options: Options(headers: {
+          "Cookie":
+              "csrftoken=${MySharedPreferences().getCsrfToken(await SharedPreferences.getInstance())}; sessionid=${MySharedPreferences().getSessionId(await SharedPreferences.getInstance())}",
+          "X-CSRFToken": MySharedPreferences()
+              .getCsrfToken(await SharedPreferences.getInstance())
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+
+        List<GetWallet> searchContent = [];
+        for (var searchData in data) {
+          if (searchData is Map<String, dynamic> &&
+              searchData.containsKey('mnemonic')) {
+            GetWallet user = GetWallet.fromJson(searchData);
+            searchContent.add(user);
+          }
+        }
+
+        setState(() {
+          searchList = searchContent;
+        });
+      }
+
+      // List<dynamic> data =
+      //     response.data; // Change here to extract the list directly
+
+      // setState(() {
+      //   // Update the searchList directly with the fetched data
+      //   searchList = data;
+      // });
+    } catch (error) {
+      print('Error fetching suggestions: $error');
+      // Handle error
+    }
+  }
+
+  void onSearchTextControlled() {
+    _getSearch();
+    setState(() {
+      isSearchidle = searchController.text.isEmpty;
+      print(isSearchidle);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget searchChild(x) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
+          child: Text(x, style: RegularTextStyle.regular16600(whiteColor)),
+        );
     return SizedBox(
       height: 50,
-      width: MediaQuery.sizeOf(context).width / 3.2,
+      width: MediaQuery.sizeOf(context).width / 2.5,
       child: SizedBox(
-        height: 50,
-        child: DropdownButtonFormField<GetWallet>(
-          alignment: AlignmentDirectional.topStart,
-          value: _selectedWallet,
-          iconSize: 24,
-          iconEnabledColor: whiteColor,
-          elevation: 0,
-          dropdownColor: gradientColor1,
-          style: const TextStyle(
-            color: whiteColor,
-          ),
-          hint: Text(
-            "      My Wallet",
-            style: RegularTextStyle.regular14600(whiteColor),
-            textAlign: TextAlign.center,
-          ),
-          decoration: const InputDecoration(
-              hintTextDirection: TextDirection.ltr,
-              disabledBorder: InputBorder.none,
-              hintStyle: TextStyle(
+        height: 100,
+        child: SearchField(
+          controller: searchController,
+          maxSuggestionsInViewPort: 10,
+          suggestionDirection: SuggestionDirection.flex,
+          onSearchTextChanged: (query) {
+            final filter = searchList
+                .where((element) => element.mnemonic
+                    .toLowerCase()
+                    .contains(query.toLowerCase()))
+                .toList();
+            return filter
+                .map((e) => SearchFieldListItem<String>(e.mnemonic,
+                    child: searchChild(e.mnemonic)))
+                .toList();
+          },
+          onTap: () {},
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: const Key('searchfield'),
+          itemHeight: 50,
+          scrollbarDecoration: ScrollbarDecoration(),
+          onTapOutside: (x) {
+            focus.unfocus();
+          },
+          suggestionStyle: RegularTextStyle.regular16600(whiteColor),
+          searchStyle: RegularTextStyle.regular16600(whiteColor),
+          searchInputDecoration: InputDecoration(
+              hintText: "My Wallets",
+              hintStyle: RegularTextStyle.regular16600(cursorColor),
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: cursorColor),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: cursorColor),
+              ),
+              suffixIcon: const Icon(
+                Icons.arrow_drop_down,
+                size: 25,
                 color: whiteColor,
               )),
-          items: widget.dropDownList.map((GetWallet wallet) {
-            return DropdownMenuItem<GetWallet>(
-              value: wallet,
-              child: Text(
-                wallet.mnemonic!,
-                style: RegularTextStyle.regular14600(whiteColor),
-              ),
-            );
-          }).toList(),
-          onChanged: (GetWallet? newValue) {
-            setState(() {
-              _selectedWallet = newValue;
-              if (newValue != null) {
-                widget.onWalletSelected(newValue);
-                _showSelectedWalletAlert(_selectedWallet!);
+          suggestionsDecoration: SuggestionDecoration(
+            color: blackColor,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          suggestions: searchList
+              .map((e) => SearchFieldListItem<String>(e.mnemonic,
+                  child: searchChild(e.mnemonic)))
+              .toList(),
+          focusNode: focus,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter Wallet Name';
+            }
+            return null;
+          },
+          suggestionState: Suggestion.expand,
+          onSuggestionTap: (SearchFieldListItem<String>? x) {
+            if (x != null) {
+              final suggestionText = x.searchKey;
+              searchController.text = suggestionText;
+              selectedUserName = suggestionText;
+              selectedUserId = searchList
+                  .firstWhere((element) => element.mnemonic == suggestionText)
+                  .id;
+              _showSelectedWalletAlert(suggestionText);
+              if (kDebugMode) {
+                print(
+                    "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
               }
-            });
+            }
+            focus.unfocus();
           },
         ),
       ),
     );
   }
 
-  void _showSelectedWalletAlert(GetWallet wallet) {
+  void _showSelectedWalletAlert(wallet) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -109,7 +199,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                 style: RegularTextStyle.regular18600(whiteColor),
               ),
               content: Text(
-                "You have selected: ${wallet.mnemonic}",
+                "You have selected: ${wallet}",
                 style: RegularTextStyle.regular16bold(whiteColor),
               ),
               actions: [
@@ -171,7 +261,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                                       listen: false);
                               var response =
                                   await balanceProvider.getWalletBalance(
-                                mnemonic: wallet.mnemonic!,
+                                mnemonic: wallet,
                                 password: balanceController.text,
                               );
                               if (balanceController.text.isEmpty) {
@@ -207,7 +297,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
     );
   }
 
-  void _showAlertBox(GetWallet walletResponse) {
+  void _showAlertBox(walletResponse) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -216,7 +306,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
           builder: (context, setState) {
             return CupertinoAlertDialog(
               title: Text("Your Selected Wallet:\n"
-                  "${walletResponse.mnemonic}"),
+                  "$walletResponse"),
               content: Consumer<ApiWalletBalance>(
                 builder: (context, value, child) => Text(
                   "And Your Balance is:\n"

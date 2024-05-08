@@ -19,12 +19,13 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   late ApiServiceForNotification apiServiceForNotification;
-  late Future<List<NotificationModel>> notificationsFuture;
+  // late Future<List<NotificationModel>> notificationsFuture;
 
   @override
   void initState() {
     apiServiceForNotification = ApiServiceForNotification();
-    notificationsFuture = apiServiceForNotification.getDataForNotification();
+    // notificationsFuture = apiServiceForNotification.getDataForNotification();
+    Provider.of<NotificationProvider>(context, listen: false).getNotification();
     super.initState();
   }
 
@@ -73,33 +74,30 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         ),
       ),
-      body: FutureBuilder<List<NotificationModel>>(
-        future: apiServiceForNotification.getDataForNotification(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
-            );
-          } else if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
+      body: Consumer<NotificationProvider>(
+        builder: (context, value, child) {
+          if (value.notifications.isEmpty) {
+            return FutureBuilder(
+              future: Future.delayed(const Duration(seconds: 4)),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return Center(
+                    child: Text(
+                      "No data",
+                      style: LargeTextStyle.large18800(whiteColor),
+                    ),
+                  );
+                }
+              },
             );
           } else {
-            final List<NotificationModel> notifications = snapshot.data!;
-
             return ListView.builder(
-              itemCount: notifications.length,
+              itemCount: value.notifications.length,
               itemBuilder: (BuildContext context, int index) {
-                String message = notifications[index].message;
-                NotificationModel notification = notifications[index];
+                String message = value.notifications[index].message;
+                NotificationModel notification = value.notifications[index];
                 int maxLength = message.length ~/ 2;
                 String truncatedMessage = '${message.substring(0, maxLength)}.';
 
@@ -124,7 +122,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         GestureDetector(
                           onTap: () async {
                             var response = await apiServiceForNotification
-                                .readMessage(notifications[index].id);
+                                .readMessage(value.notifications[index].id);
                             if (response.message != null) {}
                             notificationProvider.toggleExpansion(index);
                             // setState(() {
@@ -146,9 +144,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                   SizedBox(width: width * 0.03),
                                   Icon(
                                     Entypo.message,
-                                    color: notifications[index].readMessage
-                                        ? whiteColor.withOpacity(0.6)
-                                        : Colors.white,
+                                    color:
+                                        value.notifications[index].readMessage
+                                            ? whiteColor.withOpacity(0.6)
+                                            : Colors.white,
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
@@ -156,7 +155,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: RegularTextStyle.regular15600(
-                                      notifications[index].readMessage
+                                      value.notifications[index].readMessage
                                           ? whiteColor.withOpacity(0.6)
                                           : Colors.white,
                                     ),
@@ -194,61 +193,67 @@ class _NotificationPageState extends State<NotificationPage> {
                                                             blackColor),
                                                   ),
                                                 ),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    var response =
-                                                        await apiServiceForNotification
-                                                            .deleteMessage(
-                                                                notifications[
-                                                                        index]
-                                                                    .id);
-                                                    setState(() {});
-                                                    if (response.message !=
-                                                        null) {
-                                                      Get.back();
-                                                      Get.snackbar(
-                                                        " Deleted successfully",
-                                                        '',
-                                                        backgroundColor:
-                                                            newGradient6,
-                                                        colorText: whiteColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                20, 5, 0, 0),
-                                                        duration:
-                                                            const Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
-                                                    } else {
-                                                      Get.snackbar(
-                                                        "Something gone wrong",
-                                                        '',
-                                                        backgroundColor:
-                                                            newGradient6,
-                                                        colorText: whiteColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                20, 5, 0, 0),
-                                                        duration:
-                                                            const Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
-                                                    }
-                                                  },
-                                                  child: Text(
-                                                    'Delete',
-                                                    style: RegularTextStyle
-                                                        .regular14600(dotColor),
+                                                Consumer<NotificationProvider>(
+                                                  builder:
+                                                      (context, value, child) =>
+                                                          TextButton(
+                                                    onPressed: () async {
+                                                      var response =
+                                                          await apiServiceForNotification
+                                                              .deleteMessage(value
+                                                                  .notifications[
+                                                                      index]
+                                                                  .id);
+                                                      setState(() {});
+                                                      value.getNotification();
+                                                      if (response.message !=
+                                                          null) {
+                                                        Get.back();
+                                                        Get.snackbar(
+                                                          " Deleted successfully",
+                                                          '',
+                                                          backgroundColor:
+                                                              newGradient6,
+                                                          colorText: whiteColor,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                                  20, 5, 0, 0),
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      4000),
+                                                          snackPosition:
+                                                              SnackPosition
+                                                                  .BOTTOM,
+                                                        );
+                                                      } else {
+                                                        Get.snackbar(
+                                                          "Something gone wrong",
+                                                          '',
+                                                          backgroundColor:
+                                                              newGradient6,
+                                                          colorText: whiteColor,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                                  20, 5, 0, 0),
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      4000),
+                                                          snackPosition:
+                                                              SnackPosition
+                                                                  .BOTTOM,
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                      'Delete',
+                                                      style: RegularTextStyle
+                                                          .regular14600(
+                                                              dotColor),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -270,7 +275,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         const SizedBox(height: 8),
                         if (notificationProvider.expandedIndices
                             .contains(index))
-                          readNotification(width, notifications[index],
+                          readNotification(width, value.notifications[index],
                               metaData[0], notificationProvider, index),
                       ],
                     ),
@@ -303,45 +308,48 @@ class _NotificationPageState extends State<NotificationPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                child: CircleAvatar(
-                  child: Container(
-                      width: width * 0.30,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.green,
-                      ),
-                      alignment: Alignment.center,
-                      child: const Icon(Entypo.check)),
-                ),
-                onTap: () async {
-                  print(metaDatum.tripId);
-                  var response = await ApiProvider()
-                      .processAddUser(int.parse(metaDatum.tripId));
-                  if (response.message != null) {
+              Consumer<NotificationProvider>(
+                builder: (context, value, child) => GestureDetector(
+                  child: CircleAvatar(
+                    child: Container(
+                        width: width * 0.30,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.green,
+                        ),
+                        alignment: Alignment.center,
+                        child: const Icon(Entypo.check)),
+                  ),
+                  onTap: () async {
+                    print(metaDatum.tripId);
+                    var response = await ApiProvider()
+                        .processAddUser(int.parse(metaDatum.tripId));
+                    value.getNotification();
                     notificationProvider.toggleExpansion(index);
-                    Get.snackbar(
-                      response.message!,
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
-                  } else {
-                    Get.snackbar(
-                      "Something gone wrong",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
-                  }
-                },
+                    if (response.message != null) {
+                      Get.snackbar(
+                        response.message!,
+                        '',
+                        backgroundColor: newGradient6,
+                        colorText: whiteColor,
+                        padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                        duration: const Duration(milliseconds: 4000),
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Something gone wrong",
+                        '',
+                        backgroundColor: newGradient6,
+                        colorText: whiteColor,
+                        padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                        duration: const Duration(milliseconds: 4000),
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    }
+                  },
+                ),
               ),
               SizedBox(
                 width: width / 8,

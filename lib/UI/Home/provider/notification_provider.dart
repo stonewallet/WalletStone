@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:walletstone/API/GetNotification/get_notification.dart';
 import 'package:walletstone/UI/Model/notification_model.dart';
 
 class NotificationProvider extends ChangeNotifier {
   Set<int> expandedIndices = {};
   List<NotificationModel> notifications = [];
+  final noti = ApiServiceForNotification();
 
   void setNotifications(List<NotificationModel> newList) {
     notifications = newList;
@@ -15,12 +17,17 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getNotification() async {
+    notifications = await noti.getDataForNotification();
+    notifyListeners();
+  }
+
   void toggleExpansion(int index) {
     if (expandedIndices.contains(index)) {
-      expandedIndices.remove(index); // Collapse the notification
+      expandedIndices.remove(index); 
     } else {
-      expandedIndices.clear(); // Collapse other notifications
-      expandedIndices.add(index); // Expand the tapped notification
+      expandedIndices.clear();
+      expandedIndices.add(index); 
     }
     notifyListeners();
   }

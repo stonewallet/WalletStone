@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/API/portfolio_api/search_api.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
 import 'package:walletstone/UI/Model/portfolio/search_model.dart';
+import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/portfolio/controller/assets_controller.dart';
 import 'package:walletstone/UI/portfolio/widgets/add_tab_two_assets.dart';
 import 'package:walletstone/UI/portfolio/widgets/updateanddelete_assets.dart';
@@ -46,6 +48,7 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
         _getSearch();
       });
     });
+    Provider.of<AssetProvider>(context, listen: false).getAsset();
   }
 
   Future<void> _getSearch() async {
@@ -84,7 +87,9 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
     Widget body;
 
     if (searchController.text.isEmpty) {
-      body = buildContentWidget(widget.width);
+      double width = MediaQuery.sizeOf(context).width;
+      // body = buildContentWidget(widget.width);
+      body = BuildContentWidget(width: width);
     } else {
       if (searchList.isEmpty) {
         body = Text(
@@ -473,5 +478,173 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
         ),
       ],
     );
+  }
+}
+
+class BuildContentWidget extends StatelessWidget {
+  const BuildContentWidget({
+    super.key,
+    required this.width,
+  });
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AssetProvider>(
+        builder: (context, value, child) => value.assetList.isEmpty
+            ? const CircularProgressIndicator()
+            : ListView.builder(
+                key: UniqueKey(),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  // _portfolio = portfolios[index].subCat;
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateAssetsScreen(
+
+                              // assetsController
+                              //     .assetsPortfolios,
+                              // cashController
+                              //     .cashPortfolios,
+                              index: index,
+                              portfolios: value.assetList[index]),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: width * 0.05,
+                              ),
+                              // CachedNetworkImage(
+                              //     color: transparent,
+                              //     imageUrl:
+                              //         'https://www.${value.assetList[index].imageUrl}',
+                              //     imageBuilder: (context, imageProvider) =>
+                              //         Padding(
+                              //           padding: const EdgeInsets.only(left: 0),
+                              //           child: ClipRRect(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(20.0),
+                              //             child: Container(
+                              //               width: MediaQuery.of(context)
+                              //                       .size
+                              //                       .width /
+                              //                   19,
+                              //               height: 30,
+                              //               decoration: BoxDecoration(
+                              //                   color: transparent,
+                              //                   image: DecorationImage(
+                              //                       image: imageProvider,
+                              //                       fit: BoxFit.cover)),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //     progressIndicatorBuilder: (context, url,
+                              //             downloadProgress) =>
+                              //         Padding(
+                              //           padding: const EdgeInsets.only(left: 14),
+                              //           child: ClipRRect(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(20.0),
+                              //             child: Container(
+                              //               width: MediaQuery.of(context)
+                              //                       .size
+                              //                       .width /
+                              //                   13,
+                              //               height: 30,
+                              //               decoration: const BoxDecoration(
+                              //                 color: whiteColor,
+                              //               ),
+                              //               child:
+                              //                   const CupertinoActivityIndicator(),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //     errorWidget: (context, url, error) => Padding(
+                              //           padding: const EdgeInsets.only(
+                              //             left: 0,
+                              //             right: 0,
+                              //             bottom: 0,
+                              //             top: 0,
+                              //           ),
+                              //           child: ClipRRect(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(20.0),
+                              //             child: Container(
+                              //                 width: MediaQuery.of(context)
+                              //                         .size
+                              //                         .width /
+                              //                     20,
+                              //                 height: 30,
+                              //                 decoration: const BoxDecoration(
+                              //                     color: transparent,
+                              //                     image: DecorationImage(
+                              //                         image: AssetImage(
+                              //                             'assets/Dollar.png'))),
+                              //                 child: Image.asset(
+                              //                     'assets/Dollar.png')),
+                              //           ),
+                              //         )),
+                              Image.asset(
+                                "assets/Dollar.png",
+                                width: 20,
+                                height: 20,
+                              ),
+                              SizedBox(
+                                width: width * 0.05,
+                              ),
+                              Text(value.assetList[index].coinName,
+                                  style: RegularTextStyle.regular15600(
+                                      iconColor2)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    width: width * 0.05,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                                    child: Text(
+                                        '${value.assetList[index].quantity}  ${value.assetList[index].coinShort}',
+                                        style: RegularTextStyle.regular14400(
+                                            whiteColor)),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                                    child: Text(
+                                        "\$ ${value.assetList[index].value.toStringAsFixed(2)}",
+                                        style: RegularTextStyle.regular14400(
+                                            whiteColor)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: width * 0.05,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                itemCount: value.assetList.length,
+              ));
   }
 }

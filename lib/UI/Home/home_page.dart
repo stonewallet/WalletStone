@@ -173,7 +173,7 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
             alignment: Alignment.topLeft,
             child: Container(
               width: width * 0.6,
-              height: 500,
+              height: height * 0.5,
               decoration: const BoxDecoration(
                   color: drawerColor2,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -260,6 +260,9 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                           margin: const EdgeInsets.only(bottom: 30),
                           child: Column(
                             children: [
+                              const SizedBox(
+                                height: 12,
+                              ),
                               Row(
                                 children: [
                                   SizedBox(
@@ -576,59 +579,125 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
       bottomNavigationBar: CupertinoTabBar(
         activeColor: whiteColor,
         inactiveColor: iconColor,
-        backgroundColor: bottomBackgroundColor,
+        backgroundColor: bottomBackgroundColor, // Adjust as needed
         currentIndex: _selectedIndex,
         height: 70,
-        onTap: _onItemTapped,
-        iconSize: 30,
-        items: <BottomNavigationBarItem>[
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: [
           BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/Icons/wallet-filled-money-tool.png",
-              height: 30,
-              width: 30,
-              color: iconColor,
+            icon: AnimatedCrossFade(
+              firstCurve: Curves.bounceIn,
+              firstChild: Image.asset(
+                "assets/Icons/wallet-filled-money-tool.png",
+                height: 30,
+                width: 30,
+                color: greyColor.withOpacity(0.7),
+              ),
+              secondChild: Image.asset(
+                "assets/Icons/wallet-filled-money-tool.png",
+                height: 30,
+                width: 30,
+                color: iconColor,
+              ),
+              duration: const Duration(milliseconds: 30),
+              crossFadeState: _selectedIndex == 0
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
-            // icon: Icon(Icons.flight),
-            icon: Image.asset(
-              "assets/Icons/plane.png",
-              height: 30,
-              width: 30,
-              color: iconColor,
+            icon: AnimatedCrossFade(
+              firstCurve: Curves.bounceIn,
+              firstChild: Image.asset(
+                "assets/Icons/plane.png",
+                height: 30,
+                width: 30,
+                color: greyColor.withOpacity(0.7),
+              ),
+              secondChild: Image.asset(
+                "assets/Icons/plane.png",
+                height: 30,
+                width: 30,
+                color: iconColor,
+              ),
+              duration: const Duration(milliseconds: 30),
+              crossFadeState: _selectedIndex == 1
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/Icons/trend.png",
-              height: 30,
-              width: 30,
-              color: iconColor,
+            icon: AnimatedCrossFade(
+              firstCurve: Curves.bounceIn,
+              firstChild: Image.asset(
+                "assets/Icons/trend.png",
+                height: 30,
+                width: 30,
+                color: greyColor.withOpacity(0.7),
+              ),
+              secondChild: Image.asset(
+                "assets/Icons/trend.png",
+                height: 30,
+                width: 30,
+                color: iconColor,
+              ),
+              duration: const Duration(milliseconds: 30),
+              crossFadeState: _selectedIndex == 2
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/Icons/pie-chart-2.png",
-              height: 30,
-              width: 30,
-              color: iconColor,
+            icon: AnimatedCrossFade(
+              firstCurve: Curves.bounceIn,
+              firstChild: Image.asset(
+                "assets/Icons/pie-chart-2.png",
+                height: 30,
+                width: 30,
+                color: greyColor.withOpacity(0.7),
+              ),
+              secondChild: Image.asset(
+                "assets/Icons/pie-chart-2.png",
+                height: 30,
+                width: 30,
+                color: iconColor,
+              ),
+              duration: const Duration(milliseconds: 30),
+              crossFadeState: _selectedIndex == 3
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/Icons/gear.png",
-              height: 30,
-              width: 30,
-              color: iconColor,
+            icon: AnimatedCrossFade(
+              firstCurve: Curves.bounceIn,
+              firstChild: Image.asset(
+                "assets/Icons/gear.png",
+                height: 30,
+                width: 30,
+                color: greyColor.withOpacity(0.7),
+              ),
+              secondChild: Image.asset(
+                "assets/Icons/gear.png",
+                height: 30,
+                width: 30,
+                color: iconColor,
+              ),
+              duration: const Duration(milliseconds: 30),
+              crossFadeState: _selectedIndex == 4
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             ),
             label: '',
           ),
-          // BottomNavigationBarItem(icon: Icon(Icons.wallet))
         ],
       ),
     );

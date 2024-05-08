@@ -170,7 +170,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                 SizedBox(
                                   height: height * 0.03,
                                 ),
-                                Text("Trip ${value.travel2response.tripName}",
+                                Text("${value.travel2response.tripName}",
                                     style:
                                         LargeTextStyle.large20700(whiteColor)),
                                 const SizedBox(
@@ -562,11 +562,10 @@ class _NewTripPageState extends State<NewTripPage> {
                                                             )),
                                                   );
                                                 },
-                                                child: Text(
-                                                    "Invite Trip\nPartner",
+                                                child: Text("Invite \nPartner",
                                                     textAlign: TextAlign.center,
                                                     style: RegularTextStyle
-                                                        .regular16400(
+                                                        .regular16600(
                                                             whiteColor))),
                                           ),
                                           SizedBox(

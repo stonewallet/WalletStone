@@ -28,6 +28,7 @@ class _TripsPageState extends State<TripsPage> {
   }
 
   fetch() async {
+    setState(() {});
     travelList.clear();
     travelList = await ApiProvider().processTravel();
     setState(() {});
@@ -221,7 +222,7 @@ class _TripsPageState extends State<TripsPage> {
                                                                 Icons.edit,
                                                                 color:
                                                                     whiteColor,
-                                                                size: 30,
+                                                                size: 25,
                                                               )),
                                                           const SizedBox(
                                                             height: 10,
@@ -317,7 +318,7 @@ class _TripsPageState extends State<TripsPage> {
                                                               },
                                                               child: const Icon(
                                                                 Icons.delete,
-                                                                size: 30,
+                                                                size: 25,
                                                                 color: redColor,
                                                               ))
                                                         ],
@@ -325,7 +326,7 @@ class _TripsPageState extends State<TripsPage> {
                                                     ],
                                                   ),
                                                   const SizedBox(
-                                                    height: 30,
+                                                    height: 15,
                                                   ),
                                                 ],
                                               );

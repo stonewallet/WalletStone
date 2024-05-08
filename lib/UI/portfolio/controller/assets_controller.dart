@@ -1,6 +1,6 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:walletstone/API/portfolio_api/api_services.dart';
+  import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -10,6 +10,7 @@ class PortfolioController2 extends GetxController {
   RxDouble totalValue = 0.0.obs;
   RxMap<String, double> dataMap = <String, double>{}.obs;
   TooltipBehavior? tooltipBehavior;
+  
   @override
   void onInit() {
     super.onInit();

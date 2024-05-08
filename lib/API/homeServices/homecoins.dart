@@ -10,8 +10,9 @@ class ApiServiceForHomeCoins {
   Future<List<HomeCoin>> getDataForHomeCoins() async {
     setupHttpOverrides();
     try {
+      const limit = 15;
       final response = await _dio.get(
-        '$baseUrl/travel/home/coins/5/',
+        '$baseUrl/travel/home/coins/$limit/',
         options: Options(
           headers: {
             "Cookie":

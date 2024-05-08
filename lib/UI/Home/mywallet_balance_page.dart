@@ -8,11 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/homeServices/homecoins.dart';
 import 'package:walletstone/API/receive_address/receive_address.dart';
 import 'package:walletstone/API/settingwallet/get_setting_wallet.dart';
-import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/homeCoin/home_coin_model.dart';
 import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
 import 'package:walletstone/widgets/dropdown._widget.dart';
+import 'package:walletstone/widgets/global.dart';
 import '../../API/shared_preferences.dart';
 import '../Constants/colors.dart';
 import '../Model/coin_model.dart';
@@ -29,99 +29,6 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
   bool selectCoins = true;
   bool isLoading = false;
   TextEditingController searchController = TextEditingController();
-  List<CoinModel> coinsList = [
-    CoinModel(
-        name: "BTC",
-        type: "Bitcoin",
-        icon: "assets/Icons/Bitcoin.svg.png",
-        amount: "1 BTC",
-        usdAmount: "\$10,504"),
-    CoinModel(
-        name: "ETH",
-        type: "Ethereum",
-        icon: "assets/Icons/ethereum.png",
-        amount: "1 ETH",
-        usdAmount: "\$4879.6"),
-    CoinModel(
-        name: "USDT",
-        type: "TetherUS",
-        icon: "assets/Icons/tether.png",
-        amount: "1 USDT",
-        usdAmount: "\$60.60"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1 Solana",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1 XRP",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-    CoinModel(
-        name: "XRP",
-        type: "Ripple",
-        icon: "assets/Icons/ripple.png",
-        amount: "1",
-        usdAmount: "\$1240"),
-  ];
-
   late ApiServiceForGetSettingWallets apiServiceForGetSettingWallets;
   late ApiServiceForHomeCoins apiServiceForHomeCoins;
 
@@ -308,7 +215,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.06,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -328,7 +235,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                                       height: 3,
                                       color: lineColor,
                                     )
-                                  : Container()
+                                  : const SizedBox.shrink()
                             ],
                           ),
                           onTap: () {
@@ -355,7 +262,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                                       height: 3,
                                       color: lineColor,
                                     )
-                                  : Container()
+                                  : const SizedBox.shrink()
                             ],
                           ),
                           onTap: () {

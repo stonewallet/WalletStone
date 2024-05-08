@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/API/portfolio_api/search_api.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
 import 'package:walletstone/UI/Model/portfolio/search_model.dart';
+import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/portfolio/controller/loan_controller.dart';
 import 'package:walletstone/UI/portfolio/widgets/add_tab_four_assets.dart';
 import 'package:walletstone/UI/portfolio/widgets/updateanddelete_assets.dart';
@@ -49,6 +51,7 @@ class _InnerLoansScreenState extends State<InnerLoansScreen> {
         _getSearch();
       });
     });
+    Provider.of<AssetProvider>(context, listen: false).getLoans();
   }
 
   Future<void> _getSearch() async {
@@ -393,110 +396,103 @@ class _BuildLoanContentState extends State<BuildLoanContent> {
   @override
   Widget build(BuildContext context) {
     print(_portfolio);
-    return FutureBuilder<List<Portfolio>>(
-        future: apiService.getDataForLoan(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
-            );
-          } else if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                "No data",
-                style: LargeTextStyle.large18800(whiteColor),
-              ),
-            );
-          } else {
-            final List<Portfolio> portfolios = snapshot.data!;
+    return Consumer<AssetProvider>(builder: (context, value, child) {
+      if (value.loanList.isEmpty) {
+        return FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 4)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else {
+              return Center(
+                child: Text(
+                  "No data",
+                  style: LargeTextStyle.large18800(whiteColor),
+                ),
+              );
+            }
+          },
+        );
+      } else {
+        return ListView.builder(
+          key: UniqueKey(),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UpdateAssetsScreen(
 
-            return ListView.builder(
-              key: UniqueKey(),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UpdateAssetsScreen(
-
-                            // assetsController
-                            //     .assetsPortfolios,
-                            // cashController
-                            //     .cashPortfolios,
-                            index: index,
-                            portfolios: portfolios[index]),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: widget.width * 0.05,
-                            ),
-                            Image.asset(
-                              "assets/Dollar.png",
-                              width: 20,
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: widget.width * 0.05,
-                            ),
-                            Text(portfolios[index].coinName,
-                                style:
-                                    RegularTextStyle.regular15600(iconColor2)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: widget.width * 0.05,
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                                  child: Text(
-                                      '${portfolios[index].quantity}  ${portfolios[index].coinShort}',
-                                      style: RegularTextStyle.regular14400(
-                                          whiteColor)),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                                  child: Text(
-                                      "\$ ${portfolios[index].value.toStringAsFixed(2)}",
-                                      style: RegularTextStyle.regular14400(
-                                          whiteColor)),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: widget.width * 0.05,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                        // assetsController
+                        //     .assetsPortfolios,
+                        // cashController
+                        //     .cashPortfolios,
+                        index: index,
+                        portfolios: value.loanList[index]),
                   ),
                 );
               },
-              itemCount: portfolios.length,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: widget.width * 0.05,
+                        ),
+                        Image.asset(
+                          "assets/Dollar.png",
+                          width: 20,
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: widget.width * 0.05,
+                        ),
+                        Text(value.loanList[index].coinName,
+                            style: RegularTextStyle.regular15600(iconColor2)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: widget.width * 0.05,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                              child: Text(
+                                  '${value.loanList[index].quantity}  ${value.loanList[index].coinShort}',
+                                  style: RegularTextStyle.regular14400(
+                                      whiteColor)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                              child: Text(
+                                  "\$ ${value.loanList[index].value.toStringAsFixed(2)}",
+                                  style: RegularTextStyle.regular14400(
+                                      whiteColor)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: widget.width * 0.05,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             );
-          }
-        });
+          },
+          itemCount: value.loanList.length,
+        );
+      }
+    });
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/generate_api/generate.dart';
 import 'package:walletstone/API/logout/logout.dart';
@@ -18,6 +19,7 @@ import 'package:walletstone/UI/Other%20Settings/other_settings.dart';
 import 'package:walletstone/UI/Privacy/privacy.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
 import 'package:walletstone/UI/Wallet/wallet.dart';
+import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/welcome_page.dart';
 import 'package:walletstone/widgets/customspinkit_widget.dart';
 
@@ -78,19 +80,21 @@ class _SettingPageState extends State<SettingPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: height * 0.04,
+                    height: height * 0.17,
                   ),
                   Container(
                     width: width,
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment(0.00, -1.00),
-                          end: Alignment(0, 1),
-                          colors: [newGradient5, newGradient6],
-                        ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
+                      gradient: LinearGradient(
+                        begin: Alignment(0.00, -1.00),
+                        end: Alignment(0, 1),
+                        colors: [newGradient5, newGradient6],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
                     child: Column(
                       children: [
                         SizedBox(
@@ -620,50 +624,55 @@ class _SettingPageState extends State<SettingPage> {
                 style: RegularTextStyle.regular14600(blackColor),
               ),
             ),
-            TextButton(
-              onPressed: () async {
-                final SharedPreferences sharedPref =
-                    await SharedPreferences.getInstance();
-                sharedPref.remove('name');
-
-                var response = await ApiServiceForLogOut().logOut();
-
-                if (response.message != null) {
-                  Get.offAll(() => const WelcomePage());
-                  SharedPreferences sharedPreferences =
+            Consumer<AssetProvider>(
+              builder: (context, value, child) => TextButton(
+                onPressed: () async {
+                  final SharedPreferences sharedPref =
                       await SharedPreferences.getInstance();
-                  sharedPreferences.remove('csrfToken');
-                  sharedPreferences.remove('sessionId');
-                  Get.snackbar(
-                    "Logout successfully",
-                    '',
-                    backgroundColor: newGradient6,
-                    colorText: whiteColor,
-                    padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                    duration: const Duration(milliseconds: 4000),
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                  // var snackBar = SnackBar(
-                  //     content: Text(
-                  //         "Assets created successfully"));
-                  // ScaffoldMessenger.of(context)
-                  //     .showSnackBar(snackBar);
-                } else {
-                  Get.snackbar(
-                    "Something gone wrong",
-                    '',
-                    backgroundColor: newGradient6,
-                    colorText: whiteColor,
-                    padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                    duration: const Duration(milliseconds: 4000),
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                }
-                // Navigator.pop(context);
-              },
-              child: Text(
-                'LogOut',
-                style: RegularTextStyle.regular14600(dotColor),
+                  sharedPref.remove('name');
+
+                  var response = await ApiServiceForLogOut().logOut();
+
+                  if (response.message != null) {
+                    Get.offAll(() => const WelcomePage());
+                    SharedPreferences sharedPreferences =
+                        await SharedPreferences.getInstance();
+                    sharedPreferences.remove('csrfToken');
+                    sharedPreferences.remove('sessionId');
+                    value.assetList.clear();
+                    value.cashList.clear();
+                    value.loanList.clear();
+                    Get.snackbar(
+                      "Logout successfully",
+                      '',
+                      backgroundColor: newGradient6,
+                      colorText: whiteColor,
+                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                      duration: const Duration(milliseconds: 4000),
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                    // var snackBar = SnackBar(
+                    //     content: Text(
+                    //         "Assets created successfully"));
+                    // ScaffoldMessenger.of(context)
+                    //     .showSnackBar(snackBar);
+                  } else {
+                    Get.snackbar(
+                      "Something gone wrong",
+                      '',
+                      backgroundColor: newGradient6,
+                      colorText: whiteColor,
+                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                      duration: const Duration(milliseconds: 4000),
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                  }
+                  // Navigator.pop(context);
+                },
+                child: Text(
+                  'LogOut',
+                  style: RegularTextStyle.regular14600(dotColor),
+                ),
               ),
             ),
           ],

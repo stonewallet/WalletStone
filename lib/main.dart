@@ -21,6 +21,7 @@ import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dar
 import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
+import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/splash/splash_view.dart/splash_view.dart';
 import 'package:walletstone/UI/welcome_page.dart';
 import 'package:walletstone/controller/local/local_database.dart';
@@ -181,7 +182,10 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (context) => ApiForgetPassword(),
-          )
+          ),
+          ChangeNotifierProvider(
+            create: (context) => AssetProvider(),
+          ),
         ],
         child: GetMaterialApp(
           navigatorKey: _navKey,
