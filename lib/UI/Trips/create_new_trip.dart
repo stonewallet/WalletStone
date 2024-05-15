@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
+import 'package:walletstone/widgets/global.dart';
 
 import '../../API/api_provider.dart';
 import '../../Responses/travel_list_response.dart';
@@ -673,101 +676,120 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                               child: SizedBox(
                                 height: 45,
                                 width: width * 0.8,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColor2,
-                                        surfaceTintColor: blackColor,
-                                        shadowColor: whiteColor,
-                                        elevation: 4),
-                                    onPressed: () async {
-                                      if (kDebugMode) {
-                                        print(nameController.text);
-                                        print(itemController.text);
-                                        print(quantityController.text);
-                                        print(pricePaidController.text);
-                                        print(priceSoldController.text);
-                                        print(transportController.text);
-                                        print(hotelController.text);
-                                        print(foodController.text);
-                                      }
+                                child: Consumer<TripProvider>(
+                                  builder: (context, value, child) =>
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: buttonColor2,
+                                              surfaceTintColor: blackColor,
+                                              shadowColor: whiteColor,
+                                              elevation: 4),
+                                          onPressed: () async {
+                                            if (kDebugMode) {
+                                              print(nameController.text);
+                                              print(itemController.text);
+                                              print(quantityController.text);
+                                              print(pricePaidController.text);
+                                              print(priceSoldController.text);
+                                              print(transportController.text);
+                                              print(hotelController.text);
+                                              print(foodController.text);
+                                            }
 
-                                      // Validate the form
-                                      if (_formKey.currentState!.validate()) {
-                                        // Check if any field is empty
-                                        if (nameController.text.isEmpty ||
-                                            itemController.text.isEmpty ||
-                                            quantityController.text.isEmpty ||
-                                            pricePaidController.text.isEmpty ||
-                                            priceSoldController.text.isEmpty ||
-                                            transportController.text.isEmpty ||
-                                            hotelController.text.isEmpty ||
-                                            foodController.text.isEmpty) {
-                                          Get.snackbar(
-                                            "Something went wrong",
-                                            'Please fill every field',
-                                            backgroundColor: Colors.red,
-                                            colorText: Colors.white,
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 5, 0, 0),
-                                            duration: const Duration(
-                                                milliseconds: 4000),
-                                            snackPosition: SnackPosition.BOTTOM,
-                                          );
-                                        } else {
-                                          setState(() {
-                                            isLoading = true;
-                                          });
+                                            // Validate the form
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Check if any field is empty
+                                              if (nameController.text.isEmpty ||
+                                                  itemController.text.isEmpty ||
+                                                  quantityController
+                                                      .text.isEmpty ||
+                                                  pricePaidController
+                                                      .text.isEmpty ||
+                                                  priceSoldController
+                                                      .text.isEmpty ||
+                                                  transportController
+                                                      .text.isEmpty ||
+                                                  hotelController
+                                                      .text.isEmpty ||
+                                                  foodController.text.isEmpty) {
+                                                Get.snackbar(
+                                                  "Something went wrong",
+                                                  'Please fill every field',
+                                                  backgroundColor: Colors.red,
+                                                  colorText: Colors.white,
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 5, 0, 0),
+                                                  duration: const Duration(
+                                                      milliseconds: 4000),
+                                                  snackPosition:
+                                                      SnackPosition.BOTTOM,
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
 
-                                          var response = await ApiProvider()
-                                              .processPostTravel(
-                                            nameController.text,
-                                            itemController.text,
-                                            int.parse(quantityController.text),
-                                            int.parse(pricePaidController.text),
-                                            int.parse(priceSoldController.text),
-                                            int.parse(transportController.text),
-                                            int.parse(hotelController.text),
-                                            int.parse(foodController.text),
-                                          );
-
-                                          if (response.message != null) {
-                                            setState(() {
-                                              isLoading = false;
-                                            });
-                                            Get.back();
-                                            Get.snackbar(
-                                              "Success",
-                                              response.message!,
-                                              backgroundColor: Colors.green,
-                                              colorText: Colors.white,
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                            );
-                                          } else {
-                                            setState(() {
-                                              isLoading = false;
-                                            });
-                                            Get.snackbar(
-                                              "Error",
-                                              "Something went wrong",
-                                              backgroundColor: Colors.red,
-                                              colorText: Colors.white,
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                            );
-                                          }
-                                        }
-                                      }
-                                    },
-                                    child: isLoading == true
-                                        ? const CircularProgressIndicator(
-                                            color: Colors.white,
-                                          )
-                                        : Text("Add Trip",
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                RegularTextStyle.regular14600(
-                                                    whiteColor))),
+                                                var response =
+                                                    await ApiProvider()
+                                                        .processPostTravel(
+                                                  nameController.text,
+                                                  itemController.text,
+                                                  int.parse(
+                                                      quantityController.text),
+                                                  int.parse(
+                                                      pricePaidController.text),
+                                                  int.parse(
+                                                      priceSoldController.text),
+                                                  int.parse(
+                                                      transportController.text),
+                                                  int.parse(
+                                                      hotelController.text),
+                                                  int.parse(
+                                                      foodController.text),
+                                                );
+                                                value.fetch();
+                                                if (response.message != null) {
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                  Get.back();
+                                                  // Get.snackbar(
+                                                  //   "Success",
+                                                  //   response.message!,
+                                                  //   backgroundColor: Colors.green,
+                                                  //   colorText: Colors.white,
+                                                  //   snackPosition:
+                                                  //       SnackPosition.BOTTOM,
+                                                  // );
+                                                  alert(response.message!);
+                                                } else {
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                  Get.snackbar(
+                                                    "Error",
+                                                    "Something went wrong",
+                                                    backgroundColor: Colors.red,
+                                                    colorText: Colors.white,
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                  );
+                                                }
+                                              }
+                                            }
+                                          },
+                                          child: isLoading == true
+                                              ? const CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                )
+                                              : Text("Add Trip",
+                                                  textAlign: TextAlign.center,
+                                                  style: RegularTextStyle
+                                                      .regular14600(
+                                                          whiteColor))),
+                                ),
                               ),
                             ),
                             const SizedBox(

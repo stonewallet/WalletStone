@@ -21,8 +21,10 @@ import 'package:walletstone/UI/Model/Getpdf/getpdf_model.dart';
 import 'package:walletstone/UI/Trips/add_new_expense.dart';
 import 'package:walletstone/UI/Trips/add_new_purchase.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/Trips/widgets/invite_trip.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:walletstone/widgets/global.dart';
 import '../Constants/colors.dart';
 import 'edit_trip.dart';
 
@@ -585,29 +587,34 @@ class _NewTripPageState extends State<NewTripPage> {
                                                   //   MaterialPageRoute(builder: (context)
                                                   //   => const NewTripPage()),
                                                   // );
+                                                  var tripProvider =
+                                                      Provider.of<TripProvider>(
+                                                          context,
+                                                          listen: false);
                                                   var response =
                                                       await ApiForEndTrip()
                                                           .endTrip(value
                                                               .travel2response
                                                               .id!);
-
+                                                  tripProvider.fetch();
                                                   if (response.message !=
                                                       null) {
                                                     Get.back();
-                                                    Get.snackbar(
-                                                      " Ended successfully",
-                                                      '',
-                                                      backgroundColor:
-                                                          newGradient6,
-                                                      colorText: whiteColor,
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(
-                                                          20, 5, 0, 0),
-                                                      duration: const Duration(
-                                                          milliseconds: 4000),
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                    );
+                                                    alert(response.message!);
+                                                    // Get.snackbar(
+                                                    //   " Ended successfully",
+                                                    //   '',
+                                                    //   backgroundColor:
+                                                    //       newGradient6,
+                                                    //   colorText: whiteColor,
+                                                    //   padding: const EdgeInsets
+                                                    //       .fromLTRB(
+                                                    //       20, 5, 0, 0),
+                                                    //   duration: const Duration(
+                                                    //       milliseconds: 4000),
+                                                    //   snackPosition:
+                                                    //       SnackPosition.BOTTOM,
+                                                    // );
                                                     // var snackBar = SnackBar(
                                                     //     content: Text(
                                                     //         "Assets created successfully"));

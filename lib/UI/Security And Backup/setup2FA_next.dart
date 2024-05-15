@@ -9,6 +9,7 @@ import 'package:walletstone/API/Auth/auth_create.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dart';
 import 'package:walletstone/UI/welcome_page.dart';
+import 'package:walletstone/widgets/global.dart';
 
 import '../Constants/colors.dart';
 
@@ -132,15 +133,7 @@ class _Setup2FANextState extends State<Setup2FANext> {
                         await SharedPreferences.getInstance();
                     sharedPreferences.remove('csrfToken');
                     sharedPreferences.remove('sessionId');
-                    Get.snackbar(
-                      response.message!,
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
+                    alert(response.message!);
                   } else {
                     var snackBar =
                         const SnackBar(content: Text("Something gone wrong"));

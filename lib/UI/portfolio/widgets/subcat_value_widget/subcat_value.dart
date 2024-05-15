@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
@@ -67,8 +68,8 @@ class _SubCatListViewState extends State<SubCatListView> {
                     icon = icons[2];
                   }
                   return SizedBox(
-                    width: MediaQuery.sizeOf(context).width / 2.1,
-                    height: 50,
+                    width: 190.w,
+                    height: 50.h,
                     child: Card(
                       color: transparent,
                       child: ListTile(
@@ -76,19 +77,16 @@ class _SubCatListViewState extends State<SubCatListView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Icon(
+                              icon,
+                              size: 20.w,
+                              color: whiteColor,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Icon(
-                                icon,
-                                size: 20,
-                                color: whiteColor,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                               child: Text(
                                 textAlign: TextAlign.center,
                                 totalValue!.toStringAsFixed(2),

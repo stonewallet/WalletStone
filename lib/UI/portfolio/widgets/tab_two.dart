@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/API/portfolio_api/search_api.dart';
@@ -67,8 +68,8 @@ class _TabBarScreenTwoState extends State<TabBarScreenTwo> {
         length: 3,
         child: Builder(
           builder: (BuildContext context) {
-            final double width = MediaQuery.of(context).size.width;
-            final double height = MediaQuery.of(context).size.height;
+            final double width = MediaQuery.of(context).size.width.w;
+            final double height = MediaQuery.of(context).size.height.h;
             return SingleChildScrollView(
               child: GetBuilder<PortfolioController2>(
                 builder: (controller) {

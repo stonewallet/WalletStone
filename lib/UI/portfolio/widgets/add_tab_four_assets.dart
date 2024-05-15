@@ -10,6 +10,7 @@ import 'package:walletstone/UI/portfolio/controller/assets_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/cash_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/loan_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/portfolip_controller.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class TabFourAssets extends StatefulWidget {
   final RxList<port.Portfolio> loanportfolio;
@@ -382,19 +383,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                                   isLoading = false;
                                                 });
                                                 Get.back();
-                                                Get.snackbar(
-                                                  response.message!,
-                                                  '',
-                                                  backgroundColor: newGradient6,
-                                                  colorText: whiteColor,
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          20, 5, 0, 0),
-                                                  duration: const Duration(
-                                                      milliseconds: 4000),
-                                                  snackPosition:
-                                                      SnackPosition.BOTTOM,
-                                                );
+                                               alert(response.message!);
                                               } else {
                                                 // Handle errors that occur during stream processing
 

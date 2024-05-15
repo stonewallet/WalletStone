@@ -13,6 +13,7 @@ import 'package:walletstone/UI/portfolio/controller/cash_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/loan_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/portfolip_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/trip_controller.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class UpdateAssetsScreen extends StatefulWidget {
   final int index;
@@ -311,19 +312,7 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
                                               isLoading = false;
                                             });
                                             Get.back();
-                                            Get.snackbar(
-                                              "Assets updated successfully",
-                                              '',
-                                              backgroundColor: newGradient6,
-                                              colorText: whiteColor,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 5, 0, 0),
-                                              duration: const Duration(
-                                                  milliseconds: 4000),
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                            );
+                                           alert(response.message!);
                                           } else {
                                             setState(() {
                                               isLoading = false;
@@ -401,15 +390,7 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
                       isLoading = false;
                     });
                     Get.back();
-                    Get.snackbar(
-                      "Assets deleted successfully",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
+                   alert(response.message!);
                     // var snackBar = SnackBar(
                     //     content: Text(
                     //         "Assets created successfully"));

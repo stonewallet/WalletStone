@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/changeuser_pass.dart';
+import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/select_wallet.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/setup2FA.dart';
 
@@ -331,40 +333,44 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
               const SizedBox(
                 height: 10,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Setup2FA()),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Setup  2FA",
-                              style: RegularTextStyle.regular15600(whiteColor)),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 20,
-                            color: iconColor,
-                          )
-                        ],
+              Consumer<TwoFactorProvider>(
+                builder: (context, value, child) => InkWell(
+                  onTap: () {
+                    value.checkAuthStatus();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Setup2FA()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Setup  2FA",
+                                style:
+                                    RegularTextStyle.regular15600(whiteColor)),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                              color: iconColor,
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: width,
-                      height: 1,
-                      color: drawerColor,
-                    )
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

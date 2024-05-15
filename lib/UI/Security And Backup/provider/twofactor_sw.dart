@@ -41,7 +41,7 @@ class TwoFactorProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         CheckAuthStatus travelPostResponse =
             CheckAuthStatus.fromJson(json.decode(response.toString()));
-        _isEnabled = travelPostResponse.message!;
+        _isEnabled = response.data['has_2FAEnabled'];
         notifyListeners();
         return travelPostResponse;
       } else {

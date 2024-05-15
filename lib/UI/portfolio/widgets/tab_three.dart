@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
@@ -61,8 +62,8 @@ class _TabBarScreenThreeState extends State<TabBarScreenThree> {
   final focus = FocusNode();
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width.w;
+    height = MediaQuery.of(context).size.height.h;
 
     return Scaffold(
         backgroundColor: Colors.transparent,

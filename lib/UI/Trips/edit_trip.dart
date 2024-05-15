@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:walletstone/API/Endtrip/endtrip.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import '../../API/api_provider.dart';
 import '../../Responses/travel2_response.dart';
 import '../Constants/colors.dart';
@@ -489,7 +491,7 @@ class _EditTripPageState extends State<EditTripPage> {
 
                             ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: widget.expenses.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   if (index >= expenseController.length) {
@@ -570,98 +572,105 @@ class _EditTripPageState extends State<EditTripPage> {
                               child: SizedBox(
                                 height: 45,
                                 width: width * 0.8,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColor2,
-                                        surfaceTintColor: blackColor,
-                                        shadowColor: whiteColor,
-                                        elevation: 4),
-                                    onPressed: () async {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
+                                child: Consumer<TripProvider>(
+                                  builder: (context, value, child) =>
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: buttonColor2,
+                                              surfaceTintColor: blackColor,
+                                              shadowColor: whiteColor,
+                                              elevation: 4),
+                                          onPressed: () async {
+                                            setState(() {
+                                              isLoading = true;
+                                            });
 
-                                      List<Map<String, dynamic>> productList =
-                                          [];
-                                      List<Map<String, dynamic>> expensesList =
-                                          [];
+                                            List<Map<String, dynamic>>
+                                                productList = [];
+                                            List<Map<String, dynamic>>
+                                                expensesList = [];
 
-                                      for (int i = 0;
-                                          i <= widget.product.length - 1;
-                                          i++) {
-                                        productList.add({
-                                          "product_name": productName[i].text,
-                                          "quantity": int.parse(
-                                              productQuantity[i].text),
-                                          "price_paid": int.parse(
-                                              productPricePaid[i].text),
-                                          "price_sold": int.parse(
-                                              productPriceSold[i].text),
-                                          "user": widget.product[i].user,
-                                        });
-                                      }
-                                      for (int i = 0;
-                                          i <= widget.expenses.length - 1;
-                                          i++) {
-                                        expensesList.add({
-                                          "expense_name":
-                                              widget.expenses[i].expenseName,
-                                          "expense_amount": int.parse(
-                                              expenseController[i].text),
-                                          "user": widget.expenses[i].user,
-                                        });
-                                      }
+                                            for (int i = 0;
+                                                i <= widget.product.length - 1;
+                                                i++) {
+                                              productList.add({
+                                                "product_name":
+                                                    productName[i].text,
+                                                "quantity": int.parse(
+                                                    productQuantity[i].text),
+                                                "price_paid": int.parse(
+                                                    productPricePaid[i].text),
+                                                "price_sold": int.parse(
+                                                    productPriceSold[i].text),
+                                                "user": widget.product[i].user,
+                                              });
+                                            }
+                                            for (int i = 0;
+                                                i <= widget.expenses.length - 1;
+                                                i++) {
+                                              expensesList.add({
+                                                "expense_name": widget
+                                                    .expenses[i].expenseName,
+                                                "expense_amount": int.parse(
+                                                    expenseController[i].text),
+                                                "user": widget.expenses[i].user,
+                                              });
+                                            }
 
-                                      Map<String, dynamic> edit = {
-                                        "trip_name": nameController.text,
-                                        "product": productList,
-                                        "expenses": expensesList,
-                                        "user": widget.userid,
-                                        "user_order": widget.userOrder,
-                                      };
+                                            Map<String, dynamic> edit = {
+                                              "trip_name": nameController.text,
+                                              "product": productList,
+                                              "expenses": expensesList,
+                                              "user": widget.userid,
+                                              "user_order": widget.userOrder,
+                                            };
 
-                                      print(edit);
-                                      ApiForEndTrip().resumeTrip(widget.id);
+                                            print(edit);
+                                            ApiForEndTrip()
+                                                .resumeTrip(widget.id);
 
-                                      var response = await ApiProvider().processTravelPut(
-                                          widget.id, edit
-                                          // widget.id, nameController.text, int.parse(quantityController.text),int.parse(pricePaidController.text),
-                                          //   int.parse(priceSoldController.text),int.parse(transportController.text), int.parse(hotelController.text),
-                                          //   int.parse(foodController.text), widget.createdAt
-                                          );
-
-                                      if (response.message != null) {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        Navigator.pop(context);
-                                        var snackBar = SnackBar(
-                                            content: Text(response.message!));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      } else {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        var snackBar = const SnackBar(
-                                            content:
-                                                Text("Something gone wrong"));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      }
-                                    },
-                                    child: isLoading == true
-                                        ? const CircularProgressIndicator(
-                                            color: Colors.white,
-                                          )
-                                        : Text("Edit Trip",
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                RegularTextStyle.regular14600(
-                                                    whiteColor))),
+                                            var response = await ApiProvider()
+                                                .processTravelPut(
+                                                    widget.id, edit
+                                                    // widget.id, nameController.text, int.parse(quantityController.text),int.parse(pricePaidController.text),
+                                                    //   int.parse(priceSoldController.text),int.parse(transportController.text), int.parse(hotelController.text),
+                                                    //   int.parse(foodController.text), widget.createdAt
+                                                    );
+                                            value.fetch();
+                                            if (response.message != null) {
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                              Navigator.pop(context);
+                                              var snackBar = SnackBar(
+                                                  content:
+                                                      Text(response.message!));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                              var snackBar = const SnackBar(
+                                                  content: Text(
+                                                      "Something gone wrong"));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                            }
+                                          },
+                                          child: isLoading == true
+                                              ? const CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                )
+                                              : Text("Edit Trip",
+                                                  textAlign: TextAlign.center,
+                                                  style: RegularTextStyle
+                                                      .regular14600(
+                                                          whiteColor))),
+                                ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             )
                           ],

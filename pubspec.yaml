@@ -191,6 +191,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   local_auth: ^2.2.0
   flutter_windowmanager: ^0.2.0
+  flutter_screenutil: ^5.9.0
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:

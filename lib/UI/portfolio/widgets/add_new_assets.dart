@@ -13,6 +13,7 @@ import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart' as port;
 import 'package:walletstone/UI/portfolio/controller/assets_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/cash_controller.dart';
 import 'package:walletstone/UI/portfolio/controller/portfolip_controller.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class AddAssetsDetail extends StatefulWidget {
   final RxList<port.Portfolio> portfolio;
@@ -489,17 +490,18 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                             isLoading = false;
                                           });
                                           Get.back();
-                                          Get.snackbar(
-                                            response.message!,
-                                            '',
-                                            backgroundColor: newGradient6,
-                                            colorText: whiteColor,
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 5, 0, 0),
-                                            duration: const Duration(
-                                                milliseconds: 4000),
-                                            snackPosition: SnackPosition.BOTTOM,
-                                          );
+                                         alert(response.message!);
+                                          // Get.snackbar(
+                                          //   response.message!,
+                                          //   '',
+                                          //   backgroundColor: newGradient6,
+                                          //   colorText: whiteColor,
+                                          //   padding: const EdgeInsets.fromLTRB(
+                                          //       20, 5, 0, 0),
+                                          //   duration: const Duration(
+                                          //       milliseconds: 4000),
+                                          //   snackPosition: SnackPosition.BOTTOM,
+                                          // );
                                         } else {
                                           // Handle errors that occur during stream processing
 

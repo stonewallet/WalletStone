@@ -11,6 +11,7 @@ import 'package:walletstone/API/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
+import 'package:walletstone/widgets/global.dart';
 
 import '../Constants/colors.dart';
 
@@ -446,15 +447,7 @@ class _SendPageState extends State<SendPage> {
                   isLoading = false;
                 });
                 Get.back();
-                Get.snackbar(
-                  response.message!,
-                  '',
-                  backgroundColor: newGradient6,
-                  colorText: whiteColor,
-                  padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                  duration: const Duration(milliseconds: 4000),
-                  snackPosition: SnackPosition.BOTTOM,
-                );
+                alert(response.message!);
               } else {
                 var snackBar =
                     const SnackBar(content: Text("Something gone wrong"));

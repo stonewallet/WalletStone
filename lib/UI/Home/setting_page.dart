@@ -14,14 +14,17 @@ import 'package:walletstone/UI/AddressBook/address_book.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 import 'package:walletstone/UI/Help%20And%20Support/help_and_support.dart';
+import 'package:walletstone/UI/Home/provider/notification_provider.dart';
 import 'package:walletstone/UI/Model/keyFile/key_model.dart';
 import 'package:walletstone/UI/Other%20Settings/other_settings.dart';
 import 'package:walletstone/UI/Privacy/privacy.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/Wallet/wallet.dart';
 import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/welcome_page.dart';
 import 'package:walletstone/widgets/customspinkit_widget.dart';
+import 'package:walletstone/widgets/global.dart';
 
 import '../Constants/colors.dart';
 import '../Model/settings_model.dart';
@@ -630,42 +633,52 @@ class _SettingPageState extends State<SettingPage> {
                   final SharedPreferences sharedPref =
                       await SharedPreferences.getInstance();
                   sharedPref.remove('name');
+                  if (mounted) {
+                    var tripProvider =
+                        Provider.of<TripProvider>(context, listen: false);
+                    var notification = Provider.of<NotificationProvider>(
+                        context,
+                        listen: false);
 
-                  var response = await ApiServiceForLogOut().logOut();
+                    var response = await ApiServiceForLogOut().logOut();
 
-                  if (response.message != null) {
-                    Get.offAll(() => const WelcomePage());
-                    SharedPreferences sharedPreferences =
-                        await SharedPreferences.getInstance();
-                    sharedPreferences.remove('csrfToken');
-                    sharedPreferences.remove('sessionId');
                     value.assetList.clear();
                     value.cashList.clear();
                     value.loanList.clear();
-                    Get.snackbar(
-                      "Logout successfully",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
-                    // var snackBar = SnackBar(
-                    //     content: Text(
-                    //         "Assets created successfully"));
-                    // ScaffoldMessenger.of(context)
-                    //     .showSnackBar(snackBar);
-                  } else {
-                    Get.snackbar(
-                      "Something gone wrong",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
+                    tripProvider.travelList.clear();
+                    notification.notifications.clear();
+                    if (response.message != null) {
+                      Get.offAll(() => const WelcomePage());
+                      SharedPreferences sharedPreferences =
+                          await SharedPreferences.getInstance();
+                      sharedPreferences.remove('csrfToken');
+                      sharedPreferences.remove('sessionId');
+                      alert(response.message!);
+                      // Get.snackbar(
+                      //   "Logout successfully",
+                      //   '',
+                      //   backgroundColor: newGradient6,
+                      //   colorText: whiteColor,
+                      //   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                      //   duration: const Duration(milliseconds: 4000),
+                      //   snackPosition: SnackPosition.BOTTOM,
+                      // );
+                      // var snackBar = SnackBar(
+                      //     content: Text(
+                      //         "Assets created successfully"));
+                      // ScaffoldMessenger.of(context)
+                      //     .showSnackBar(snackBar);
+                    } else {
+                      Get.snackbar(
+                        "Something gone wrong",
+                        '',
+                        backgroundColor: newGradient6,
+                        colorText: whiteColor,
+                        padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                        duration: const Duration(milliseconds: 4000),
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    }
                   }
                   // Navigator.pop(context);
                 },

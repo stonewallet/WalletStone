@@ -4,12 +4,12 @@ import 'package:walletstone/UI/Model/coin_model.dart';
 
 void alert(String alert) {
   Fluttertoast.showToast(
-    msg: alert,
-    textColor: Colors.white,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.CENTER,
-    backgroundColor: Colors.indigo,
-  );
+      msg: alert,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.indigo,
+      timeInSecForIosWeb: 400);
 }
 
 List<CoinModel> coinsList = [

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/API/portfolio_api/search_api.dart';
@@ -62,8 +63,8 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
   final focus = FocusNode();
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width.w;
+    height = MediaQuery.of(context).size.height.h;
 
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -296,18 +297,19 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                20,
-                                            height: 30,
-                                            decoration: const BoxDecoration(
-                                                color: transparent,
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/Dollar.png'))),
-                                            child: Image.asset(
-                                                'assets/Dollar.png'),),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              20,
+                                          height: 30,
+                                          decoration: const BoxDecoration(
+                                              color: transparent,
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Dollar.png'))),
+                                          child:
+                                              Image.asset('assets/Dollar.png'),
+                                        ),
                                       ),
                                     )),
                             SizedBox(

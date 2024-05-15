@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/API/change_password/change_user_password.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/widgets/global.dart';
 import '../Constants/colors.dart';
 
 class BackupPage extends StatefulWidget {
@@ -195,15 +196,7 @@ class _BackupPageState extends State<BackupPage> {
                 );
                 if (response.message != null) {
                   Get.back();
-                  Get.snackbar(
-                    response.message!,
-                    '',
-                    backgroundColor: newGradient6,
-                    colorText: whiteColor,
-                    padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                    duration: const Duration(milliseconds: 4000),
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
+                 alert(response.message!);
                 } else {
                   Get.snackbar(
                     "Something Went Wrong",

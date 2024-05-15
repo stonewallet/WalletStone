@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/api_provider.dart';
@@ -30,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = false;
 
   TravelPostResponse travelPostResponse = TravelPostResponse();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,248 +46,266 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(children: [
           Stack(
             children: [
-              Container(
-                width: width,
-                height: height,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [gradientColor1, gradientColor2],
+              Form(
+                key: _formKey,
+                child: Container(
+                  width: width,
+                  height: height,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [gradientColor1, gradientColor2],
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: height * 0.2,
-                    ),
-                    Image.asset(
-                      "assets/images/welcome_logo.png",
-                      height: 110,
-                      width: 120,
-                      fit: BoxFit.fill,
-                    ),
-                    Text(
-                      "Login To \nSTONE WALLET",
-                      style: NasalTextStyle.nasal(whiteColor),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: height * 0.03,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "User Name",
-                          style: RegularTextStyle.regular16600(whiteColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: userNameController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: height * 0.1.h,
+                      ),
+                      Image.asset(
+                        "assets/images/welcome_logo.png",
+                        height: 110.h,
+                        width: 120.w,
+                        fit: BoxFit.fill,
+                      ),
+                      Text(
+                        "Login To \nSTONE WALLET",
+                        style: NasalTextStyle.nasal(whiteColor),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: height * 0.03.h,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "User Name",
                             style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: EdgeInsets.only(left: 20),
-                            ),
-                            textInputAction: TextInputAction.next,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Password",
-                          style: RegularTextStyle.regular16600(whiteColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: passwordController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
-                            style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: const EdgeInsets.only(left: 20),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color:
-                                      passwordVisible ? whiteColor : greyColor,
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Container(
+                            height: 45.h,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15.w, right: width * 0.15.w),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: userNameController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
                                 ),
-                                onPressed: () {
-                                  setState(
-                                    () {
-                                      passwordVisible = !passwordVisible;
-                                    },
-                                  );
-                                },
+                                fillColor: fillColor,
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
+                                ),
+                                contentPadding: EdgeInsets.only(left: 20),
                               ),
+                              textInputAction: TextInputAction.next,
                             ),
-                            textInputAction: TextInputAction.next,
-                            obscureText: passwordVisible,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: 65,
-                      width: width * 0.75,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: buttonColor3,
-                              surfaceTintColor: blackColor,
-                              shadowColor: whiteColor,
-                              elevation: 4),
-                          onPressed: () async {
-                            final SharedPreferences sharedPref =
-                                await SharedPreferences.getInstance();
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Password",
+                            style: RegularTextStyle.regular16600(whiteColor),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 45,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15, right: width * 0.15),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: passwordController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: InputDecoration(
+                                // hintText: "Password",
+                                hintStyle:
+                                    RegularTextStyle.regular16600(cursorColor),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
+                                ),
+                                fillColor: fillColor,
+                                filled: true,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  borderSide: BorderSide(
+                                      color: borderColor, width: 1.0),
+                                ),
+                                contentPadding: const EdgeInsets.only(left: 20),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: passwordVisible
+                                        ? whiteColor
+                                        : greyColor,
+                                  ),
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        passwordVisible = !passwordVisible;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Your Password';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                              obscureText: passwordVisible,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      SizedBox(
+                        height: 65,
+                        width: width * 0.75,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: buttonColor3,
+                                surfaceTintColor: blackColor,
+                                shadowColor: whiteColor,
+                                elevation: 4),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                final SharedPreferences sharedPref =
+                                    await SharedPreferences.getInstance();
 
-                            if (kDebugMode) {
-                              print(userNameController.text);
-                              print(passwordController.text);
-                            }
-                            sharedPref.setString(
-                                "name", userNameController.text);
-                            var response = await ApiProvider().processLogin(
-                                userNameController.text,
-                                passwordController.text);
+                                if (kDebugMode) {
+                                  print(userNameController.text);
+                                  print(passwordController.text);
+                                }
+                                sharedPref.setString(
+                                    "name", userNameController.text);
+                                var response = await ApiProvider().processLogin(
+                                    userNameController.text,
+                                    passwordController.text);
 
-                            if (response.message == "Login successful") {
-                              setState(() {
-                                isLoading = false;
-                              });
-                              var snackBar =
-                                  SnackBar(content: Text(response.message!));
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BottomNavigationPage()),
-                                );
+                                if (response.message == "Login successful") {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  var snackBar = SnackBar(
+                                      content: Text(response.message!));
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BottomNavigationPage()),
+                                    );
+                                  }
+                                  userNameController.clear();
+                                  passwordController.clear();
+                                } else if (response.message ==
+                                    " Invalid login credentials") {
+                                  var snackBar = SnackBar(
+                                      content: Text(response.message!));
+                                  if (context.mounted)
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  var snackBar = const SnackBar(
+                                      content: Text("Something went wrong"));
+                                  if (context.mounted)
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                }
                               }
-                              userNameController.clear();
-                              passwordController.clear();
-                            } else if (response.message ==
-                                " Invalid login credentials") {
-                              var snackBar =
-                                  SnackBar(content: Text(response.message!));
-                              if (context.mounted)
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                            } else {
-                              setState(() {
-                                isLoading = false;
-                              });
-                              var snackBar = const SnackBar(
-                                  content: Text("Something went wrong"));
-                              if (context.mounted)
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                            }
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context)
-                            //   => const BottomNavigationPage()),
-                            // );
-                          },
-                          child: isLoading == true
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white,
-                                )
-                              : Text("Login",
-                                  textAlign: TextAlign.center,
-                                  style: LargeTextStyle.large20700(textColor))),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => const ForgetPassword());
-                      },
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Forget Password ?',
-                            style: RegularTextStyle.regular15700(whiteColor),
-                            children: const <TextSpan>[
-                              // TextSpan(
-                              //     text: 'bold',
-                              //     style: TextStyle(
-                              //         fontWeight: FontWeight.bold,
-                              //         color: blackColor)),
-                            ],
+
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context)
+                              //   => const BottomNavigationPage()),
+                              // );
+                            },
+                            child: isLoading == true
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text("Login",
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        LargeTextStyle.large20700(textColor))),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => const ForgetPassword());
+                        },
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Forget Password ?',
+                              style: RegularTextStyle.regular15700(whiteColor),
+                              children: const <TextSpan>[
+                                // TextSpan(
+                                //     text: 'bold',
+                                //     style: TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         color: blackColor)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(

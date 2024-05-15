@@ -10,6 +10,7 @@ import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 import 'package:walletstone/UI/Model/InviteUser/inviteusermodel.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class InviteUserTripScreen extends StatefulWidget {
   final String centerTitle;
@@ -321,17 +322,7 @@ class InviteUserTripScreenState extends State<InviteUserTripScreen> {
                                           isLoading = false;
                                         });
                                         Get.back();
-                                        Get.snackbar(
-                                          "Invitation Send successfully",
-                                          '',
-                                          backgroundColor: newGradient6,
-                                          colorText: whiteColor,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 5, 0, 0),
-                                          duration: const Duration(
-                                              milliseconds: 4000),
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
+                                        alert(response.message!);
                                       } else {
                                         setState(() {
                                           isLoading = false;

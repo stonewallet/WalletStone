@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +16,6 @@ import 'package:walletstone/widgets/dropdown._widget.dart';
 import 'package:walletstone/widgets/global.dart';
 import '../../API/shared_preferences.dart';
 import '../Constants/colors.dart';
-import '../Model/coin_model.dart';
 import '../Send/send_page.dart';
 
 class MyWalletBalancePage extends StatefulWidget {
@@ -41,8 +41,8 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width.w;
+    double height = MediaQuery.of(context).size.height.h;
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -50,7 +50,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: height * 0.001,
+                height: height * 0.001.h,
               ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +98,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                 },
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.02.h,
               ),
               // Consumer<ApiWalletBalance>(
               //   builder: (context, value, child) => Text(
@@ -107,7 +107,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
               //       style: RegularTextStyle.regular15600(whiteColor)),
               // ),
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.04.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -132,9 +132,9 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                             _showBottomSheet();
                           },
                           child: Image.asset("assets/Icons/download.png",
-                              width: 25, height: 25, color: whiteColor)),
-                      const SizedBox(
-                        height: 5,
+                              width: 25.w, height: 25.h, color: whiteColor)),
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Text("Receive",
                           style: RegularTextStyle.regular15600(whiteColor))
@@ -156,12 +156,12 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                           },
                           child: Image.asset(
                             "assets/Icons/upload.png",
-                            width: 25,
-                            height: 25,
+                            width: 25.w,
+                            height: 25.h,
                             color: whiteColor,
                           )),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Text("Send",
                           style: RegularTextStyle.regular15600(whiteColor))
@@ -170,14 +170,14 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                 ],
               ),
               SizedBox(
-                height: height * 0.03,
+                height: height * 0.03.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 6,
-                    height: 6,
+                    width: 6.w,
+                    height: 6.h,
                     decoration: BoxDecoration(
                       border: Border.all(color: whiteColor),
                       color: whiteColor,

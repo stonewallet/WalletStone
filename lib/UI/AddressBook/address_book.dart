@@ -10,6 +10,7 @@ import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/contact/contact.dart';
 import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class AddressBookPage extends StatefulWidget {
   const AddressBookPage({super.key});
@@ -323,28 +324,28 @@ class _AddressBookPageState extends State<AddressBookPage> {
                   var response = await value.deleteContact(iD);
                   if (response != false) {
                     value.getContact();
-
-                    Get.snackbar(
-                      "Contact deleted successfully",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
+                  alert('Contact deleted successfully');
+                    // Get.snackbar(
+                    //   "Contact deleted successfully",
+                    //   '',
+                    //   backgroundColor: newGradient6,
+                    //   colorText: whiteColor,
+                    //   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    //   duration: const Duration(milliseconds: 4000),
+                    //   snackPosition: SnackPosition.BOTTOM,
+                    // );
                   } else {
                     value.getContact();
-
-                    Get.snackbar(
-                      "Contact deleted successfully",
-                      '',
-                      backgroundColor: newGradient6,
-                      colorText: whiteColor,
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      duration: const Duration(milliseconds: 4000),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
+                    alert('Contact deleted successfully');
+                    // Get.snackbar(
+                    //   "Contact deleted successfully",
+                    //   '',
+                    //   backgroundColor: newGradient6,
+                    //   colorText: whiteColor,
+                    //   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    //   duration: const Duration(milliseconds: 4000),
+                    //   snackPosition: SnackPosition.BOTTOM,
+                    // );
                   }
                   Navigator.pop(context);
                 },

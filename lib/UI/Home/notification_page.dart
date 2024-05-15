@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,8 @@ import 'package:walletstone/API/api_provider.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Home/provider/notification_provider.dart';
 import 'package:walletstone/UI/Model/notification_model.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
+import 'package:walletstone/widgets/global.dart';
 
 import '../Constants/colors.dart';
 
@@ -111,7 +114,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     duration: const Duration(milliseconds: 3),
                     height: notificationProvider.expandedIndices.contains(index)
                         ? null
-                        : height / 12,
+                        : height / 12.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -141,7 +144,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             children: [
                               Row(
                                 children: [
-                                  SizedBox(width: width * 0.03),
+                                  SizedBox(width: width * 0.03.w),
                                   Icon(
                                     Entypo.message,
                                     color:
@@ -149,18 +152,21 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ? whiteColor.withOpacity(0.6)
                                             : Colors.white,
                                   ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    truncatedMessage,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: RegularTextStyle.regular15600(
-                                      value.notifications[index].readMessage
-                                          ? whiteColor.withOpacity(0.6)
-                                          : Colors.white,
+                                  SizedBox(width: 10.w),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      truncatedMessage,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: RegularTextStyle.regular15600(
+                                        value.notifications[index].readMessage
+                                            ? whiteColor.withOpacity(0.6)
+                                            : Colors.white,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(width: width / 3.5),
+                                  SizedBox(width: 100.w),
                                   SizedBox(
                                     height: 25,
                                     child: IconButton(
@@ -209,43 +215,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       if (response.message !=
                                                           null) {
                                                         Get.back();
-                                                        Get.snackbar(
-                                                          " Deleted successfully",
-                                                          '',
-                                                          backgroundColor:
-                                                              newGradient6,
-                                                          colorText: whiteColor,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  20, 5, 0, 0),
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      4000),
-                                                          snackPosition:
-                                                              SnackPosition
-                                                                  .BOTTOM,
-                                                        );
+                                                        alert(
+                                                            response.message!);
+                                                        // Get.snackbar(
+                                                        //   " Deleted successfully",
+                                                        //   '',
+                                                        //   backgroundColor:
+                                                        //       newGradient6,
+                                                        //   colorText: whiteColor,
+                                                        //   padding:
+                                                        //       const EdgeInsets
+                                                        //           .fromLTRB(
+                                                        //           20, 5, 0, 0),
+                                                        //   duration:
+                                                        //       const Duration(
+                                                        //           milliseconds:
+                                                        //               4000),
+                                                        //   snackPosition:
+                                                        //       SnackPosition
+                                                        //           .BOTTOM,
+                                                        // );
                                                       } else {
-                                                        Get.snackbar(
-                                                          "Something gone wrong",
-                                                          '',
-                                                          backgroundColor:
-                                                              newGradient6,
-                                                          colorText: whiteColor,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  20, 5, 0, 0),
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      4000),
-                                                          snackPosition:
-                                                              SnackPosition
-                                                                  .BOTTOM,
-                                                        );
+                                                        // Get.snackbar(
+                                                        //   "Something gone wrong",
+                                                        //   '',
+                                                        //   backgroundColor:
+                                                        //       newGradient6,
+                                                        //   colorText: whiteColor,
+                                                        //   padding:
+                                                        //       const EdgeInsets
+                                                        //           .fromLTRB(
+                                                        //           20, 5, 0, 0),
+                                                        //   duration:
+                                                        //       const Duration(
+                                                        //           milliseconds:
+                                                        //               4000),
+                                                        //   snackPosition:
+                                                        //       SnackPosition
+                                                        //           .BOTTOM,
+                                                        // );
+                                                        alert(
+                                                            'Something gone wrong');
                                                       }
                                                     },
                                                     child: Text(
@@ -322,21 +332,16 @@ class _NotificationPageState extends State<NotificationPage> {
                         child: const Icon(Entypo.check)),
                   ),
                   onTap: () async {
+                    var tripprovider =
+                        Provider.of<TripProvider>(context, listen: false);
                     print(metaDatum.tripId);
                     var response = await ApiProvider()
                         .processAddUser(int.parse(metaDatum.tripId));
                     value.getNotification();
+                    tripprovider.fetch();
                     notificationProvider.toggleExpansion(index);
                     if (response.message != null) {
-                      Get.snackbar(
-                        response.message!,
-                        '',
-                        backgroundColor: newGradient6,
-                        colorText: whiteColor,
-                        padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                        duration: const Duration(milliseconds: 4000),
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
+                      alert(response.message!);
                     } else {
                       Get.snackbar(
                         "Something gone wrong",
