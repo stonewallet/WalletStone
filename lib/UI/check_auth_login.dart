@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/T2FAuth/two_f_login.dart';
 import 'package:walletstone/UI/login_page.dart';
+import 'package:walletstone/widgets/global.dart';
 
 class CheckAuthLogin extends StatefulWidget {
   const CheckAuthLogin({super.key});
@@ -87,14 +89,23 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                     decoration: InputDecoration(
                       fillColor: fillColor,
                       filled: true,
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(color: borderColor, width: 1.0),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: blueAccentColor,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide:
-                            const BorderSide(color: Colors.red, width: 1.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: blueAccentColor,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: borderColor,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       errorStyle: const TextStyle(height: 0.1),
                       errorMaxLines: 2,
@@ -156,18 +167,27 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                         backgroundColor: Colors.blueAccent),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        // var userResponse = await usergetProvider.getAllUser();
+                        // if (userResponse.username == loginAuthController.text) {
                         var response = await value.check2FAuth(
                           name: loginAuthController.text,
                         );
                         if (loginAuthController.text.isNotEmpty) {
-                          if (response.message!) {
-                            print(response.message);
+                          if (response == true) {
+                            if (kDebugMode) {
+                              print(response);
+                            }
                             Get.offAll(() => const TWOFactorLogin());
-                          } else {
+                            print("it is true ${response}");
+                          } else if (response == false) {
                             Get.offAll(() => const LoginPage());
-                            print("it is false ${response.message}");
+
+                            print("it is false ${response}");
+                          } else {
+                            alert(response);
                           }
                         }
+                        // }
                       }
                     },
                     child: Text(

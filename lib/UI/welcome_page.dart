@@ -37,6 +37,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 height: height * 0.2,

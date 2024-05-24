@@ -15,14 +15,15 @@ import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
 import 'package:walletstone/widgets/customspinkit_widget.dart';
 
 class DropDownTextFieldWidget extends StatefulWidget {
-  final List<GetWallet> dropDownList;
-
-  final Function(GetWallet) onWalletSelected;
+  // final List<GetWallet> dropDownList;
+  // final bool selectedValue;
+  // final Function(GetWallet) onWalletSelected;
 
   const DropDownTextFieldWidget({
     Key? key,
-    required this.dropDownList,
-    required this.onWalletSelected,
+    // required this.dropDownList,
+    // required this.onWalletSelected,
+    // required this.selectedValue,
   }) : super(key: key);
 
   @override
@@ -108,80 +109,79 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
       height: 50,
       width: MediaQuery.sizeOf(context).width / 2.5,
       child: SizedBox(
-        height: 100,
-        child: SearchField(
-          controller: searchController,
-          maxSuggestionsInViewPort: 10,
-          suggestionDirection: SuggestionDirection.flex,
-          onSearchTextChanged: (query) {
-            final filter = searchList
-                .where((element) => element.mnemonic
-                    .toLowerCase()
-                    .contains(query.toLowerCase()))
-                .toList();
-            return filter
+          height: 100,
+          child: SearchField(
+            controller: searchController,
+            maxSuggestionsInViewPort: 10,
+            suggestionDirection: SuggestionDirection.flex,
+            onSearchTextChanged: (query) {
+              final filter = searchList
+                  .where((element) => element.mnemonic
+                      .toLowerCase()
+                      .contains(query.toLowerCase()))
+                  .toList();
+              return filter
+                  .map((e) => SearchFieldListItem<String>(e.mnemonic,
+                      child: searchChild(e.mnemonic)))
+                  .toList();
+            },
+            onTap: () {},
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: const Key('searchfield'),
+            itemHeight: 50,
+            scrollbarDecoration: ScrollbarDecoration(),
+            onTapOutside: (x) {
+              focus.unfocus();
+            },
+            suggestionStyle: RegularTextStyle.regular16600(whiteColor),
+            searchStyle: RegularTextStyle.regular16600(whiteColor),
+            searchInputDecoration: InputDecoration(
+                hintText: "My Wallets",
+                hintStyle: RegularTextStyle.regular16600(cursorColor),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: cursorColor),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: cursorColor),
+                ),
+                suffixIcon: const Icon(
+                  Icons.arrow_drop_down,
+                  size: 25,
+                  color: whiteColor,
+                )),
+            suggestionsDecoration: SuggestionDecoration(
+              color: blackColor,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            suggestions: searchList
                 .map((e) => SearchFieldListItem<String>(e.mnemonic,
                     child: searchChild(e.mnemonic)))
-                .toList();
-          },
-          onTap: () {},
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: const Key('searchfield'),
-          itemHeight: 50,
-          scrollbarDecoration: ScrollbarDecoration(),
-          onTapOutside: (x) {
-            focus.unfocus();
-          },
-          suggestionStyle: RegularTextStyle.regular16600(whiteColor),
-          searchStyle: RegularTextStyle.regular16600(whiteColor),
-          searchInputDecoration: InputDecoration(
-              hintText: "My Wallets",
-              hintStyle: RegularTextStyle.regular16600(cursorColor),
-              enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: cursorColor),
-              ),
-              focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: cursorColor),
-              ),
-              suffixIcon: const Icon(
-                Icons.arrow_drop_down,
-                size: 25,
-                color: whiteColor,
-              )),
-          suggestionsDecoration: SuggestionDecoration(
-            color: blackColor,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          suggestions: searchList
-              .map((e) => SearchFieldListItem<String>(e.mnemonic,
-                  child: searchChild(e.mnemonic)))
-              .toList(),
-          focusNode: focus,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter Wallet Name';
-            }
-            return null;
-          },
-          suggestionState: Suggestion.expand,
-          onSuggestionTap: (SearchFieldListItem<String>? x) {
-            if (x != null) {
-              final suggestionText = x.searchKey;
-              searchController.text = suggestionText;
-              selectedUserName = suggestionText;
-              selectedUserId = searchList
-                  .firstWhere((element) => element.mnemonic == suggestionText)
-                  .id;
-              _showSelectedWalletAlert(suggestionText);
-              if (kDebugMode) {
-                print(
-                    "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                .toList(),
+            focusNode: focus,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter Wallet Name';
               }
-            }
-            focus.unfocus();
-          },
-        ),
-      ),
+              return null;
+            },
+            suggestionState: Suggestion.expand,
+            onSuggestionTap: (SearchFieldListItem<String>? x) {
+              if (x != null) {
+                final suggestionText = x.searchKey;
+                searchController.text = suggestionText;
+                selectedUserName = suggestionText;
+                selectedUserId = searchList
+                    .firstWhere((element) => element.mnemonic == suggestionText)
+                    .id;
+                _showSelectedWalletAlert(suggestionText);
+                if (kDebugMode) {
+                  print(
+                      "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                }
+              }
+              focus.unfocus();
+            },
+          )),
     );
   }
 
@@ -218,13 +218,17 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                       textAlignVertical: TextAlignVertical.center,
                       style: const TextStyle(
                           color: whiteColor, fontWeight: FontWeight.bold),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Enter Password",
-                        hintStyle: RegularTextStyle.regular15400(whiteColor),
-                        enabledBorder: const OutlineInputBorder(
+                        hintStyle: TextStyle(
+                          color: whiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: cursorColor),
                         ),
-                        focusedBorder: const OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: cursorColor),
                         ),
                       ),
@@ -242,7 +246,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      // backgroundColor: gradientColor1,
+                      backgroundColor: whiteColor,
                       foregroundColor: gradientColor1,
                       shadowColor: whiteColor,
                       shape: const ContinuousRectangleBorder(

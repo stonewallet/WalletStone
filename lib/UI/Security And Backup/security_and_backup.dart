@@ -58,6 +58,7 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: appBarBackgroundColor,
+        elevation: 0,
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -255,6 +256,9 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
                         Text("Allow biometrical authentication",
                             style: RegularTextStyle.regular15600(whiteColor)),
                         Switch.adaptive(
+                          inactiveThumbColor: redColor,
+                          activeColor:
+                              isBiometricEnabled ? stockGreenColor : redColor,
                           value: isBiometricEnabled,
                           onChanged: (value) {
                             setState(() => isBiometricEnabled = value);

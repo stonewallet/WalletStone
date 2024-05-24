@@ -33,6 +33,7 @@ class _SelectWalletPageState extends State<SelectWalletPage> {
       backgroundColor: appBarBackgroundColor,
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
         backgroundColor: appBarBackgroundColor,
         leading: InkWell(
           onTap: () {

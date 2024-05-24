@@ -75,17 +75,22 @@ class _Setup2FANextState extends State<Setup2FANext> {
                         }
                         // print(authStatus);
                         return Switch.adaptive(
+                          inactiveThumbColor: redColor,
+                          activeColor: twoFactorProvider.isEnabled
+                              ? stockGreenColor
+                              : redColor,
                           value: twoFactorProvider.isEnabled,
                           onChanged: (value) async {
                             twoFactorProvider.toggleSwitch(value);
                             if (value) {
-                              provider.authEnablePost();
+                              var response = await provider.authEnablePost();
+                              alert(response.message!);
                               if (kDebugMode) {
                                 print("value is enabled that is := $value");
                               }
                             } else {
-                              provider.authDisablePost();
-
+                              var response = await provider.authDisablePost();
+                              alert(response.message!);
                               if (kDebugMode) {
                                 print("not true it's  $value");
                               }

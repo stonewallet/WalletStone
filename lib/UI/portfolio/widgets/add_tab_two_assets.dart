@@ -151,23 +151,34 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                                             TextAlignVertical.center,
                                         style: RegularTextStyle.regular16600(
                                             whiteColor),
-                                        decoration: const InputDecoration(
-                                          focusedBorder: OutlineInputBorder(
+                                        decoration: InputDecoration(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
                                           fillColor: fillColor,
                                           filled: true,
-                                          enabledBorder: OutlineInputBorder(
+                                          enabledBorder:
+                                              const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
-                                          contentPadding:
-                                              EdgeInsets.only(left: 20),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(1),
+                                            borderSide: const BorderSide(
+                                                color: Colors.red, width: 0),
+                                          ),
+                                          errorStyle:
+                                              const TextStyle(height: 0.2),
+                                          errorMaxLines: 2,
+                                          contentPadding: const EdgeInsets.only(
+                                              left: 10, bottom: 10),
                                         ),
                                         textInputAction: TextInputAction.next,
                                         validator: (value) {
@@ -214,7 +225,7 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
@@ -223,18 +234,18 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                                           enabledBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30),
+                                                BorderRadius.circular(1),
                                             borderSide: const BorderSide(
                                                 color: Colors.red, width: 1.0),
                                           ),
                                           errorStyle:
-                                              const TextStyle(height: 0.1),
+                                              const TextStyle(height: 1),
                                           errorMaxLines: 2,
                                           contentPadding: const EdgeInsets.only(
                                               left: 10, bottom: 10),
@@ -262,7 +273,7 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: SizedBox(
                                   height: 45,
-                                  width: width * 0.8,
+                                  width: width * 0.6,
                                   child: Consumer<AssetProvider>(
                                     builder: (context, value, child) =>
                                         ElevatedButton(
@@ -373,7 +384,7 @@ class TabTwoAssetsState extends State<TabTwoAssets> {
                                                     isLoading = false;
                                                   });
                                                   Get.back();
-                                                 alert(response.message!);
+                                                  alert(response.message!);
                                                 } else {
                                                   // Handle errors that occur during stream processing
 

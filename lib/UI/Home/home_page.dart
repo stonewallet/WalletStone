@@ -75,6 +75,7 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarBackgroundColor,
+        elevation: 0,
         leading: GestureDetector(
           child: const Icon(
             Icons.list,

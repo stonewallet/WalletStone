@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
-import 'package:walletstone/Responses/auth_check.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 
 class TwoFactorProvider extends ChangeNotifier {
@@ -17,7 +15,7 @@ class TwoFactorProvider extends ChangeNotifier {
   }
 
   final Dio _dio = Dio();
-  Future<CheckAuthStatus> checkAuthStatus() async {
+  Future<dynamic> checkAuthStatus() async {
     try {
       if (kDebugMode) {
         print("Add Post api hit");
@@ -39,11 +37,11 @@ class TwoFactorProvider extends ChangeNotifier {
         print("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
-        CheckAuthStatus travelPostResponse =
-            CheckAuthStatus.fromJson(json.decode(response.toString()));
+        // CheckAuthStatus travelPostResponse =
+        //     CheckAuthStatus.fromJson(json.decode(response.toString()));
         _isEnabled = response.data['has_2FAEnabled'];
         notifyListeners();
-        return travelPostResponse;
+        // return travelPostResponse;
       } else {
         throw Exception(
             "Error: ${response.statusCode} - ${response.statusMessage}");

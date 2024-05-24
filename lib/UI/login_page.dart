@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: const InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(1)),
                                   borderSide: BorderSide(
                                       color: borderColor, width: 1.0),
                                 ),
@@ -109,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(1)),
                                   borderSide: BorderSide(
                                       color: borderColor, width: 1.0),
                                 ),
@@ -121,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 1,
                       ),
                       const SizedBox(
                         height: 10,
@@ -137,9 +135,9 @@ class _LoginPageState extends State<LoginPage> {
                             height: 5,
                           ),
                           Container(
-                            height: 45,
+                            height: 45.h,
                             padding: EdgeInsets.only(
-                                left: width * 0.15, right: width * 0.15),
+                                left: width * 0.15.w, right: width * 0.15.w),
                             alignment: Alignment.center,
                             child: TextFormField(
                               autofocus: true,
@@ -154,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                     RegularTextStyle.regular16600(cursorColor),
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(1)),
                                   borderSide: BorderSide(
                                       color: borderColor, width: 1.0),
                                 ),
@@ -162,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                 filled: true,
                                 enabledBorder: const OutlineInputBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(1)),
                                   borderSide: BorderSide(
                                       color: borderColor, width: 1.0),
                                 ),
@@ -185,7 +183,6 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter Your Password';
@@ -199,11 +196,11 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       SizedBox(
-                        height: 20.h,
+                        height: 25.h,
                       ),
                       SizedBox(
-                        height: 65,
-                        width: width * 0.75,
+                        height: 45,
+                        width: width * 0.50,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: buttonColor3,
@@ -278,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                                         LargeTextStyle.large20700(textColor))),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () {

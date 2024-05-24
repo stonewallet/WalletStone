@@ -37,6 +37,7 @@ class _BackupPageState extends State<BackupPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: appBarBackgroundColor,
+        elevation: 0,
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -180,7 +181,7 @@ class _BackupPageState extends State<BackupPage> {
       ),
       floatingActionButton: Consumer<ApiChangePassword>(
         builder: (context, value, child) => SizedBox(
-          width: width * 0.8,
+          width: width * 0.6,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor2,
@@ -196,7 +197,7 @@ class _BackupPageState extends State<BackupPage> {
                 );
                 if (response.message != null) {
                   Get.back();
-                 alert(response.message!);
+                  alert(response.message!);
                 } else {
                   Get.snackbar(
                     "Something Went Wrong",
@@ -211,7 +212,7 @@ class _BackupPageState extends State<BackupPage> {
               }
             },
             child: Text("Change Password",
-                style: RegularTextStyle.regular18600(whiteColor)),
+                style: RegularTextStyle.regular15700(whiteColor)),
           ),
         ),
       ),

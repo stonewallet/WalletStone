@@ -97,14 +97,14 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                         style: RegularTextStyle.regular16600(whiteColor),
                         decoration: InputDecoration(
                           focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(1)),
                             borderSide:
                                 BorderSide(color: borderColor, width: 1.0),
                           ),
                           fillColor: fillColor,
                           filled: true,
                           enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(1)),
                             borderSide:
                                 BorderSide(color: borderColor, width: 1.0),
                           ),
@@ -153,14 +153,14 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                         style: RegularTextStyle.regular16600(whiteColor),
                         decoration: InputDecoration(
                           focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(1)),
                             borderSide:
                                 BorderSide(color: borderColor, width: 1.0),
                           ),
                           fillColor: fillColor,
                           filled: true,
                           enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(1)),
                             borderSide:
                                 BorderSide(color: borderColor, width: 1.0),
                           ),
@@ -204,10 +204,10 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                     ),
                     GestureDetector(
                       child: Container(
-                          width: width * 0.9,
-                          height: height * 0.09,
+                          width: width * 0.6,
+                          height: height * 0.08,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(1),
                             gradient: const LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -221,7 +221,7 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                               ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
-                              : Text('I Understand. Show me my seed',
+                              : Text('I Understand. \nShow me my seed',
                                   textAlign: TextAlign.center,
                                   style: RegularTextStyle.regular18600(
                                       whiteColor))),

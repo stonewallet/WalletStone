@@ -198,7 +198,7 @@ class _MyAppState extends State<MyApp> {
             title: 'Stone Wallet',
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: purpleColor),
-              useMaterial3: true,
+              useMaterial3: false,
             ),
             home: SplashView(),
           ),

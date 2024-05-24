@@ -9,7 +9,7 @@ import 'package:walletstone/UI/Constants/urls.dart';
 class ApiCheckAuth extends ChangeNotifier {
   final Dio _dio = Dio();
 
-  Future<Check2FAuth> check2FAuth({
+  Future<dynamic> check2FAuth({
     required String name,
   }) async {
     try {
@@ -34,8 +34,8 @@ class ApiCheckAuth extends ChangeNotifier {
         print("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
-        Check2FAuth travelPostResponse =
-            Check2FAuth.fromJson(json.decode(response.toString()));
+        dynamic travelPostResponse =
+            response.data['message'] ?? response.data['has_2FAEnabled'];
 
         return travelPostResponse;
       } else {

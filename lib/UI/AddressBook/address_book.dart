@@ -40,6 +40,7 @@ class _AddressBookPageState extends State<AddressBookPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: appBarBackgroundColor,
+        elevation: 0,
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);

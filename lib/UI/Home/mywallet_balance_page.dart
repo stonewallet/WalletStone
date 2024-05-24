@@ -11,7 +11,6 @@ import 'package:walletstone/API/receive_address/receive_address.dart';
 import 'package:walletstone/API/settingwallet/get_setting_wallet.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Model/homeCoin/home_coin_model.dart';
-import 'package:walletstone/UI/Model/setting/setting_wallet.dart';
 import 'package:walletstone/widgets/dropdown._widget.dart';
 import 'package:walletstone/widgets/global.dart';
 import '../../API/shared_preferences.dart';
@@ -64,39 +63,42 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
               //     )
               //   ],
               // ),
-              FutureBuilder<List<GetWallet>>(
-                future:
-                    apiServiceForGetSettingWallets.getDataForSettingWallet(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No data",
-                        style: LargeTextStyle.large18800(whiteColor),
-                      ),
-                    );
-                  } else if (!snapshot.hasData) {
-                    return Center(
-                      child: Text(
-                        "No data",
-                        style: LargeTextStyle.large18800(whiteColor),
-                      ),
-                    );
-                  } else {
-                    final List<GetWallet> wallets = snapshot.data!;
-                    // final List<DropDownValueModel> dropDownList = wallets
-                    //     .map((wallet) => DropDownValueModel(
-                    //         name: wallet.mnemonic!, value: wallet.mnemonic))
-                    //     .toList();
+              // FutureBuilder<List<GetWallet>>(
+              //   future:
+              //       apiServiceForGetSettingWallets.getDataForSettingWallet(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const Center();
+              //     } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+              //       return Center(
+              //         child: Text(
+              //           "No data",
+              //           style: LargeTextStyle.large18800(whiteColor),
+              //         ),
+              //       );
+              //     } else if (!snapshot.hasData) {
+              //       return Center(
+              //         child: Text(
+              //           "No data",
+              //           style: LargeTextStyle.large18800(whiteColor),
+              //         ),
+              //       );
+              //     } else {
+              //       final List<GetWallet> wallets = snapshot.data!;
+              //       // final List<DropDownValueModel> dropDownList = wallets
+              //       //     .map((wallet) => DropDownValueModel(
+              //       //         name: wallet.mnemonic!, value: wallet.mnemonic))
+              //       //     .toList();
 
-                    return DropDownTextFieldWidget(
-                        dropDownList: wallets,
-                        onWalletSelected: (GetWallet selectedWallet) {});
-                  }
-                },
-              ),
+              //       return
+              const DropDownTextFieldWidget(
+                  // dropDownList: wallets,
+                  // selectedValue: selectCoins,
+                  // onWalletSelected: (GetWallet selectedWallet) {}
+                  ),
+              //     }
+              //   },
+              // ),
               SizedBox(
                 height: height * 0.02.h,
               ),
@@ -576,13 +578,17 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                       textAlignVertical: TextAlignVertical.center,
                       style: const TextStyle(
                           color: whiteColor, fontWeight: FontWeight.bold),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Enter Wallet Name",
-                        hintStyle: RegularTextStyle.regular16600(whiteColor),
-                        enabledBorder: const OutlineInputBorder(
+                        hintStyle: TextStyle(
+                          color: whiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: cursorColor),
                         ),
-                        focusedBorder: const OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: cursorColor),
                         ),
                       ),
@@ -618,6 +624,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue,
+                      backgroundColor: whiteColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

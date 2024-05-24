@@ -117,6 +117,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
+          elevation: 0,
           backgroundColor: appBarBackgroundColor,
           leading: InkWell(
             onTap: () {
@@ -272,10 +273,10 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                       hintStyle: RegularTextStyle.regular16600(
                                           whiteColor),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(24),
+                                        borderRadius: BorderRadius.circular(1),
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(24),
+                                        borderRadius: BorderRadius.circular(1),
                                         borderSide: const BorderSide(
                                           width: 1,
                                           color: Colors.black,
@@ -291,7 +292,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                     ),
                                     suggestionsDecoration: SuggestionDecoration(
                                       color: blackColor,
-                                      borderRadius: BorderRadius.circular(24),
+                                      borderRadius: BorderRadius.circular(2),
                                     ),
                                     suggestions: searchList
                                         .map((e) => SearchFieldListItem<String>(
@@ -352,7 +353,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
@@ -361,13 +362,13 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                           enabledBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30),
+                                                BorderRadius.circular(1),
                                             borderSide: const BorderSide(
                                                 color: Colors.red, width: 1.0),
                                           ),
@@ -403,7 +404,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                   const EdgeInsets.symmetric(horizontal: 15),
                               child: SizedBox(
                                 height: 45,
-                                width: width * 0.8,
+                                width: width * 0.6,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: buttonColor2,
@@ -490,7 +491,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                             isLoading = false;
                                           });
                                           Get.back();
-                                         alert(response.message!);
+                                          alert(response.message!);
                                           // Get.snackbar(
                                           //   response.message!,
                                           //   '',

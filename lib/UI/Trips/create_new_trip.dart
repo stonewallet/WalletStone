@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/widgets/global.dart';
-
 import '../../API/api_provider.dart';
 import '../../Responses/travel_list_response.dart';
 import '../Constants/colors.dart';
@@ -148,27 +147,34 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                         style: RegularTextStyle.regular16600(
                                             whiteColor),
                                         decoration: InputDecoration(
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
-                                            borderSide: BorderSide(
-                                                color: borderColor, width: 1.0),
-                                          ),
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
                                           fillColor: fillColor,
                                           filled: true,
-                                          enabledBorder:
-                                              const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
-                                            borderSide: BorderSide(
-                                                color: borderColor, width: 1.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
+                                          border: OutlineInputBorder(
                                             borderSide: const BorderSide(
-                                                color: Colors.red, width: 1.0),
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
                                           errorStyle:
                                               const TextStyle(height: 0.1),
@@ -219,25 +225,34 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -280,6 +295,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.number,
                                       controller: quantityController,
                                       textAlign: TextAlign.start,
                                       textAlignVertical:
@@ -287,25 +303,34 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -348,6 +373,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.number,
                                       controller: pricePaidController,
                                       textAlign: TextAlign.start,
                                       textAlignVertical:
@@ -355,25 +381,34 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -416,6 +451,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.number,
                                       controller: priceSoldController,
                                       textAlign: TextAlign.start,
                                       textAlignVertical:
@@ -423,25 +459,34 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -485,31 +530,41 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                           AutovalidateMode.onUserInteraction,
                                       cursorColor: Colors.blue,
                                       controller: transportController,
+                                      keyboardType: TextInputType.number,
                                       textAlign: TextAlign.start,
                                       textAlignVertical:
                                           TextAlignVertical.center,
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -554,30 +609,40 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       cursorColor: Colors.blue,
                                       controller: hotelController,
                                       textAlign: TextAlign.start,
+                                      keyboardType: TextInputType.number,
                                       textAlignVertical:
                                           TextAlignVertical.center,
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -621,31 +686,41 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                           AutovalidateMode.onUserInteraction,
                                       cursorColor: Colors.blue,
                                       controller: foodController,
+                                      keyboardType: TextInputType.number,
                                       textAlign: TextAlign.start,
                                       textAlignVertical:
                                           TextAlignVertical.center,
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 4.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                         errorStyle:
                                             const TextStyle(height: 0.1),
@@ -675,7 +750,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                   const EdgeInsets.symmetric(horizontal: 15),
                               child: SizedBox(
                                 height: 45,
-                                width: width * 0.8,
+                                width: width * 0.5,
                                 child: Consumer<TripProvider>(
                                   builder: (context, value, child) =>
                                       ElevatedButton(

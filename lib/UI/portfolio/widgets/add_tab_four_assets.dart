@@ -154,7 +154,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
@@ -163,13 +163,13 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                           enabledBorder:
                                               const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(30)),
+                                                Radius.circular(1)),
                                             borderSide: BorderSide(
                                                 color: borderColor, width: 1.0),
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30),
+                                                BorderRadius.circular(1),
                                             borderSide: const BorderSide(
                                                 color: Colors.red, width: 1.0),
                                           ),
@@ -227,7 +227,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                       decoration: InputDecoration(
                                         focusedBorder: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
+                                              Radius.circular(1)),
                                           borderSide: BorderSide(
                                               color: borderColor, width: 1.0),
                                         ),
@@ -235,7 +235,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                         filled: true,
                                         enabledBorder: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
+                                              Radius.circular(1)),
                                           borderSide: BorderSide(
                                               color: borderColor, width: 1.0),
                                         ),
@@ -274,7 +274,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                   const EdgeInsets.symmetric(horizontal: 15),
                               child: SizedBox(
                                 height: 45,
-                                width: width * 0.8,
+                                width: width * 0.6,
                                 child: Consumer<AssetProvider>(
                                   builder: (context, value, child) =>
                                       ElevatedButton(
@@ -383,7 +383,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                                   isLoading = false;
                                                 });
                                                 Get.back();
-                                               alert(response.message!);
+                                                alert(response.message!);
                                               } else {
                                                 // Handle errors that occur during stream processing
 
