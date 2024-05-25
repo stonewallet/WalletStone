@@ -144,7 +144,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                     decoration: InputDecoration(
                                       focusedBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
@@ -152,7 +152,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                       filled: true,
                                       enabledBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
@@ -209,7 +209,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                     decoration: InputDecoration(
                                       focusedBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
@@ -217,12 +217,12 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                       filled: true,
                                       enabledBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(1),
                                         borderSide: const BorderSide(
                                             color: Colors.red, width: 1.0),
                                       ),
@@ -278,7 +278,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                     decoration: InputDecoration(
                                       focusedBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
@@ -286,12 +286,12 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                       filled: true,
                                       enabledBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(1),
                                         borderSide: const BorderSide(
                                             color: Colors.red, width: 1.0),
                                       ),
@@ -347,7 +347,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                     decoration: InputDecoration(
                                       focusedBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
@@ -355,12 +355,12 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                       filled: true,
                                       enabledBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
+                                            Radius.circular(1)),
                                         borderSide: BorderSide(
                                             color: borderColor, width: 1.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(1),
                                         borderSide: const BorderSide(
                                             color: Colors.red, width: 1.0),
                                       ),
@@ -394,7 +394,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: SizedBox(
                               height: 45,
-                              width: width * 0.8,
+                              width: width * 0.6,
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: buttonColor2,
