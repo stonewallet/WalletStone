@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/api_provider.dart';
 import 'package:walletstone/Responses/travel_post_response.dart';
 import 'package:walletstone/UI/Constants/strings.dart';
+import 'package:walletstone/UI/Create%20New%20Wallet/create_new_wallet_2.dart';
 import 'package:walletstone/UI/Home/home_page.dart';
 import 'package:walletstone/widgets/forget_password.dart';
 
@@ -23,7 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    loadName();
     passwordVisible = true;
+  }
+
+  loadName() async {
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    userNameController.text = sharedPref.getString('name')!;
   }
 
   bool isLoading = false;
@@ -90,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                                 left: width * 0.15.w, right: width * 0.15.w),
                             alignment: Alignment.center,
                             child: TextFormField(
+                              readOnly: true,
                               autofocus: true,
                               cursorColor: Colors.blue,
                               controller: userNameController,
@@ -209,15 +217,11 @@ class _LoginPageState extends State<LoginPage> {
                                 elevation: 4),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final SharedPreferences sharedPref =
-                                    await SharedPreferences.getInstance();
-
                                 if (kDebugMode) {
                                   print(userNameController.text);
                                   print(passwordController.text);
                                 }
-                                sharedPref.setString(
-                                    "name", userNameController.text);
+
                                 var response = await ApiProvider().processLogin(
                                     userNameController.text,
                                     passwordController.text);
@@ -238,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                                               const BottomNavigationPage()),
                                     );
                                   }
-                                  userNameController.clear();
+                                  userController.clear();
                                   passwordController.clear();
                                 } else if (response.message ==
                                     " Invalid login credentials") {

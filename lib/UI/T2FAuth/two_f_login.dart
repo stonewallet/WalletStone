@@ -25,6 +25,7 @@ class _TWOFactorLoginState extends State<TWOFactorLogin> {
   bool isLoading = false;
 
   TravelPostResponse travelPostResponse = TravelPostResponse();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,243 +49,293 @@ class _TWOFactorLoginState extends State<TWOFactorLogin> {
                     colors: [gradientColor1, gradientColor2],
                   ),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: height * 0.2,
-                    ),
-                    Image.asset(
-                      "assets/images/welcome_logo.png",
-                      height: 110,
-                      width: 120,
-                      fit: BoxFit.fill,
-                    ),
-                    SizedBox(
-                      height: height * 0.03,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "User Name",
-                          style: RegularTextStyle.regular16600(whiteColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: userNameController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
-                            style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: EdgeInsets.only(left: 20),
-                            ),
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "OTP",
-                          style: RegularTextStyle.regular16600(whiteColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: otpController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
-                            style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: EdgeInsets.only(left: 20),
-                            ),
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Password",
-                          style: RegularTextStyle.regular16600(whiteColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 45,
-                          padding: EdgeInsets.only(
-                              left: width * 0.15, right: width * 0.15),
-                          alignment: Alignment.center,
-                          child: TextField(
-                            // autofocus: true,
-                            cursorColor: Colors.blue,
-                            controller: passwordController,
-                            textAlign: TextAlign.start,
-                            textAlignVertical: TextAlignVertical.center,
-                            style: RegularTextStyle.regular16600(whiteColor),
-                            decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              fillColor: fillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: borderColor, width: 1.0),
-                              ),
-                              contentPadding: EdgeInsets.only(left: 20),
-                            ),
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: 65,
-                      width: width * 0.75,
-                      child: Consumer<APiAuthOTPLogin>(
-                        builder: (context, value, child) => ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: buttonColor3,
-                                surfaceTintColor: blackColor,
-                                shadowColor: whiteColor,
-                                elevation: 4),
-                            onPressed: () async {
-                              final SharedPreferences sharedPref =
-                                  await SharedPreferences.getInstance();
-                              setState(() {
-                                isLoading = true;
-                              });
-                              if (kDebugMode) {
-                                print(userNameController.text);
-                                print(passwordController.text);
-                              }
-                              sharedPref.setString(
-                                  "name", userNameController.text);
-
-                              var response = await value.authOTPLogin(
-                                  otp: int.parse(otpController.text),
-                                  userName: userNameController.text,
-                                  password: passwordController.text);
-                              if (response.message ==
-                                  'Login successful with 2 Factor Authentication') {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                var snackBar =
-                                    SnackBar(content: Text(response.message!));
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomNavigationPage()),
-                                  );
-                                }
-                                userNameController.clear();
-                                passwordController.clear();
-                              } else if (response.message ==
-                                  " Invalid login credentials") {
-                                var snackBar =
-                                    SnackBar(content: Text(response.message!));
-                                if (context.mounted)
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                              } else {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                var snackBar = const SnackBar(
-                                    content: Text("Something went wrong"));
-                                if (context.mounted)
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                              }
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context)
-                              //   => const BottomNavigationPage()),
-                              // );
-                            },
-                            child: isLoading == true
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : Text("Login",
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        LargeTextStyle.large20700(textColor))),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: height * 0.2,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
+                      Image.asset(
+                        "assets/images/welcome_logo.png",
+                        height: 110,
+                        width: 120,
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "User Name",
+                            style: RegularTextStyle.regular16600(whiteColor),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 45,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15, right: width * 0.15),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: userNameController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: InputDecoration(
+                                fillColor: fillColor,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: borderColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                errorStyle: const TextStyle(height: 0.1),
+                                errorMaxLines: 2,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 10, bottom: 10),
+                              ),
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Your Username';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "OTP",
+                            style: RegularTextStyle.regular16600(whiteColor),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 45,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15, right: width * 0.15),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: otpController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: InputDecoration(
+                                fillColor: fillColor,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: borderColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorStyle: const TextStyle(height: 0.1),
+                                errorMaxLines: 2,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 10, bottom: 10),
+                              ),
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Your OTP';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Password",
+                            style: RegularTextStyle.regular16600(whiteColor),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 45,
+                            padding: EdgeInsets.only(
+                                left: width * 0.15, right: width * 0.15),
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              autofocus: true,
+                              cursorColor: Colors.blue,
+                              controller: passwordController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: RegularTextStyle.regular16600(whiteColor),
+                              decoration: InputDecoration(
+                                fillColor: fillColor,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: blueAccentColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: borderColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                errorStyle: const TextStyle(height: 0.1),
+                                errorMaxLines: 2,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 10, bottom: 10),
+                              ),
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Your Password';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height: 65,
+                        width: width * 0.75,
+                        child: Consumer<APiAuthOTPLogin>(
+                          builder: (context, value, child) => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonColor3,
+                                  surfaceTintColor: blackColor,
+                                  shadowColor: whiteColor,
+                                  elevation: 4),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  final SharedPreferences sharedPref =
+                                      await SharedPreferences.getInstance();
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  if (kDebugMode) {
+                                    print(userNameController.text);
+                                    print(passwordController.text);
+                                  }
+                                  sharedPref.setString(
+                                      "name", userNameController.text);
+
+                                  var response = await value.authOTPLogin(
+                                      otp: int.parse(otpController.text),
+                                      userName: userNameController.text,
+                                      password: passwordController.text);
+                                  if (response.message ==
+                                      'Login successful with 2 Factor Authentication') {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    var snackBar = SnackBar(
+                                        content: Text(response.message!));
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BottomNavigationPage()),
+                                      );
+                                    }
+                                    userNameController.clear();
+                                    passwordController.clear();
+                                  } else if (response.message ==
+                                      " Invalid login credentials") {
+                                    var snackBar = SnackBar(
+                                        content: Text(response.message!));
+                                    if (context.mounted)
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                  } else {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    var snackBar = const SnackBar(
+                                        content: Text("Something went wrong"));
+                                    if (context.mounted)
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                  }
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(builder: (context)
+                                  //   => const BottomNavigationPage()),
+                                  // );
+                                }
+                              },
+                              child: isLoading == true
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text("Login",
+                                      textAlign: TextAlign.center,
+                                      style: LargeTextStyle.large20700(
+                                          textColor))),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(

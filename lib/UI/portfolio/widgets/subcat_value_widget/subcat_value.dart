@@ -67,36 +67,34 @@ class _SubCatListViewState extends State<SubCatListView> {
                   } else if (subCat == 2) {
                     icon = icons[2];
                   }
-                  return SizedBox(
-                    width: 190.w,
-                    height: 50.h,
-                    child: Card(
-                      color: transparent,
-                      child: ListTile(
-                        title: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              icon,
-                              size: 20.w,
-                              color: whiteColor,
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                totalValue!.toStringAsFixed(2),
-                                style:
-                                    RegularTextStyle.regular15700(whiteColor),
-                              ),
-                            ),
-                          ],
+                  return Card(
+                    color: transparent,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 5.w,
                         ),
-                      ),
+                        Icon(
+                          icon,
+                          size: 20.w,
+                          color: whiteColor,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        FittedBox(
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width / 3.5,
+                            child: Text(
+                              textAlign: TextAlign.start,
+                              totalValue!.toStringAsFixed(2),
+                              style: RegularTextStyle.regular15700(whiteColor),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },

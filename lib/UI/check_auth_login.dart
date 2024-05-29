@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/Auth/auth_check.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -169,6 +170,8 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                       if (_formKey.currentState!.validate()) {
                         // var userResponse = await usergetProvider.getAllUser();
                         // if (userResponse.username == loginAuthController.text) {
+                        final SharedPreferences sharedPref =
+                            await SharedPreferences.getInstance();
                         var response = await value.check2FAuth(
                           name: loginAuthController.text,
                         );
@@ -180,6 +183,7 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                             Get.offAll(() => const TWOFactorLogin());
                             print("it is true ${response}");
                           } else if (response == false) {
+                        sharedPref.setString("name", loginAuthController.text);
                             Get.offAll(() => const LoginPage());
 
                             print("it is false ${response}");

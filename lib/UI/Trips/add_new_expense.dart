@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/Endtrip/endtrip.dart';
 import 'package:walletstone/Responses/travel2_response.dart' as trip;
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import '../../API/api_provider.dart';
 import '../Constants/colors.dart';
 
@@ -259,133 +261,158 @@ class _AddNewExpensePageState extends State<AddNewExpensePage> {
                                 child: SizedBox(
                                   height: 45,
                                   width: width * 0.6,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: buttonColor2,
-                                          surfaceTintColor: blackColor,
-                                          shadowColor: whiteColor,
-                                          elevation: 4),
-                                      onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          List<Map<String, dynamic>>
-                                              productList = [];
-                                          List<Map<String, dynamic>>
-                                              expensesList = [];
-                                          final SharedPreferences sharedPref =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          final String? userName =
-                                              sharedPref.getString('name');
+                                  child: Consumer<TripProvider>(
+                                    builder: (context, value, child) =>
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: buttonColor2,
+                                                surfaceTintColor: blackColor,
+                                                shadowColor: whiteColor,
+                                                elevation: 4),
+                                            onPressed: () async {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                List<Map<String, dynamic>>
+                                                    productList = [];
+                                                List<Map<String, dynamic>>
+                                                    expensesList = [];
+                                                final SharedPreferences
+                                                    sharedPref =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                final String? userName =
+                                                    sharedPref
+                                                        .getString('name');
 
-                                          print(
-                                              "nnn ${widget.travel2response.product!.length}");
-                                          for (int i = 0;
-                                              i <=
-                                                  widget.travel2response
-                                                          .product!.length -
-                                                      1;
-                                              i++) {
-                                            productList.add({
-                                              "product_name": widget
-                                                  .travel2response
-                                                  .product![i]
-                                                  .productName,
-                                              "quantity": widget.travel2response
-                                                  .product![i].quantity,
-                                              "price_paid": widget
-                                                  .travel2response
-                                                  .product![i]
-                                                  .pricePaid,
-                                              "price_sold": widget
-                                                  .travel2response
-                                                  .product![i]
-                                                  .priceSold,
-                                              "user": widget.travel2response
-                                                  .product![i].user,
-                                            });
-                                          }
-                                          for (int i = 0;
-                                              i <=
-                                                  widget.travel2response
-                                                          .expenses!.length -
-                                                      1;
-                                              i++) {
-                                            expensesList.add({
-                                              "expense_name": widget
-                                                  .travel2response
-                                                  .expenses![i]
-                                                  .expenseName,
-                                              "expense_amount": widget
-                                                  .travel2response
-                                                  .expenses![i]
-                                                  .expenseAmount,
-                                              "user": widget.travel2response
-                                                  .expenses![i].user,
-                                            });
-                                          }
+                                                print(
+                                                    "nnn ${widget.travel2response.product!.length}");
+                                                for (int i = 0;
+                                                    i <=
+                                                        widget
+                                                                .travel2response
+                                                                .product!
+                                                                .length -
+                                                            1;
+                                                    i++) {
+                                                  productList.add({
+                                                    "product_name": widget
+                                                        .travel2response
+                                                        .product![i]
+                                                        .productName,
+                                                    "quantity": widget
+                                                        .travel2response
+                                                        .product![i]
+                                                        .quantity,
+                                                    "price_paid": widget
+                                                        .travel2response
+                                                        .product![i]
+                                                        .pricePaid,
+                                                    "price_sold": widget
+                                                        .travel2response
+                                                        .product![i]
+                                                        .priceSold,
+                                                    "user": widget
+                                                        .travel2response
+                                                        .product![i]
+                                                        .user,
+                                                  });
+                                                }
+                                                for (int i = 0;
+                                                    i <=
+                                                        widget
+                                                                .travel2response
+                                                                .expenses!
+                                                                .length -
+                                                            1;
+                                                    i++) {
+                                                  expensesList.add({
+                                                    "expense_name": widget
+                                                        .travel2response
+                                                        .expenses![i]
+                                                        .expenseName,
+                                                    "expense_amount": widget
+                                                        .travel2response
+                                                        .expenses![i]
+                                                        .expenseAmount,
+                                                    "user": widget
+                                                        .travel2response
+                                                        .expenses![i]
+                                                        .user,
+                                                  });
+                                                }
 
-                                          expensesList.add({
-                                            "expense_name":
-                                                expenseNameController.text,
-                                            "expense_amount": int.parse(
-                                                expenseAmountController.text),
-                                            "user": userName,
-                                          });
+                                                expensesList.add({
+                                                  "expense_name":
+                                                      expenseNameController
+                                                          .text,
+                                                  "expense_amount": int.parse(
+                                                      expenseAmountController
+                                                          .text),
+                                                  "user": userName,
+                                                });
 
-                                          Map<String, dynamic> addExpense = {
-                                            "trip_name":
-                                                widget.travel2response.tripName,
-                                            "product": productList,
-                                            "expenses": expensesList,
-                                            "user": widget.travel2response.user,
-                                            "user_order": widget
-                                                .travel2response.userOrder,
-                                          };
+                                                Map<String, dynamic>
+                                                    addExpense = {
+                                                  "trip_name": widget
+                                                      .travel2response.tripName,
+                                                  "product": productList,
+                                                  "expenses": expensesList,
+                                                  "user": widget
+                                                      .travel2response.user,
+                                                  "user_order": widget
+                                                      .travel2response
+                                                      .userOrder,
+                                                };
 
-                                          if (kDebugMode) {
-                                            print(addExpense);
-                                          }
+                                                if (kDebugMode) {
+                                                  print(addExpense);
+                                                }
 
-                                          setState(() {
-                                            isLoading = true;
-                                          });
-                                          ApiForEndTrip().resumeTrip(
-                                              widget.travel2response.id!);
-                                          var response = await ApiProvider()
-                                              .processAddEvent(addExpense,
-                                                  widget.travel2response.id!);
-
-                                          if (response.message != null) {
-                                            setState(() {
-                                              isLoading = false;
-                                            });
-                                            Navigator.pop(context);
-                                            var snackBar = const SnackBar(
-                                                content: Text(
-                                                    "Expense created successfully"));
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(snackBar);
-                                          } else {
-                                            setState(() {
-                                              isLoading = false;
-                                            });
-                                            var snackBar = const SnackBar(
-                                                content: Text(
-                                                    "Something gone wrong"));
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(snackBar);
-                                          }
-                                        }
-                                      },
-                                      child: isLoading == true
-                                          ? const CircularProgressIndicator(
-                                              color: Colors.white,
-                                            )
-                                          : Text("Add Expense",
-                                              textAlign: TextAlign.center,
-                                              style:
-                                                  RegularTextStyle.regular14600(
-                                                      whiteColor))),
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                ApiForEndTrip().resumeTrip(
+                                                    widget.travel2response.id!);
+                                                var response =
+                                                    await ApiProvider()
+                                                        .processAddEvent(
+                                                            addExpense,
+                                                            widget
+                                                                .travel2response
+                                                                .id!);
+                                                value.fetch();
+                                                if (response.message != null) {
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                  Navigator.pop(context);
+                                                  var snackBar = const SnackBar(
+                                                      content: Text(
+                                                          "Expense created successfully"));
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackBar);
+                                                } else {
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                  var snackBar = const SnackBar(
+                                                      content: Text(
+                                                          "Something gone wrong"));
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackBar);
+                                                }
+                                              }
+                                            },
+                                            child: isLoading == true
+                                                ? const CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  )
+                                                : Text("Add Expense",
+                                                    textAlign: TextAlign.center,
+                                                    style: RegularTextStyle
+                                                        .regular14600(
+                                                            whiteColor))),
+                                  ),
                                 ),
                               )
                             ],

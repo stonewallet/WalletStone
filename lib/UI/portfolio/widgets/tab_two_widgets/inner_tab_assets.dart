@@ -491,160 +491,174 @@ class BuildContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AssetProvider>(
-        builder: (context, value, child) => value.assetList.isEmpty
-            ? const CircularProgressIndicator()
-            : ListView.builder(
-                key: UniqueKey(),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  // _portfolio = portfolios[index].subCat;
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateAssetsScreen(
+    return Consumer<AssetProvider>(builder: (context, value, child) {
+      if (value.loanList.isEmpty) {
+        return FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 4)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else {
+              return Center(
+                child: Text(
+                  "No data",
+                  style: LargeTextStyle.large18800(whiteColor),
+                ),
+              );
+            }
+          },
+        );
+      } else {
+        return ListView.builder(
+          key: UniqueKey(),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            // _portfolio = portfolios[index].subCat;
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UpdateAssetsScreen(
 
-                              // assetsController
-                              //     .assetsPortfolios,
-                              // cashController
-                              //     .cashPortfolios,
-                              index: index,
-                              portfolios: value.assetList[index]),
+                        // assetsController
+                        //     .assetsPortfolios,
+                        // cashController
+                        //     .cashPortfolios,
+                        index: index,
+                        portfolios: value.assetList[index]),
+                  ),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width * 0.05,
                         ),
-                      );
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: width * 0.05,
-                              ),
-                              // CachedNetworkImage(
-                              //     color: transparent,
-                              //     imageUrl:
-                              //         'https://www.${value.assetList[index].imageUrl}',
-                              //     imageBuilder: (context, imageProvider) =>
-                              //         Padding(
-                              //           padding: const EdgeInsets.only(left: 0),
-                              //           child: ClipRRect(
-                              //             borderRadius:
-                              //                 BorderRadius.circular(20.0),
-                              //             child: Container(
-                              //               width: MediaQuery.of(context)
-                              //                       .size
-                              //                       .width /
-                              //                   19,
-                              //               height: 30,
-                              //               decoration: BoxDecoration(
-                              //                   color: transparent,
-                              //                   image: DecorationImage(
-                              //                       image: imageProvider,
-                              //                       fit: BoxFit.cover)),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //     progressIndicatorBuilder: (context, url,
-                              //             downloadProgress) =>
-                              //         Padding(
-                              //           padding: const EdgeInsets.only(left: 14),
-                              //           child: ClipRRect(
-                              //             borderRadius:
-                              //                 BorderRadius.circular(20.0),
-                              //             child: Container(
-                              //               width: MediaQuery.of(context)
-                              //                       .size
-                              //                       .width /
-                              //                   13,
-                              //               height: 30,
-                              //               decoration: const BoxDecoration(
-                              //                 color: whiteColor,
-                              //               ),
-                              //               child:
-                              //                   const CupertinoActivityIndicator(),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //     errorWidget: (context, url, error) => Padding(
-                              //           padding: const EdgeInsets.only(
-                              //             left: 0,
-                              //             right: 0,
-                              //             bottom: 0,
-                              //             top: 0,
-                              //           ),
-                              //           child: ClipRRect(
-                              //             borderRadius:
-                              //                 BorderRadius.circular(20.0),
-                              //             child: Container(
-                              //                 width: MediaQuery.of(context)
-                              //                         .size
-                              //                         .width /
-                              //                     20,
-                              //                 height: 30,
-                              //                 decoration: const BoxDecoration(
-                              //                     color: transparent,
-                              //                     image: DecorationImage(
-                              //                         image: AssetImage(
-                              //                             'assets/Dollar.png'))),
-                              //                 child: Image.asset(
-                              //                     'assets/Dollar.png')),
-                              //           ),
-                              //         )),
-                              Image.asset(
-                                "assets/Dollar.png",
-                                width: 20,
-                                height: 20,
-                              ),
-                              SizedBox(
-                                width: width * 0.05,
-                              ),
-                              Text(value.assetList[index].coinName,
-                                  style: RegularTextStyle.regular15600(
-                                      iconColor2)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                                    child: Text(
-                                        '${value.assetList[index].quantity}  ${value.assetList[index].coinShort}',
-                                        style: RegularTextStyle.regular14400(
-                                            whiteColor)),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                                    child: Text(
-                                        "\$ ${value.assetList[index].value.toStringAsFixed(2)}",
-                                        style: RegularTextStyle.regular14400(
-                                            whiteColor)),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: width * 0.05,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                        // CachedNetworkImage(
+                        //     color: transparent,
+                        //     imageUrl:
+                        //         'https://www.${value.assetList[index].imageUrl}',
+                        //     imageBuilder: (context, imageProvider) =>
+                        //         Padding(
+                        //           padding: const EdgeInsets.only(left: 0),
+                        //           child: ClipRRect(
+                        //             borderRadius:
+                        //                 BorderRadius.circular(20.0),
+                        //             child: Container(
+                        //               width: MediaQuery.of(context)
+                        //                       .size
+                        //                       .width /
+                        //                   19,
+                        //               height: 30,
+                        //               decoration: BoxDecoration(
+                        //                   color: transparent,
+                        //                   image: DecorationImage(
+                        //                       image: imageProvider,
+                        //                       fit: BoxFit.cover)),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //     progressIndicatorBuilder: (context, url,
+                        //             downloadProgress) =>
+                        //         Padding(
+                        //           padding: const EdgeInsets.only(left: 14),
+                        //           child: ClipRRect(
+                        //             borderRadius:
+                        //                 BorderRadius.circular(20.0),
+                        //             child: Container(
+                        //               width: MediaQuery.of(context)
+                        //                       .size
+                        //                       .width /
+                        //                   13,
+                        //               height: 30,
+                        //               decoration: const BoxDecoration(
+                        //                 color: whiteColor,
+                        //               ),
+                        //               child:
+                        //                   const CupertinoActivityIndicator(),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //     errorWidget: (context, url, error) => Padding(
+                        //           padding: const EdgeInsets.only(
+                        //             left: 0,
+                        //             right: 0,
+                        //             bottom: 0,
+                        //             top: 0,
+                        //           ),
+                        //           child: ClipRRect(
+                        //             borderRadius:
+                        //                 BorderRadius.circular(20.0),
+                        //             child: Container(
+                        //                 width: MediaQuery.of(context)
+                        //                         .size
+                        //                         .width /
+                        //                     20,
+                        //                 height: 30,
+                        //                 decoration: const BoxDecoration(
+                        //                     color: transparent,
+                        //                     image: DecorationImage(
+                        //                         image: AssetImage(
+                        //                             'assets/Dollar.png'))),
+                        //                 child: Image.asset(
+                        //                     'assets/Dollar.png')),
+                        //           ),
+                        //         )),
+                        Image.asset(
+                          "assets/Dollar.png",
+                          width: 20,
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: width * 0.05,
+                        ),
+                        Text(value.assetList[index].coinName,
+                            style: RegularTextStyle.regular15600(iconColor2)),
+                      ],
                     ),
-                  );
-                },
-                itemCount: value.assetList.length,
-              ));
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                              child: Text(
+                                  '${value.assetList[index].quantity}  ${value.assetList[index].coinShort}',
+                                  style: RegularTextStyle.regular14400(
+                                      whiteColor)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                              child: Text(
+                                  "\$ ${value.assetList[index].value.toStringAsFixed(2)}",
+                                  style: RegularTextStyle.regular14400(
+                                      whiteColor)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: width * 0.05,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+          itemCount: value.assetList.length,
+        );
+      }
+    });
   }
 }
