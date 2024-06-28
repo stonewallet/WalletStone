@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/portfolio/portfolio_page.dart';
@@ -235,7 +236,7 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Container(
                     width: width,
@@ -243,12 +244,15 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                     color: drawerColor,
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   ListView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -257,43 +261,36 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                 builder: (context) => const WalletPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/wallet-filled-money-tool.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text("Wallets",
-                                      style: RegularTextStyle.regular14600(
-                                          whiteColor)),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Image.asset(
+                              "assets/Icons/wallet-filled-money-tool.png",
+                              height: 20,
+                              width: 20,
+                              color: iconColor,
+                            ),
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text("Wallets",
+                                style:
+                                    RegularTextStyle.regular14600(whiteColor)),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       // InkWell(
                       //   onTap: () {
@@ -349,42 +346,37 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                 builder: (context) => const AddressBookPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/address-book.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text(
-                                    "Address Book",
-                                    style: RegularTextStyle.regular14600(
-                                        whiteColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Image.asset(
+                              "assets/Icons/address-book.png",
+                              height: 20,
+                              width: 20,
+                              color: iconColor,
+                            ),
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text(
+                              "Address Book",
+                              style: RegularTextStyle.regular14600(whiteColor),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () {
@@ -395,42 +387,37 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                     const SecurityAndBackupPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/lock.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text(
-                                    "Security and Backup",
-                                    style: RegularTextStyle.regular14600(
-                                        whiteColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Image.asset(
+                              "assets/Icons/lock.png",
+                              height: 20,
+                              width: 20,
+                              color: iconColor,
+                            ),
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text(
+                              "Security and Backup",
+                              style: RegularTextStyle.regular14600(whiteColor),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () {
@@ -440,42 +427,37 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                 builder: (context) => const PrivacyPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/view.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text(
-                                    "Privacy",
-                                    style: RegularTextStyle.regular14600(
-                                        whiteColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Image.asset(
+                              "assets/Icons/view.png",
+                              height: 20,
+                              width: 20,
+                              color: iconColor,
+                            ),
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text(
+                              "Privacy",
+                              style: RegularTextStyle.regular14600(whiteColor),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () {
@@ -486,42 +468,37 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                     const OtherSettingsPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/settings.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text(
-                                    "Other Settings",
-                                    style: RegularTextStyle.regular14600(
-                                        whiteColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Image.asset(
+                              "assets/Icons/settings.png",
+                              height: 20,
+                              width: 20,
+                              color: iconColor,
+                            ),
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text(
+                              "Other Settings",
+                              style: RegularTextStyle.regular14600(whiteColor),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: width,
+                        height: 1,
+                        color: drawerColor,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () {
@@ -532,41 +509,30 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
                                     const HelpAndSupportPage()),
                           );
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Image.asset(
-                                    "assets/Icons/support.png",
-                                    height: 20,
-                                    width: 20,
-                                    color: iconColor,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.05,
-                                  ),
-                                  Text(
-                                    "Help & Support",
-                                    style: RegularTextStyle.regular14600(
-                                        whiteColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: width,
-                                height: 1,
-                                color: drawerColor,
-                              )
-                            ],
-                          ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Image.asset(
+                                  "assets/Icons/support.png",
+                                  height: 20,
+                                  width: 20,
+                                  color: iconColor,
+                                ),
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text(
+                                  "Help & Support",
+                                  style:
+                                      RegularTextStyle.regular14600(whiteColor),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -577,12 +543,15 @@ class BottomNavigationPageState extends State<BottomNavigationPage> {
           ),
         ),
       ]),
-      bottomNavigationBar: CupertinoTabBar(
-        activeColor: whiteColor,
-        inactiveColor: iconColor,
-        backgroundColor: bottomBackgroundColor, // Adjust as needed
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedItemColor: whiteColor,
+        unselectedItemColor: iconColor,
+        backgroundColor: bottomBackgroundColor,
+        type: BottomNavigationBarType.fixed,
+        enableFeedback: false,
         currentIndex: _selectedIndex,
-        height: 70,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;

@@ -61,7 +61,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       fit: BoxFit.fill,
                     ),
                     Text(
-                      "Enter Your \nYourName",
+                      "Enter Your \nUserName",
                       style: NasalTextStyle.nasal(whiteColor),
                       textAlign: TextAlign.center,
                     ),

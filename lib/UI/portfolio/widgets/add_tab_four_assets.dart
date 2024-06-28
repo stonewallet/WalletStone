@@ -137,11 +137,13 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                       height: 6,
                                     ),
                                     SizedBox(
-                                      height: 45,
+                                      height: 60,
                                       width: width,
                                       // padding: EdgeInsets.only(left: 15, right: 15),
                                       // alignment: Alignment.center,
                                       child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
                                         autofocus: true,
                                         cursorColor: Colors.blue,
                                         controller: assestNameController,
@@ -151,33 +153,40 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                         style: RegularTextStyle.regular16600(
                                             whiteColor),
                                         decoration: InputDecoration(
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(1)),
-                                            borderSide: BorderSide(
-                                                color: borderColor, width: 1.0),
-                                          ),
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
                                           fillColor: fillColor,
                                           filled: true,
-                                          enabledBorder:
-                                              const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(1)),
-                                            borderSide: BorderSide(
-                                                color: borderColor, width: 1.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(1),
+                                          border: OutlineInputBorder(
                                             borderSide: const BorderSide(
-                                                color: Colors.red, width: 1.0),
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
                                           ),
                                           errorStyle:
-                                              const TextStyle(height: 0.1),
-                                          errorMaxLines: 2,
-                                          contentPadding: const EdgeInsets.only(
-                                              left: 10, bottom: 10),
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.text,
@@ -209,7 +218,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                     height: 6,
                                   ),
                                   SizedBox(
-                                    height: 45,
+                                    height: 60,
                                     width: width,
                                     // padding: EdgeInsets.only(left: 15, right: 15),
                                     // alignment: Alignment.center,
@@ -225,31 +234,39 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                       style: RegularTextStyle.regular16600(
                                           whiteColor),
                                       decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(1)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
+                                        // focusedBorder: const OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(1)),
+                                        //   borderSide: BorderSide(
+                                        //       color: borderColor, width: 1.0),
+                                        // ),
                                         fillColor: fillColor,
                                         filled: true,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(1)),
-                                          borderSide: BorderSide(
-                                              color: borderColor, width: 1.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                        border: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                              color: Colors.red, width: 1.0),
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(0),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: blueAccentColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: borderColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                        ),
+                                        errorStyle: const TextStyle(height: 0),
+                                        errorMaxLines: 1,
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 7),
                                       ),
                                       textInputAction: TextInputAction.next,
                                       keyboardType: TextInputType.number,

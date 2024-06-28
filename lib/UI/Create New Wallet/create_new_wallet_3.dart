@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -178,7 +179,7 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
           ),
           backgroundColor: const Color(0xff182C4B),
           centerTitle: true,
-          title: Text("Create New Wallet",
+          title: Text("Wallet created",
               style: LargeTextStyle.large20500(whiteColor)),
         ),
         body: Column(
@@ -195,9 +196,9 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
             //     Navigator.pop(context);
             //   },
             // ),
-            // SizedBox(
-            //   height: height * 0.02,
-            // ),
+            SizedBox(
+              height: height * 0.02,
+            ),
             Container(
               width: width * 0.2,
               height: height * 0.09,
@@ -339,24 +340,31 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
                     ),
                     child: Row(
                       children: [
-                        const SizedBox(
-                          width: 1,
+                        SizedBox(
+                          width: 4.w,
                         ),
                         Container(
-                          height: 45,
-                          width: 35,
+                          width: 30,
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
-                            color: gradientColor1,
-                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
                             border: const Border.fromBorderSide(
-                                BorderSide(color: Colors.blue)),
+                                BorderSide(color: Colors.transparent)),
                           ),
-                          child: Text(
-                            displayIndex.toString(),
-                            textAlign: TextAlign.center,
-                            style: RegularTextStyle.regular16bold(whiteColor),
+                          child: Center(
+                            child: Text(
+                              displayIndex.toString(),
+                              textAlign: TextAlign.center,
+                              style: RegularTextStyle.regular16bold(whiteColor),
+                            ),
                           ),
+                        ),
+                        const VerticalDivider(
+                          color: Colors.blue,
+                          thickness: 1,
+                          indent: 5,
+                          endIndent: 5,
                         ),
                         SizedBox(
                           width: width * 0.05,

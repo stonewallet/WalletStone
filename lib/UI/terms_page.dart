@@ -10,6 +10,7 @@ import 'package:walletstone/UI/Home/home_page.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
 import 'package:walletstone/UI/welcome_page.dart';
 import 'Constants/colors.dart';
+import 'login/createwallet_register.dart';
 
 class TermsOfPage extends StatefulWidget {
   const TermsOfPage({super.key});
@@ -328,7 +329,7 @@ class _TermsOfPageState extends State<TermsOfPage> {
     if (csrfToken != null && sessionId != null) {
       Get.off(() => const BottomNavigationPage());
     } else {
-      Get.off(() => const WelcomePage());
+      Get.off(() => const CreateNewWalletRegisterPage());
     }
   }
 }

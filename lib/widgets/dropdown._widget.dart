@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
@@ -108,7 +109,8 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
     return SizedBox(
       height: 50,
       width: MediaQuery.sizeOf(context).width / 2.5,
-      child: SizedBox(
+      child: Container(
+          padding: EdgeInsets.symmetric(vertical: 7.w),
           height: 100,
           child: SearchField(
             controller: searchController,

@@ -110,16 +110,16 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                         SizedBox(
                           height: height * 0.05,
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // const SizedBox(height: 30,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Form(
-                                key: _formKey,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // const SizedBox(height: 30,),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,11 +131,13 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                       height: 6,
                                     ),
                                     SizedBox(
-                                      height: 45,
+                                      height: 70,
                                       width: width,
                                       // padding: EdgeInsets.only(left: 15, right: 15),
                                       // alignment: Alignment.center,
                                       child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
                                         // autofocus: true,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
@@ -177,10 +179,10 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           errorStyle:
-                                              const TextStyle(height: 0.1),
-                                          errorMaxLines: 2,
-                                          contentPadding: const EdgeInsets.only(
-                                              left: 10, bottom: 10),
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
                                         textInputAction: TextInputAction.next,
                                         validator: (value) {
@@ -194,683 +196,690 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                   ],
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Item Name",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      controller: itemController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter Item name';
-                                        }
-                                        return null;
-                                      },
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Item Name",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Trip Quantity",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      keyboardType: TextInputType.number,
-                                      controller: quantityController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: itemController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter Item name';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter trip Quantity';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Price Paid",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      keyboardType: TextInputType.number,
-                                      controller: pricePaidController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Trip Quantity",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        keyboardType: TextInputType.number,
+                                        controller: quantityController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 2,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter trip Quantity';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter Price Paid';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Price Sold",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      keyboardType: TextInputType.number,
-                                      controller: priceSoldController,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Price Paid",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        keyboardType: TextInputType.number,
+                                        controller: pricePaidController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: blueAccentColor),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: blueAccentColor),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: borderColor),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter Price Paid';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter price Sold';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Transport Expenses",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      controller: transportController,
-                                      keyboardType: TextInputType.number,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Price Sold",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        keyboardType: TextInputType.number,
+                                        controller: priceSoldController,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter price Sold';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter transport Expenses';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Hotel Expenses",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      controller: hotelController,
-                                      textAlign: TextAlign.start,
-                                      keyboardType: TextInputType.number,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Transport Expenses",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: transportController,
+                                        keyboardType: TextInputType.number,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter transport Expenses';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter Hotel Expenses';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Food Expenses",
-                                      style: RegularTextStyle.regular16600(
-                                          Colors.white)),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  SizedBox(
-                                    height: 45,
-                                    width: width,
-                                    // padding: EdgeInsets.only(left: 15, right: 15),
-                                    // alignment: Alignment.center,
-                                    child: TextFormField(
-                                      // autofocus: true,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      cursorColor: Colors.blue,
-                                      controller: foodController,
-                                      keyboardType: TextInputType.number,
-                                      textAlign: TextAlign.start,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      style: RegularTextStyle.regular16600(
-                                          whiteColor),
-                                      decoration: InputDecoration(
-                                        // focusedBorder: const OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.all(
-                                        //       Radius.circular(1)),
-                                        //   borderSide: BorderSide(
-                                        //       color: borderColor, width: 1.0),
-                                        // ),
-                                        fillColor: fillColor,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Hotel Expenses",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: hotelController,
+                                        textAlign: TextAlign.start,
+                                        keyboardType: TextInputType.number,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: blueAccentColor,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: borderColor,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
                                         ),
-                                        errorStyle:
-                                            const TextStyle(height: 0.1),
-                                        errorMaxLines: 2,
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 10, bottom: 10),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter Hotel Expenses';
+                                          }
+                                          return null;
+                                        },
                                       ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter Food Expenses';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Food Expenses",
+                                        style: RegularTextStyle.regular16600(
+                                            Colors.white)),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: width,
+                                      // padding: EdgeInsets.only(left: 15, right: 15),
+                                      // alignment: Alignment.center,
+                                      child: TextFormField(
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        // autofocus: true,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        cursorColor: Colors.blue,
+                                        controller: foodController,
+                                        keyboardType: TextInputType.number,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: RegularTextStyle.regular16600(
+                                            whiteColor),
+                                        decoration: InputDecoration(
+                                          // focusedBorder: const OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(1)),
+                                          //   borderSide: BorderSide(
+                                          //       color: borderColor, width: 1.0),
+                                          // ),
+                                          fillColor: fillColor,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: blueAccentColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: borderColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorStyle:
+                                              const TextStyle(height: 0),
+                                          errorMaxLines: 1,
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 7),
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter Food Expenses';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
 
-                            const SizedBox(
-                              height: 20,
-                            ),
+                              const SizedBox(
+                                height: 20,
+                              ),
 
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: SizedBox(
-                                height: 45,
-                                width: width * 0.5,
-                                child: Consumer<TripProvider>(
-                                  builder: (context, value, child) =>
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: buttonColor2,
-                                              surfaceTintColor: blackColor,
-                                              shadowColor: whiteColor,
-                                              elevation: 4),
-                                          onPressed: () async {
-                                            if (kDebugMode) {
-                                              print(nameController.text);
-                                              print(itemController.text);
-                                              print(quantityController.text);
-                                              print(pricePaidController.text);
-                                              print(priceSoldController.text);
-                                              print(transportController.text);
-                                              print(hotelController.text);
-                                              print(foodController.text);
-                                            }
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: SizedBox(
+                                  height: 45,
+                                  width: width * 0.5,
+                                  child: Consumer<TripProvider>(
+                                    builder: (context, value, child) =>
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: buttonColor2,
+                                                surfaceTintColor: blackColor,
+                                                shadowColor: whiteColor,
+                                                elevation: 4),
+                                            onPressed: () async {
+                                              if (kDebugMode) {
+                                                print(nameController.text);
+                                                print(itemController.text);
+                                                print(quantityController.text);
+                                                print(pricePaidController.text);
+                                                print(priceSoldController.text);
+                                                print(transportController.text);
+                                                print(hotelController.text);
+                                                print(foodController.text);
+                                              }
 
-                                            // Validate the form
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              // Check if any field is empty
-                                              if (nameController.text.isEmpty ||
-                                                  itemController.text.isEmpty ||
-                                                  quantityController
-                                                      .text.isEmpty ||
-                                                  pricePaidController
-                                                      .text.isEmpty ||
-                                                  priceSoldController
-                                                      .text.isEmpty ||
-                                                  transportController
-                                                      .text.isEmpty ||
-                                                  hotelController
-                                                      .text.isEmpty ||
-                                                  foodController.text.isEmpty) {
-                                                Get.snackbar(
-                                                  "Something went wrong",
-                                                  'Please fill every field',
-                                                  backgroundColor: Colors.red,
-                                                  colorText: Colors.white,
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          20, 5, 0, 0),
-                                                  duration: const Duration(
-                                                      milliseconds: 4000),
-                                                  snackPosition:
-                                                      SnackPosition.BOTTOM,
-                                                );
-                                              } else {
-                                                setState(() {
-                                                  isLoading = true;
-                                                });
-
-                                                var response =
-                                                    await ApiProvider()
-                                                        .processPostTravel(
-                                                  nameController.text,
-                                                  itemController.text,
-                                                  int.parse(
-                                                      quantityController.text),
-                                                  int.parse(
-                                                      pricePaidController.text),
-                                                  int.parse(
-                                                      priceSoldController.text),
-                                                  int.parse(
-                                                      transportController.text),
-                                                  int.parse(
-                                                      hotelController.text),
-                                                  int.parse(
-                                                      foodController.text),
-                                                );
-                                                value.fetch();
-                                                if (response.message != null) {
-                                                  setState(() {
-                                                    isLoading = false;
-                                                  });
-                                                  Get.back();
-                                                  // Get.snackbar(
-                                                  //   "Success",
-                                                  //   response.message!,
-                                                  //   backgroundColor: Colors.green,
-                                                  //   colorText: Colors.white,
-                                                  //   snackPosition:
-                                                  //       SnackPosition.BOTTOM,
-                                                  // );
-                                                  alert(response.message!);
-                                                } else {
-                                                  setState(() {
-                                                    isLoading = false;
-                                                  });
+                                              // Validate the form
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                // Check if any field is empty
+                                                if (nameController.text.isEmpty ||
+                                                    itemController
+                                                        .text.isEmpty ||
+                                                    quantityController
+                                                        .text.isEmpty ||
+                                                    pricePaidController
+                                                        .text.isEmpty ||
+                                                    priceSoldController
+                                                        .text.isEmpty ||
+                                                    transportController
+                                                        .text.isEmpty ||
+                                                    hotelController
+                                                        .text.isEmpty ||
+                                                    foodController
+                                                        .text.isEmpty) {
                                                   Get.snackbar(
-                                                    "Error",
                                                     "Something went wrong",
+                                                    'Please fill every field',
                                                     backgroundColor: Colors.red,
                                                     colorText: Colors.white,
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(20, 5, 0, 0),
+                                                    duration: const Duration(
+                                                        milliseconds: 4000),
                                                     snackPosition:
                                                         SnackPosition.BOTTOM,
                                                   );
+                                                } else {
+                                                  setState(() {
+                                                    isLoading = true;
+                                                  });
+
+                                                  var response =
+                                                      await ApiProvider()
+                                                          .processPostTravel(
+                                                    nameController.text,
+                                                    itemController.text,
+                                                    int.parse(quantityController
+                                                        .text),
+                                                    int.parse(
+                                                        pricePaidController
+                                                            .text),
+                                                    int.parse(
+                                                        priceSoldController
+                                                            .text),
+                                                    int.parse(
+                                                        transportController
+                                                            .text),
+                                                    int.parse(
+                                                        hotelController.text),
+                                                    int.parse(
+                                                        foodController.text),
+                                                  );
+                                                  value.fetch();
+                                                  if (response.message !=
+                                                      null) {
+                                                    setState(() {
+                                                      isLoading = false;
+                                                    });
+                                                    Get.back();
+                                                    // Get.snackbar(
+                                                    //   "Success",
+                                                    //   response.message!,
+                                                    //   backgroundColor: Colors.green,
+                                                    //   colorText: Colors.white,
+                                                    //   snackPosition:
+                                                    //       SnackPosition.BOTTOM,
+                                                    // );
+                                                    alert(response.message!);
+                                                  } else {
+                                                    setState(() {
+                                                      isLoading = false;
+                                                    });
+                                                    Get.snackbar(
+                                                      "Error",
+                                                      "Something went wrong",
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      colorText: Colors.white,
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                    );
+                                                  }
                                                 }
                                               }
-                                            }
-                                          },
-                                          child: isLoading == true
-                                              ? const CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                )
-                                              : Text("Add Trip",
-                                                  textAlign: TextAlign.center,
-                                                  style: RegularTextStyle
-                                                      .regular14600(
-                                                          whiteColor))),
+                                            },
+                                            child: isLoading == true
+                                                ? const CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  )
+                                                : Text("Add Trip",
+                                                    textAlign: TextAlign.center,
+                                                    style: RegularTextStyle
+                                                        .regular14600(
+                                                            whiteColor))),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            )
-                          ],
+                              const SizedBox(
+                                height: 15,
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),

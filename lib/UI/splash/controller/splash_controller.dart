@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/terms_page.dart';
 
+import '../../welcome_page.dart';
+
 class SplashController extends GetxController {
   final _loading = true.obs;
   bool get loading => _loading.value;
@@ -40,9 +42,9 @@ class SplashController extends GetxController {
     final String? sessionId = prefs.getString('sessionId');
 
     if (csrfToken != null && sessionId != null) {
-      Get.off(() => const TermsOfPage());
+      Get.off(() => const WelcomePage());
     } else {
-      Get.off(() => const TermsOfPage());
+      Get.off(() => const WelcomePage());
     }
   }
 }

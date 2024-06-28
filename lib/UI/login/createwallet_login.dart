@@ -11,6 +11,7 @@ import 'package:walletstone/UI/Constants/text_styles.dart';
 import 'package:walletstone/UI/login/createwallet_register.dart';
 
 import '../Create New Wallet/create_new_wallet_2.dart';
+import '../terms_page.dart';
 
 class NewWalletLoginPage extends StatefulWidget {
   const NewWalletLoginPage({super.key});
@@ -311,11 +312,11 @@ class _NewWalletLoginPageState extends State<NewWalletLoginPage> {
                           TextButton(
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CreateNewWalletRegisterPage(),
-                                    ));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const TermsOfPage(),
+                                  ),
+                                );
                               },
                               child: Text(
                                 'Sign Up',

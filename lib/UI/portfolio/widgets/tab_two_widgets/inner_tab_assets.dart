@@ -492,7 +492,7 @@ class BuildContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AssetProvider>(builder: (context, value, child) {
-      if (value.loanList.isEmpty) {
+      if (value.assetList.isEmpty) {
         return FutureBuilder(
           future: Future.delayed(const Duration(seconds: 4)),
           builder: (context, snapshot) {

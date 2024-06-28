@@ -197,6 +197,8 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Stone Wallet',
             theme: ThemeData(
+              splashFactory: NoSplash.splashFactory,
+              highlightColor: Colors.transparent,
               colorScheme: ColorScheme.fromSeed(seedColor: purpleColor),
               useMaterial3: false,
             ),
