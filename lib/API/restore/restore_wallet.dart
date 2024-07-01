@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ class ApiRestorePassWord extends ChangeNotifier {
   }) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         restoreWallet,
@@ -37,7 +38,7 @@ class ApiRestorePassWord extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("restored seed ${response.data}");
+        log("restored seed ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =

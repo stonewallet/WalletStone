@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -295,8 +297,8 @@ class _CreateNewWalletRegisterPageState
                                   isLoading = true;
                                 });
                                 if (kDebugMode) {
-                                  print(userNameController.text);
-                                  print(passwordController.text);
+                                  log(userNameController.text);
+                                  log(passwordController.text);
                                 }
                                 var response =
                                     await ApiProvider().processRegister(

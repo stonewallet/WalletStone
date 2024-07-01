@@ -77,37 +77,35 @@ class _TermsOfPageState extends State<TermsOfPage> {
     if (Platform.isAndroid) {
       DeviceInfoPlugin plugin = DeviceInfoPlugin();
       AndroidDeviceInfo? android = await plugin.androidInfo;
-      if (android != null) {
-        if (android.version.sdkInt < 33) {
-          if (await Permission.storage.request().isGranted &&
-              await Permission.manageExternalStorage.request().isGranted) {
-            setState(() {
-              permissionGranted = true;
-            });
-          } else if (await Permission.storage.request().isPermanentlyDenied) {
-            await getStoragePermission();
-          } else if (await Permission.audio.request().isDenied) {
-            setState(() {
-              permissionGranted = false;
-            });
-          }
-        } else {
-          if (await Permission.photos.request().isGranted &&
-              await Permission.videos.request().isGranted &&
-              await Permission.audio.request().isGranted) {
-            setState(() {
-              permissionGranted = true;
-            });
-          } else if (await Permission.photos.request().isPermanentlyDenied) {
-            await getStoragePermission();
-          } else if (await Permission.photos.request().isDenied &&
-              await Permission.microphone.request().isDenied &&
-              await Permission.mediaLibrary.request().isDenied &&
-              await Permission.storage.request().isDenied) {
-            setState(() {
-              permissionGranted = false;
-            });
-          }
+      if (android.version.sdkInt < 33) {
+        if (await Permission.storage.request().isGranted &&
+            await Permission.manageExternalStorage.request().isGranted) {
+          setState(() {
+            permissionGranted = true;
+          });
+        } else if (await Permission.storage.request().isPermanentlyDenied) {
+          await getStoragePermission();
+        } else if (await Permission.audio.request().isDenied) {
+          setState(() {
+            permissionGranted = false;
+          });
+        }
+      } else {
+        if (await Permission.photos.request().isGranted &&
+            await Permission.videos.request().isGranted &&
+            await Permission.audio.request().isGranted) {
+          setState(() {
+            permissionGranted = true;
+          });
+        } else if (await Permission.photos.request().isPermanentlyDenied) {
+          await getStoragePermission();
+        } else if (await Permission.photos.request().isDenied &&
+            await Permission.microphone.request().isDenied &&
+            await Permission.mediaLibrary.request().isDenied &&
+            await Permission.storage.request().isDenied) {
+          setState(() {
+            permissionGranted = false;
+          });
         }
       }
     } else if (Platform.isIOS) {
@@ -258,16 +256,17 @@ class _TermsOfPageState extends State<TermsOfPage> {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: buttonColor),
                     onPressed: () async {
-                      if (isBiometricEnabled) {
-                        isBiometric = await authenticateWithBiometrics();
-                        if (isBiometric) {
-                          Get.off(() => const BottomNavigationPage());
-                        } else {
-                          Get.off(() => const WelcomePage());
-                        }
-                      }
+                      // if (isBiometricEnabled) {
+                      //   isBiometric = await authenticateWithBiometrics();
+                      //   if (isBiometric) {
+                      //     Get.off(() => const BottomNavigationPage());
+                      //   } else {
+                      //     Get.off(() => const WelcomePage());
+                      //   }
+                      // }
 
-                      checkLoginStatus();
+                      // checkLoginStatus();
+                      Get.off(() => const CreateNewWalletRegisterPage());
                     },
                     child: Text("Accept",
                         style: LargeTextStyle.large20700(whiteColor))),
@@ -321,15 +320,15 @@ class _TermsOfPageState extends State<TermsOfPage> {
     ));
   }
 
-  void checkLoginStatus() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? csrfToken = prefs.getString('csrfToken');
-    final String? sessionId = prefs.getString('sessionId');
+  // void checkLoginStatus() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String? csrfToken = prefs.getString('csrfToken');
+  //   final String? sessionId = prefs.getString('sessionId');
 
-    if (csrfToken != null && sessionId != null) {
-      Get.off(() => const BottomNavigationPage());
-    } else {
-      Get.off(() => const CreateNewWalletRegisterPage());
-    }
-  }
+  //   if (csrfToken != null && sessionId != null) {
+  //     Get.off(() => const BottomNavigationPage());
+  //   } else {
+  //     Get.off(() => const CreateNewWalletRegisterPage());
+  //   }
+  // }
 }

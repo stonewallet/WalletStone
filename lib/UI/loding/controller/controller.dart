@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,15 +23,7 @@ class LoadingController extends GetxController {
     startTimer();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void startTimer() async {
     await Future.delayed(const Duration(seconds: 5));
@@ -41,7 +35,7 @@ class LoadingController extends GetxController {
         name: userController.text,
         pass: passController.text,
       );
-      print(walletResponse.mnemonicSeed);
+      log(walletResponse.mnemonicSeed);
 
       if (walletResponse.mnemonicSeed.isNotEmpty) {
         ApiServiceForADDAssets().createPortfolio1();
@@ -59,7 +53,7 @@ class LoadingController extends GetxController {
         duration: const Duration(milliseconds: 4000),
         snackPosition: SnackPosition.BOTTOM,
       );
-      print('Error creating wallet: $e');
+      log('Error creating wallet: $e');
       // Stop the controller or perform any other necessary actions here
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -218,8 +220,8 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 if (kDebugMode) {
-                                  print(userNameController.text);
-                                  print(passwordController.text);
+                                  log(userNameController.text);
+                                  log(passwordController.text);
                                 }
 
                                 var response = await ApiProvider().processLogin(
@@ -235,11 +237,13 @@ class _LoginPageState extends State<LoginPage> {
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
-                                    Navigator.push(
+                                    Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const BottomNavigationPage()),
+                                        builder: (context) =>
+                                            const BottomNavigationPage(),
+                                      ),
+                                      (route) => false,
                                     );
                                   }
                                   userController.clear();
@@ -248,18 +252,20 @@ class _LoginPageState extends State<LoginPage> {
                                     " Invalid login credentials") {
                                   var snackBar = SnackBar(
                                       content: Text(response.message!));
-                                  if (context.mounted)
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
+                                  }
                                 } else {
                                   setState(() {
                                     isLoading = false;
                                   });
                                   var snackBar = const SnackBar(
                                       content: Text("Something went wrong"));
-                                  if (context.mounted)
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
+                                  }
                                 }
                               }
 

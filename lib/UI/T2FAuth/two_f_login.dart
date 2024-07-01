@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -268,8 +270,8 @@ class _TWOFactorLoginState extends State<TWOFactorLogin> {
                                     isLoading = true;
                                   });
                                   if (kDebugMode) {
-                                    print(userNameController.text);
-                                    print(passwordController.text);
+                                    log(userNameController.text);
+                                    log(passwordController.text);
                                   }
                                   sharedPref.setString(
                                       "name", userNameController.text);
@@ -301,18 +303,20 @@ class _TWOFactorLoginState extends State<TWOFactorLogin> {
                                       " Invalid login credentials") {
                                     var snackBar = SnackBar(
                                         content: Text(response.message!));
-                                    if (context.mounted)
+                                    if (context.mounted) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackBar);
+                                    }
                                   } else {
                                     setState(() {
                                       isLoading = false;
                                     });
                                     var snackBar = const SnackBar(
                                         content: Text("Something went wrong"));
-                                    if (context.mounted)
+                                    if (context.mounted) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackBar);
+                                    }
                                   }
                                   // Navigator.push(
                                   //   context,

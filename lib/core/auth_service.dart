@@ -47,7 +47,7 @@
 //     try {
 //       password = await secureStorage.read(key: key) ?? '';
 //     } catch (e) {
-//       print(e);
+//       log(e);
 //     }
 //
 //     return walletName.isNotEmpty && password.isNotEmpty;

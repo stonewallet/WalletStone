@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -127,9 +129,9 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                             //   MaterialPageRoute(builder: (context)
                             //   => const ReceivePage()),
                             // );
-                            print(MySharedPreferences().getCsrfToken(
+                            log(MySharedPreferences().getCsrfToken(
                                 await SharedPreferences.getInstance()));
-                            print(MySharedPreferences().getSessionId(
+                            log(MySharedPreferences().getSessionId(
                                 await SharedPreferences.getInstance()));
                             _showBottomSheet();
                           },
@@ -607,7 +609,7 @@ class _MyWalletBalancePageState extends State<MyWalletBalancePage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         if (kDebugMode) {
-                          print('Entered data: ${_textController.text}');
+                          log('Entered data: ${_textController.text}');
                         }
                         final String text = _textController.text.trim();
                         var response =

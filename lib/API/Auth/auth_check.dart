@@ -1,9 +1,8 @@
-import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
-import 'package:walletstone/Responses/auth_check.dart';
 import 'package:walletstone/UI/Constants/urls.dart';
 
 class ApiCheckAuth extends ChangeNotifier {
@@ -14,7 +13,7 @@ class ApiCheckAuth extends ChangeNotifier {
   }) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         '$baseUrl/travel/auth_check/',
@@ -31,7 +30,7 @@ class ApiCheckAuth extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         dynamic travelPostResponse =

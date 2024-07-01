@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -141,8 +143,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               //     await SharedPreferences.getInstance();
                               if (_formKey.currentState!.validate()) {
                                 if (kDebugMode) {
-                                  print(userNameController.text);
-                                  // print(passwordController.text);
+                                  log(userNameController.text);
+                                  // log(passwordController.text);
                                 }
                                 // sharedPref.setString(
                                 //     "name", userNameController.text);
@@ -174,18 +176,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     " Invalid login credentials") {
                                   var snackBar = SnackBar(
                                       content: Text(response.message!));
-                                  if (context.mounted)
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
+                                  }
                                 } else {
                                   setState(() {
                                     isLoading = false;
                                   });
                                   var snackBar = const SnackBar(
                                       content: Text("Something went wrong"));
-                                  if (context.mounted)
+                                  if (context.mounted) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
+                                  }
                                 }
                               }
 

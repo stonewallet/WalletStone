@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +82,7 @@ class _SendPageState extends State<SendPage> {
       //   searchList = data;
       // });
     } catch (error) {
-      print('Error fetching suggestions: $error');
+      log('Error fetching suggestions: $error');
       // Handle error
     }
   }
@@ -89,7 +91,7 @@ class _SendPageState extends State<SendPage> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -216,8 +218,7 @@ class _SendPageState extends State<SendPage> {
                                 (element) => element.mnemonic == suggestionText)
                             .id;
                         if (kDebugMode) {
-                          print(
-                              "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                          log("input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
                         }
                       }
                       focus.unfocus();
@@ -441,7 +442,7 @@ class _SendPageState extends State<SendPage> {
                 addressController.text,
                 double.parse(amountController.text),
               );
-              print(response);
+              log(response);
               if (response.message != null) {
                 setState(() {
                   isLoading = false;

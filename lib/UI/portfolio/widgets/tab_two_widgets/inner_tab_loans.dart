@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -81,7 +83,7 @@ class _InnerLoansScreenState extends State<InnerLoansScreen> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -213,7 +215,7 @@ class _InnerLoansScreenState extends State<InnerLoansScreen> {
           itemCount: searchList.length,
           itemBuilder: (context, index) {
             final product = searchList[index];
-            print(product);
+            log(product.toString());
 
             return buildSearchDetails(product, index, width);
           },
@@ -337,7 +339,7 @@ class BuildLoanContent extends StatefulWidget {
 
 class _BuildLoanContentState extends State<BuildLoanContent> {
   List<Portfolio> dataPortfolio = [];
-  int _portfolio = 3;
+  final int _portfolio = 3;
   late ApiService apiService;
   bool isLoading = true;
   List<Map<String, dynamic>> savedTime = [];
@@ -352,12 +354,12 @@ class _BuildLoanContentState extends State<BuildLoanContent> {
 // //read data from db or fetch api
 //   loanpagePortfolioData() async {
 //     int count = await LocalDatabase.getPortfolioCount() ?? 0;
-//     print("No of news saved ${count}");
+//     log("No of news saved ${count}");
 //     int savedTimeLength = savedTime.length;
 //     DateTime firstDataSavedTime = savedTimeLength >= 1
 //         ? DateTime.parse(savedTime[0]["lastSavedTime"] ?? "2000-01-01")
 //         : DateTime(2000);
-//     print(firstDataSavedTime);
+//     log(firstDataSavedTime);
 
 //     DateTime currentTime = DateTime.now();
 //     Duration difference = currentTime.difference(firstDataSavedTime);
@@ -365,13 +367,13 @@ class _BuildLoanContentState extends State<BuildLoanContent> {
 //       var isApiFetching = await ApiService().getDataForLoan();
 //       if (isApiFetching) {
 //         if (kDebugMode) {
-//           print('api fetching is called');
+//           log('api fetching is called');
 //         }
 //         getLoanPortfolio();
 //       }
 //     } else {
 //       if (kDebugMode) {
-//         print('data from local called');
+//         log('data from local called');
 //       }
 //       getLoanPortfolio();
 //     }
@@ -395,7 +397,7 @@ class _BuildLoanContentState extends State<BuildLoanContent> {
 
   @override
   Widget build(BuildContext context) {
-    print(_portfolio);
+    log(_portfolio.toString());
     return Consumer<AssetProvider>(builder: (context, value, child) {
       if (value.loanList.isEmpty) {
         return FutureBuilder(

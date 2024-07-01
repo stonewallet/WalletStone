@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -75,8 +76,8 @@ class _NewTripPageState extends State<NewTripPage> {
   Widget build(BuildContext context) {
     final provider = Provider.of<NewTripProvider>(context);
     if (kDebugMode) {
-      print("travel2response ${provider.travel2response.id}");
-      print(provider.numbers);
+      log("travel2response ${provider.travel2response.id}");
+      log(provider.numbers.toString());
     }
 
     double width = MediaQuery.of(context).size.width;
@@ -97,7 +98,7 @@ class _NewTripPageState extends State<NewTripPage> {
           : [];
     }
 
-    print("totalQuantity ${provider.totalQuantity}");
+    log("totalQuantity ${provider.totalQuantity}");
     List<DataRow> getRows() {
       return provider.newData.map((Map<String, dynamic> rowData) {
         return DataRow(
@@ -235,7 +236,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                 context, value);
 
                                             if (kDebugMode) {
-                                              print(value.travel2response.id!);
+                                              log(value.travel2response.id!.toString());
                                             }
                                           },
                                           child: const Icon(
@@ -673,7 +674,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                           "${value.travel2response.tripName}.pdf";
                                                       String savePath =
                                                           "$dir/$savename";
-                                                      print(savePath);
+                                                      log(savePath);
                                                       //output:  /storage/emulated/0/Download/banner.png
 
                                                       try {
@@ -703,8 +704,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                                     (received,
                                                                         total) {
                                                           if (received != -1) {
-                                                            print(
-                                                                "${(received / total * 100).toStringAsFixed(0)}%");
+                                                            log("${(received / total * 100).toStringAsFixed(0)}%");
 
                                                             //you can build progressbar feature too
                                                           }
@@ -712,8 +712,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                         if (response
                                                                 .statusCode ==
                                                             200) {
-                                                          print(
-                                                              "File is saved to download folder.");
+                                                          log("File is saved to download folder.");
 
                                                           Get.snackbar(
                                                             "File Downloaded",
@@ -754,21 +753,17 @@ class _NewTripPageState extends State<NewTripPage> {
                                                             e.response!
                                                                     .statusCode ==
                                                                 403) {
-                                                          print(
-                                                              "403 Forbidden: ${e.message}");
+                                                          log("403 Forbidden: ${e.message}");
                                                         } else {
-                                                          print(
-                                                              "Dio error: $e");
+                                                          log("Dio error: $e");
                                                         }
                                                       } catch (e) {
-                                                        print(
-                                                            "Unexpected error: $e");
+                                                        log("Unexpected error: $e");
                                                       }
                                                     }
                                                   } else {
                                                     if (kDebugMode) {
-                                                      print(
-                                                          "No permission to read and write.");
+                                                      log("No permission to read and write.");
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -894,7 +889,7 @@ class _NewTripPageState extends State<NewTripPage> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   var snackBar =
-                      SnackBar(content: Text("Something went wrong"));
+                      const SnackBar(content: Text("Something went wrong"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
                 Navigator.pop(context);

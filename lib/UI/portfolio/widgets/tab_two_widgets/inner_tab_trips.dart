@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
@@ -74,7 +76,7 @@ class _InnerTripTabScreenFourState extends State<InnerTripTabScreenFour> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -200,7 +202,7 @@ class _InnerTripTabScreenFourState extends State<InnerTripTabScreenFour> {
           itemCount: searchList.length,
           itemBuilder: (context, index) {
             final product = searchList[index];
-            print(product);
+            log(product.toString());
 
             return buildSearchDetails(product, index, width);
           },

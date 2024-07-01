@@ -45,7 +45,7 @@ class _ConnectionAndSyncPageState extends State<ConnectionAndSyncPage> {
 
       // set up the AlertDialog
       AlertDialog alert = AlertDialog(
-        backgroundColor: Color(0xff1A2330),
+        backgroundColor: const Color(0xff1A2330),
         title: Center(
             child: Text("Reconnection",
                 style: RegularTextStyle.regular18600(whiteColor))),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,7 @@ class APiAuthOTPLogin extends ChangeNotifier {
     getSharePrefs();
     try {
       if (kDebugMode) {
-        print("Login otp Post api hit");
+        log("Login otp Post api hit");
       }
       Response response = await _dio.post(
         "$sendOTPLogin/$otp/",
@@ -43,11 +44,11 @@ class APiAuthOTPLogin extends ChangeNotifier {
         // ),
       );
       if (kDebugMode) {
-        print("Auth login data ${response.data}");
+        log("Auth login data ${response.data}");
       }
       if (response.statusCode == 200) {
         List<String> cookies = response.headers.map['set-cookie']!;
-        print(cookies);
+        log(cookies.toString());
         if (cookies.isNotEmpty && cookies.length == 2) {
           String csToken =
               cookies[0].split(';')[0].replaceAll("csrftoken=", "");
@@ -59,13 +60,13 @@ class APiAuthOTPLogin extends ChangeNotifier {
           MySharedPreferences().setCsrfToken(sharedPreferences!, csToken);
           MySharedPreferences().setSessionId(sharedPreferences!, sessionToken);
 
-          print("csrfToken $csrfToken");
-          print("sessionId $sessionId");
-          print(MySharedPreferences()
+          log("csrfToken $csrfToken");
+          log("sessionId $sessionId");
+          log(MySharedPreferences()
               .getCsrfToken(await SharedPreferences.getInstance()));
         }
 
-        print("cookies $cookies");
+        log("cookies $cookies");
       }
 
       TravelPostResponse travelPostResponse =

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +21,6 @@ import 'package:walletstone/API/send_wallet/send_wallet.dart';
 import 'package:walletstone/API/wallet_balance/wallet_balance.dart';
 import 'package:walletstone/UI/Home/provider/notification_provider.dart';
 import 'package:walletstone/UI/Security%20And%20Backup/provider/twofactor_sw.dart';
-import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
@@ -68,28 +69,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _navKey = GlobalKey<NavigatorState>();
 
-  Future<void> _loadSelectedOption() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedOption = prefs.getString('selectedOption') ?? '10 minutes';
-    setState(() {
-      selectedOption = savedOption;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _loadSelectedOption();
   }
 
   @override
   Widget build(BuildContext context) {
-    int durationInMinutes = int.parse(selectedOption.split(' ')[0]);
     return SessionTimeOutListener(
-      duration: Duration(minutes: durationInMinutes),
+      initialDuration: const Duration(minutes: 10),
       onTimeOut: () async {
         if (kDebugMode) {
-          print("Time Out");
+          log("Time Out");
         }
         final SharedPreferences sharedPref =
             await SharedPreferences.getInstance();

@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:walletstone/UI/terms_page.dart';
+import 'package:local_auth/local_auth.dart';
 
+import '../../Home/home_page.dart';
+import '../../Security And Backup/security_and_backup.dart';
 import '../../welcome_page.dart';
 
 class SplashController extends GetxController {
@@ -16,16 +18,6 @@ class SplashController extends GetxController {
     startTimer();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void startTimer() async {
     await Future.delayed(const Duration(seconds: 5));
 
@@ -36,13 +28,45 @@ class SplashController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  Future<void> loadBiometricState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // setState(() {
+    isBiometricEnabled = prefs.getBool('biometricEnabled') ?? false;
+    // });
+  }
+
+  Future<bool> authenticateWithBiometrics() async {
+    final LocalAuthentication localAuthentication = LocalAuthentication();
+    final bool isBiometricSupported =
+        await localAuthentication.isDeviceSupported();
+    final bool canCheckBiometric = await localAuthentication.canCheckBiometrics;
+
+    bool isAuthentificated = false;
+    if (isBiometricSupported && canCheckBiometric) {
+      isAuthentificated = await localAuthentication.authenticate(
+          localizedReason: 'please complete the biometrics to proceed');
+    }
+    return isAuthentificated;
+  }
+
   void checkLoginStatus() async {
+    await loadBiometricState();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? csrfToken = prefs.getString('csrfToken');
     final String? sessionId = prefs.getString('sessionId');
 
     if (csrfToken != null && sessionId != null) {
-      Get.off(() => const WelcomePage());
+      if (isBiometricEnabled) {
+        bool isBiometric = await authenticateWithBiometrics();
+        if (isBiometric) {
+          Get.off(() => const BottomNavigationPage());
+        } else {
+          Get.off(() => const WelcomePage());
+        }
+      } else {
+        Get.off(() => const BottomNavigationPage());
+      }
     } else {
       Get.off(() => const WelcomePage());
     }

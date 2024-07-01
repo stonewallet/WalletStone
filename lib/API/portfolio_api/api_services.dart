@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +71,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        print(response);
+        log(response.toString());
         final List<dynamic> data = response.data;
 
         final filteredData =
@@ -177,7 +178,7 @@ class ApiService {
   //       // return filteredData.map((item) => Portfolio.fromJson(item)).toList();
   //       return true;
   //     } else {
-  //       print('Failed to load data${response.statusCode}');
+  //       log('Failed to load data${response.statusCode}');
   //       return false;
   //     }
   //   } on DioException catch (e) {

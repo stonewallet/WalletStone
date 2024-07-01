@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/API/seed/key/get_seed_key.dart';
@@ -114,7 +116,7 @@ class _SelectWalletPageState extends State<SelectWalletPage> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () async {
-                              print(wallets[index].mnemonic);
+                              log(wallets[index].mnemonic.toString());
                               var response = await apiServiceForSEEDKey
                                   .seedkey(wallets[index].mnemonic!);
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +52,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(widget._portfolio);
+    log(widget._portfolio.toString());
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -379,7 +381,7 @@ class TabFourAssetsState extends State<TabFourAssets> {
                                               // await ApiServiceForADDAssets().addAsset(
                                               //   expensesList
                                               // );
-                                              print(widget._portfolio);
+                                              log(widget._portfolio.toString());
                                               var response =
                                                   await ApiServiceForADDAssets()
                                                       .addAsset(

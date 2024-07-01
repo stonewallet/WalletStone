@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/GetNotification/get_notification.dart';
@@ -50,7 +52,7 @@ class NewTripProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error fetching cart item count: $e');
+      log('Error fetching cart item count: $e');
     }
   }
 }

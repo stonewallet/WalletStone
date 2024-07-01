@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/API/Endtrip/endtrip.dart';
@@ -773,7 +775,7 @@ class _EditTripPageState extends State<EditTripPage> {
                                                       widget.userOrder,
                                                 };
 
-                                                print(edit);
+                                                log(edit.toString());
                                                 ApiForEndTrip()
                                                     .resumeTrip(widget.id);
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -334,7 +336,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   onTap: () async {
                     var tripprovider =
                         Provider.of<TripProvider>(context, listen: false);
-                    print(metaDatum.tripId);
+                    log(metaDatum.tripId);
                     var response = await ApiProvider()
                         .processAddUser(int.parse(metaDatum.tripId));
                     value.getNotification();

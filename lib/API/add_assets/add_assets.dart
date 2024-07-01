@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 // import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +14,7 @@ class ApiServiceForADDAssets {
   Future<TravelPostResponse> createPortfolio1() async {
     try {
       if (kDebugMode) {
-        print("Create portfolio api hit");
+        log("Create portfolio api hit");
       }
       final response = await _dio.post(
         portfolio,
@@ -32,7 +33,7 @@ class ApiServiceForADDAssets {
       );
 
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       TravelPostResponse travelPostResponse =
           TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -66,20 +67,20 @@ class ApiServiceForADDAssets {
     //     // Handle response
     //     if (response.statusCode == 200) {
     //       // Request successful, handle the response data
-    //       print('Asset added successfully');
+    //       log('Asset added successfully');
     //     } else {
     //       // Request failed, handle error
-    //       print('Failed to add asset. Status code: ${response.statusCode}');
+    //       log('Failed to add asset. Status code: ${response.statusCode}');
     //     }
     //   } catch (e) {
     //     // Handle error
-    //     print('Error adding asset: $e');
+    //     log('Error adding asset: $e');
     //     rethrow; // Rethrow the error to propagate it
     //   }
     // }
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         createPortfolio,
@@ -96,7 +97,7 @@ class ApiServiceForADDAssets {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       TravelPostResponse travelPostResponse =
           TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -128,7 +129,7 @@ class ApiServiceForADDAssets {
       String name, double quantity, int subcat) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.put(
         updatePortfolio,
@@ -145,7 +146,7 @@ class ApiServiceForADDAssets {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       TravelPostResponse travelPostResponse =
           TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -173,7 +174,7 @@ class ApiServiceForADDAssets {
       String name, double quantity, int subcat) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.delete(
         deletePortfolio,
@@ -190,7 +191,7 @@ class ApiServiceForADDAssets {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       TravelPostResponse travelPostResponse =
           TravelPostResponse.fromJson(json.decode(response.toString()));

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +13,7 @@ class ApiServiceForLogOut {
   Future<TravelPostResponse> logOut() async {
     try {
       if (kDebugMode) {
-        print("logout api hit");
+        log("logout api hit");
       }
       Response response = await _dio.post(
         logOutPost,
@@ -28,7 +29,7 @@ class ApiServiceForLogOut {
         ),
       );
       if (kDebugMode) {
-        print("logout ${response.data}");
+        log("logout ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =
@@ -36,7 +37,7 @@ class ApiServiceForLogOut {
       return travelPostResponse;
     } catch (error) {
       if (kDebugMode) {
-        print("Error logout list $error");
+        log("Error logout list $error");
       }
       rethrow;
     }

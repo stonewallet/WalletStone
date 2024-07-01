@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,7 +38,7 @@ class _TripsPageState extends State<TripsPage> {
   //   travelList = await ApiProvider().processTravel();
   //   setState(() {});
   //   if (kDebugMode) {
-  //     print("travelList $travelList");
+  //     log("travelList $travelList");
   //   }
   // }
 
@@ -191,7 +193,7 @@ class _TripsPageState extends State<TripsPage> {
                                                                 .travelList[i]
                                                                 .id;
                                                             if (kDebugMode) {
-                                                              print(id);
+                                                              log(id.toString());
                                                             }
                                                             Navigator.push(
                                                               context,

@@ -1,17 +1,20 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SessionTimeOutListener extends StatefulWidget {
-  Widget child;
-  Duration duration;
-  VoidCallback onTimeOut;
+  final Widget child;
+  final Duration initialDuration;
+  final VoidCallback onTimeOut;
 
-  SessionTimeOutListener(
-      {super.key,
-      required this.child,
-      required this.duration,
-      required this.onTimeOut});
+  const SessionTimeOutListener({
+    Key? key,
+    required this.child,
+    required this.initialDuration,
+    required this.onTimeOut,
+  }) : super(key: key);
 
   @override
   State<SessionTimeOutListener> createState() => _SessionTimeOutListenerState();
@@ -19,25 +22,52 @@ class SessionTimeOutListener extends StatefulWidget {
 
 class _SessionTimeOutListenerState extends State<SessionTimeOutListener> {
   Timer? _timer;
+  Duration? _currentDuration;
 
-  _startTimer() {
-    print("Timer Reset");
+  Future<void> _loadSelectedOption() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedOption = prefs.getString('selectedOption') ?? '10 minutes';
+    log(savedOption);
+
+    setState(() {
+      _currentDuration = _parseDuration(savedOption);
+    });
+  }
+
+  Duration _parseDuration(String option) {
+    switch (option) {
+      case '5 minutes':
+        return const Duration(minutes: 5);
+      case '15 minutes':
+        return const Duration(minutes: 15);
+      default:
+        return const Duration(minutes: 10);
+    }
+  }
+
+  void _startTimer() async {
+    await _loadSelectedOption();
+
+    log("Timer Reset");
+
     if (_timer != null) {
+      log('inside timer');
       _timer?.cancel();
       _timer = null;
     }
 
-    _timer = Timer(widget.duration, () {
-      print("Elasped ");
-      print("the time is ${widget.duration.inSeconds}");
+    _timer = Timer(_currentDuration ?? widget.initialDuration, () {
+      log('inside timer2');
+      log("Elapsed");
+      log("the time is ${_currentDuration?.inMinutes ?? widget.initialDuration.inMinutes}");
       widget.onTimeOut();
     });
   }
 
   @override
   void initState() {
-    _startTimer();
     super.initState();
+    _startTimer();
   }
 
   @override

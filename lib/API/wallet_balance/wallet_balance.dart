@@ -16,7 +16,7 @@ class ApiWalletBalance extends ChangeNotifier {
   }) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         walletBalance,
@@ -36,7 +36,7 @@ class ApiWalletBalance extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("wallent balance ${response.data}");
+        log("wallent balance ${response.data}");
       }
       if (response.statusCode == 200) {
         dynamic responseData = response.data;

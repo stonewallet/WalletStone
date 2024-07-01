@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:walletstone/Responses/travel2_response.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -29,7 +31,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
   //   setState(() {
   //
   //   });
-  //   print("travelList $travelList");
+  //   log("travelList $travelList");
   //
   //
   // }
@@ -56,7 +58,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
         ),
         body: ListView(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Container(
                   width: width,
@@ -150,12 +152,12 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                                               .large20700(
                                                                   whiteColor)),
                                                     )),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 10,
                                                 ),
                                                 InkWell(
                                                     onTap: () {
-                                                      print(widget
+                                                      log(widget
                                                           .travel2response
                                                           .expenses![i]
                                                           .expenseName!);
@@ -163,7 +165,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                                           .expenses!
                                                           .removeAt(i);
                                                     },
-                                                    child: Icon(
+                                                    child: const Icon(
                                                       Icons.delete_outline,
                                                       color: whiteColor,
                                                     ))
@@ -176,7 +178,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                         );
                                       }),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
 
@@ -196,8 +198,8 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                                 shadowColor: whiteColor,
                                                 elevation: 4),
                                             onPressed: () async {
-                                              print(widget
-                                                  .travel2response.expenses);
+                                              log(widget
+                                                  .travel2response.expenses.toString());
 
                                               setState(() {
                                                 isLoading = true;
@@ -212,16 +214,16 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                                     .travel2response.expenses
                                               };
 
-                                              print(expense);
-                                              print(widget.travel2response
-                                                  .expenses!.length);
+                                              log(expense.toString());
+                                              log(widget.travel2response
+                                                  .expenses!.length.toString());
 
                                               var response = await ApiProvider()
                                                   .processAddEvent(
                                                       expense,
                                                       widget
                                                           .travel2response.id!);
-                                              print(response);
+                                              log(response.toString());
 
                                               if (response.message != null) {
                                                 setState(() {
@@ -237,7 +239,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                                 setState(() {
                                                   isLoading = false;
                                                 });
-                                                var snackBar = SnackBar(
+                                                var snackBar = const SnackBar(
                                                     content: Text(
                                                         "Something gone wrong"));
                                                 ScaffoldMessenger.of(context)
@@ -245,7 +247,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                               }
                                             },
                                             child: isLoading == true
-                                                ? CircularProgressIndicator(
+                                                ? const CircularProgressIndicator(
                                                     color: Colors.white,
                                                   )
                                                 : Text("Edit Expenses",
@@ -257,7 +259,7 @@ class _DeleteExpensePageState extends State<DeleteExpensePage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 )
                               ],

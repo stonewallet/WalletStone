@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +14,7 @@ class ApiServiceForSEEDKey extends ChangeNotifier {
   Future<Keys> seedkey(String name) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         getseedkey,
@@ -30,12 +31,12 @@ class ApiServiceForSEEDKey extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         Keys keys = Keys.fromJson(json.decode(response.toString()));
         dataKey.add(keys);
-        print("data is :${dataKey.runtimeType}");
+        log("data is :${dataKey.runtimeType}");
         return keys;
       } else {
         throw Exception(

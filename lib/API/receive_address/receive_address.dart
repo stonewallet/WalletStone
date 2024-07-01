@@ -14,7 +14,7 @@ class ApiPublicAddress extends ChangeNotifier {
     required String mnemonic,
   }) async {
     if (kDebugMode) {
-      print("Add Post api hit");
+      log("Add Post api hit");
     }
     final response = await http.post(
       Uri.parse(publicAddress),
@@ -57,7 +57,7 @@ class ApiPublicAddress extends ChangeNotifier {
       notifyListeners();
       return value;
     } else {
-      print(response.statusCode);
+      log(response.statusCode.toString());
     }
   }
 }

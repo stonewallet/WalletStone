@@ -55,9 +55,9 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
   //     Uri.parse('https://api.coinpaprika.com/v1/tickers/xmr-monero'),
   //   );
 
-  //   print(response.statusCode);
+  //   log(response.statusCode);
   //   if (response.statusCode == 200) {
-  //     print(response.body);
+  //     log(response.body);
   //     return json.decode(response.body);
   //   } else {
   //     throw Exception('Failed to load Monero information');
@@ -67,14 +67,14 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
   // getPublicKey(String privateKey) async {
   //   final private = EthPrivateKey.fromHex(privateKey);
   //   publicKey = await private.address.toString();
-  //   print(publicKey); //rinkeby.infura.io/v3
+  //   log(publicKey); //rinkeby.infura.io/v3
   //   String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
   //   final credentials = EthPrivateKey.fromHex(privateKey);
   //   final client = Web3Client(rpcUrl, http.Client());
   //   final address = credentials.address;
-  //   print(address);
+  //   log(address);
   //   final balance = await client.getBalance(address);
-  //   debugPrint("Balance, ${balance}");
+  //   debuglog("Balance, ${balance}");
   // }
 
   // loadKeys() async {
@@ -99,14 +99,14 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
   //     days: 7,
   //   );
   //   if (!result.isError) {
-  //     print('getCoinOHLC method returned result');
+  //     log('getCoinOHLC method returned result');
   //     result.data.forEach(
-  //       (item) => print(
+  //       (item) => log(
   //         '${item.timestamp}: open = ${item.open}, high = ${item.high}, low = ${item.low}, close = ${item.close}',
   //       ),
   //     );
   //   } else {
-  //     print(
+  //     log(
   //         'getCoinOHLC method returned error ${result.errorCode}: ${result.errorMessage}');
   //   }
   // }
@@ -120,13 +120,13 @@ class _CreateNewWalletPage3State extends State<CreateNewWalletPage3> {
   //       KeyModel resultData = KeyModel.fromJson(jsonResponse);
   //       setState(() {
   //         List<String> temp = resultData.privateKey.split(" ");
-  //         print(temp.length);
+  //         log(temp.length);
   //         mnemonic = temp.take(12).join("  ");
   //         publicAddress = resultData.publicKey;
   //         prefs.setString('publicAddress', publicAddress!);
   //         prefs.setString('seed', mnemonic!);
-  //         print(mnemonic);
-  //         print(publicAddress);
+  //         log(mnemonic);
+  //         log(publicAddress);
   //       });
   //     }
   //   });

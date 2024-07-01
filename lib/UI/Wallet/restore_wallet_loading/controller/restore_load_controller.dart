@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,15 +21,7 @@ class RestoreWalletController extends GetxController {
     startTimer();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void startTimer() async {
     await Future.delayed(const Duration(seconds: 10));
@@ -41,7 +35,7 @@ class RestoreWalletController extends GetxController {
           password: passwordControllerForSeed.text);
 
       if (kDebugMode) {
-        print(response.message);
+        log(response.message.toString());
       }
 
       if (response.message!.isNotEmpty) {
@@ -68,7 +62,7 @@ class RestoreWalletController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
       if (kDebugMode) {
-        print('Error creating wallet: $e');
+        log('Error creating wallet: $e');
       }
       // Stop the controller or perform any other necessary actions here
     }

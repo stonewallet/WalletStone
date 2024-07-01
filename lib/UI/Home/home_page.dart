@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/portfolio/portfolio_page.dart';

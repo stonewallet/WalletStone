@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,11 +36,11 @@ class ApiProvider {
   Future<List<TravelList>> processTravel() async {
     try {
       if (kDebugMode) {
-        print("api hit travel list");
-        print(travelListUrl);
-        print(MySharedPreferences()
+        log("api hit travel list");
+        log(travelListUrl);
+        log(MySharedPreferences()
             .getCsrfToken(await SharedPreferences.getInstance()));
-        print(MySharedPreferences()
+        log(MySharedPreferences()
             .getSessionId(await SharedPreferences.getInstance()));
       }
 
@@ -57,26 +58,26 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("travel list ${response.data}");
-        print("api hit : hit ");
+        log("travel list ${response.data}");
+        log("api hit : hit ");
       }
 
       if (response.statusCode == 200) {
         List res = response.data;
         List<TravelList> travelList = [];
 
-        res.forEach((element) {
+        for (var element in res) {
           String str = json.encode(element);
           var travel = TravelList.fromJson(json.decode(str));
           travelList.add(travel);
-        });
-        print("data $travelList");
+        }
+        log("data $travelList");
 
         return travelList;
       } else {
         var jsonData = jsonDecode(response.data);
         if (kDebugMode) {
-          print(jsonData["error"]);
+          log(jsonData["error"]);
         }
         return [];
       }
@@ -110,7 +111,7 @@ class ApiProvider {
       int? food) async {
     try {
       if (kDebugMode) {
-        print("Post travel api hit");
+        log("Post travel api hit");
       }
       final SharedPreferences sharedPref =
           await SharedPreferences.getInstance();
@@ -163,7 +164,7 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("travelPost ${response.data}");
+        log("travelPost ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =
@@ -171,7 +172,7 @@ class ApiProvider {
       return travelPostResponse;
     } catch (error) {
       if (kDebugMode) {
-        print("Error travel list $error");
+        log("Error travel list $error");
       }
       rethrow;
     }
@@ -181,8 +182,8 @@ class ApiProvider {
       Map<String, dynamic> addEvents, int id) async {
     try {
       if (kDebugMode) {
-        print("put travel api hit");
-        print(addEvents);
+        log("put travel api hit");
+        log(addEvents.toString());
       }
       Response response = await _dio.put(
         "$travelList2Url/$id/",
@@ -199,7 +200,7 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("travelPost ${response.data}");
+        log("travelPost ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =
@@ -229,14 +230,14 @@ class ApiProvider {
     getSharePrefs();
     try {
       if (kDebugMode) {
-        print("login travel api hit");
+        log("login travel api hit");
       }
       Response response = await _dio.post(
         travelLoginUrl,
         data: {"username": userName, "password": password},
       );
       if (kDebugMode) {
-        print("travelPost ${response.headers.map['set-cookie']}");
+        log("travelPost ${response.headers.map['set-cookie']}");
       }
 
       if (response.statusCode == 200) {
@@ -253,13 +254,13 @@ class ApiProvider {
           MySharedPreferences().setCsrfToken(sharedPreferences!, csToken);
           MySharedPreferences().setSessionId(sharedPreferences!, sessionToken);
 
-          print("csrfToken $csrfToken");
-          print("sessionId $sessionId");
-          print(MySharedPreferences()
+          log("csrfToken $csrfToken");
+          log("sessionId $sessionId");
+          log(MySharedPreferences()
               .getCsrfToken(await SharedPreferences.getInstance()));
         }
 
-        print("cookies $cookies");
+        log("cookies $cookies");
       }
 
       TravelPostResponse travelPostResponse =
@@ -288,14 +289,14 @@ class ApiProvider {
       String name, String email, String pass) async {
     try {
       if (kDebugMode) {
-        print("Register api hit");
+        log("Register api hit");
       }
       Response response = await _dio.post(
         travelRegisterUrl,
         data: {"username": name, "email": email, "password": pass},
       );
       if (kDebugMode) {
-        print("travelPost ${response.data}");
+        log("travelPost ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =
@@ -323,8 +324,8 @@ class ApiProvider {
   Future<Travel2Response> processTravel2(int id) async {
     try {
       if (kDebugMode) {
-        print("Next travel api hit");
-        print("$travelList2Url/$id/");
+        log("Next travel api hit");
+        log("$travelList2Url/$id/");
       }
       Response response = await _dio.get(
         "$travelList2Url/$id/",
@@ -340,7 +341,7 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("travel next ${response.data}");
+        log("travel next ${response.data}");
       }
 
       Travel2Response travel2response =
@@ -373,8 +374,8 @@ class ApiProvider {
   ) async {
     try {
       if (kDebugMode) {
-        print("Edit travel api hit");
-        print("$travelList2Url/$id/");
+        log("Edit travel api hit");
+        log("$travelList2Url/$id/");
       }
       Response response = await _dio.put(
         "$travelList2Url/$id/",
@@ -407,7 +408,7 @@ class ApiProvider {
       );
 
       if (kDebugMode) {
-        print("Travel Edit ${response.data}");
+        log("Travel Edit ${response.data}");
       }
 
       TripEditResponse tripEditResponse =
@@ -435,7 +436,7 @@ class ApiProvider {
   Future<TravelPostResponse> processTravelDelete(int id) async {
     try {
       if (kDebugMode) {
-        print("Post travel api hit");
+        log("Post travel api hit");
       }
       Response response = await _dio.delete(
         "$travelList2Url/$id/",
@@ -451,7 +452,7 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("travelDelete ${response.data}");
+        log("travelDelete ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =
@@ -479,7 +480,7 @@ class ApiProvider {
   Future<TravelPostResponse> processAddUser(int? id) async {
     try {
       if (kDebugMode) {
-        print("Post travel api hit");
+        log("Post travel api hit");
       }
       Response response = await _dio.post(
         addUserUrl,
@@ -496,7 +497,7 @@ class ApiProvider {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
 
       TravelPostResponse travelPostResponse =

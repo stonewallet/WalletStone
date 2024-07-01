@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -178,15 +180,16 @@ class _CheckAuthLoginState extends State<CheckAuthLogin> {
                         if (loginAuthController.text.isNotEmpty) {
                           if (response == true) {
                             if (kDebugMode) {
-                              print(response);
+                              log(response);
                             }
                             Get.offAll(() => const TWOFactorLogin());
-                            print("it is true ${response}");
+                            log("it is true $response");
                           } else if (response == false) {
-                        sharedPref.setString("name", loginAuthController.text);
+                            sharedPref.setString(
+                                "name", loginAuthController.text);
                             Get.offAll(() => const LoginPage());
 
-                            print("it is false ${response}");
+                            log("it is false $response");
                           } else {
                             alert(response);
                           }

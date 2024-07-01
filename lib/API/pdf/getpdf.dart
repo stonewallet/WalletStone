@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
@@ -22,7 +24,7 @@ class ApiForGetPdf {
           receiveTimeout: const Duration(seconds: 30 * 1000),
         ),
       );
-      print("pdf url${response.data}");
+      log("pdf url${response.data}");
       if (response.statusCode == 200) {
         final responseData = response.data;
         return GetPdf.fromJson(responseData);

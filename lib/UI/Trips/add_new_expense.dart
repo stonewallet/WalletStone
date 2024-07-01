@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -284,8 +286,7 @@ class _AddNewExpensePageState extends State<AddNewExpensePage> {
                                                     sharedPref
                                                         .getString('name');
 
-                                                print(
-                                                    "nnn ${widget.travel2response.product!.length}");
+                                                log("nnn ${widget.travel2response.product!.length}");
                                                 for (int i = 0;
                                                     i <=
                                                         widget
@@ -365,7 +366,7 @@ class _AddNewExpensePageState extends State<AddNewExpensePage> {
                                                 };
 
                                                 if (kDebugMode) {
-                                                  print(addExpense);
+                                                  log(addExpense.toString());
                                                 }
 
                                                 setState(() {

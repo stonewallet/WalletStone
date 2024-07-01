@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:walletstone/Responses/travel_list_response.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -26,7 +28,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
     travelList.clear();
     travelList = await ApiProvider().processTravel();
     setState(() {});
-    print("travelList $travelList");
+    log("travelList $travelList");
   }
 
   @override
@@ -51,7 +53,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
         ),
         body: ListView(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Container(
                   width: width,
@@ -156,7 +158,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
                                               );
                                             }),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                                 Padding(
@@ -175,7 +177,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
                                                 shadowColor: whiteColor,
                                                 elevation: 4),
                                             onPressed: () async {
-                                              print(id);
+                                              log(id.toString());
                                               // fetch();
                                               setState(() {
                                                 isLoading = true;
@@ -183,7 +185,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
 
                                               var response = await ApiProvider()
                                                   .processAddUser(id);
-                                              print(response);
+                                              log(response.toString());
 
                                               if (response.message != null) {
                                                 setState(() {
@@ -199,7 +201,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
                                                 setState(() {
                                                   isLoading = false;
                                                 });
-                                                var snackBar = SnackBar(
+                                                var snackBar = const SnackBar(
                                                     content: Text(
                                                         "Something gone wrong"));
                                                 ScaffoldMessenger.of(context)
@@ -207,7 +209,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
                                               }
                                             },
                                             child: isLoading == true
-                                                ? CircularProgressIndicator(
+                                                ? const CircularProgressIndicator(
                                                     color: Colors.white,
                                                   )
                                                 : Text("Add User trip",
@@ -219,7 +221,7 @@ class _AddUserTripPageState extends State<AddUserTripPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 )
                               ],

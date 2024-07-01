@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +10,6 @@ import 'package:walletstone/Responses/travel_post_response.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/strings.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
-import 'package:walletstone/UI/login/createwallet_register.dart';
 
 import '../Create New Wallet/create_new_wallet_2.dart';
 import '../terms_page.dart';
@@ -218,8 +219,8 @@ class _NewWalletLoginPageState extends State<NewWalletLoginPage> {
                                   isLoading = true;
                                 });
                                 if (kDebugMode) {
-                                  print(userNameController.text);
-                                  print(passwordController.text);
+                                  log(userNameController.text);
+                                  log(passwordController.text);
                                 }
                                 sharedPref.setString(
                                     "name", userNameController.text);

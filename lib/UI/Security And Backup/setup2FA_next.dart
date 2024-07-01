@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,9 @@ class _Setup2FANextState extends State<Setup2FANext> {
                           builder: (context, provider, child) {
                         // var authStatus = provider.checkAuthStatus();
                         if (kDebugMode) {
-                          print(" data is ${twoFactorProvider.isEnabled}");
+                          log(" data is ${twoFactorProvider.isEnabled}");
                         }
-                        // print(authStatus);
+                        // log(authStatus);
                         return Switch.adaptive(
                           inactiveThumbColor: redColor,
                           activeColor: twoFactorProvider.isEnabled
@@ -86,13 +87,13 @@ class _Setup2FANextState extends State<Setup2FANext> {
                               var response = await provider.authEnablePost();
                               alert(response.message!);
                               if (kDebugMode) {
-                                print("value is enabled that is := $value");
+                                log("value is enabled that is := $value");
                               }
                             } else {
                               var response = await provider.authDisablePost();
                               alert(response.message!);
                               if (kDebugMode) {
-                                print("not true it's  $value");
+                                log("not true it's  $value");
                               }
                             }
                           },

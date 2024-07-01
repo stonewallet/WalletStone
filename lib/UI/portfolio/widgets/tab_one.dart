@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
           .getSearchData(searchController.text.trim(), _portfolio);
     } catch (error) {
       // Handle error
-      print('Error in _getSearch: $error');
+      log('Error in _getSearch: $error');
     }
   }
 
@@ -56,7 +58,7 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -188,7 +190,7 @@ class _TabBarScreenOneState extends State<TabBarScreenOne> {
           itemCount: searchList.length,
           itemBuilder: (context, index) {
             final product = searchList[index];
-            print(product);
+            log(product.toString());
             return buildSearchDetails(product, index, width);
           },
         ),

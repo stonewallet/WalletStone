@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchfield/searchfield.dart';
@@ -90,7 +91,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
         });
       }
     } catch (error) {
-      print('Error fetching suggestions: $error');
+      log('Error fetching suggestions: $error');
       // Handle error
     }
   }
@@ -99,7 +100,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -107,7 +108,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(widget._portfolio);
+    log(widget._portfolio.toString());
 
     Widget searchChild(x) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
@@ -469,7 +470,7 @@ class AddAssetsDetailState extends State<AddAssetsDetail> {
                                         // await ApiServiceForADDAssets().addAsset(
                                         //   expensesList
                                         // );
-                                        print(widget._portfolio);
+                                        log(widget._portfolio.toString());
                                         final amount = double.parse(
                                             assestAmountController.text);
                                         final lastamount =

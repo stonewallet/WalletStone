@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -763,14 +765,14 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                                                 elevation: 4),
                                             onPressed: () async {
                                               if (kDebugMode) {
-                                                print(nameController.text);
-                                                print(itemController.text);
-                                                print(quantityController.text);
-                                                print(pricePaidController.text);
-                                                print(priceSoldController.text);
-                                                print(transportController.text);
-                                                print(hotelController.text);
-                                                print(foodController.text);
+                                                log(nameController.text);
+                                                log(itemController.text);
+                                                log(quantityController.text);
+                                                log(pricePaidController.text);
+                                                log(priceSoldController.text);
+                                                log(transportController.text);
+                                                log(hotelController.text);
+                                                log(foodController.text);
                                               }
 
                                               // Validate the form

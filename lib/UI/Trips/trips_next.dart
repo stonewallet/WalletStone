@@ -35,7 +35,7 @@
 //     setState(() {
 //
 //     });
-//     print("travelList $travelList");
+//     log("travelList $travelList");
 //
 //     // if(travelList.isNotEmpty){
 //     //   isSwitch = false;

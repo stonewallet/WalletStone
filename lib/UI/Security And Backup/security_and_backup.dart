@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,7 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
   Future<void> _loadSelectedOption() async {
     final prefs = await SharedPreferences.getInstance();
     final savedOption = prefs.getString('selectedOption') ?? '10 minutes';
+    log(savedOption);
     setState(() {
       selectedOption = savedOption;
     });
@@ -315,7 +318,7 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
                                   _saveSelectedOption(newValue);
                                 });
                                 if (kDebugMode) {
-                                  print("Selected option: $selectedOption");
+                                  log("Selected option: $selectedOption");
                                 }
                               }
                             },

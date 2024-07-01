@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class ApiForEndTrip {
       );
       if (response.statusCode == 200) {
         final responseData = response.data;
-        print(responseData);
+        log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -38,7 +39,7 @@ class ApiForEndTrip {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
         // Handle DioError related to bad response
-        print(e.message);
+        log(e.message.toString());
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||
@@ -75,7 +76,7 @@ class ApiForEndTrip {
       );
       if (response.statusCode == 200) {
         final responseData = response.data;
-        print(responseData);
+        log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -86,7 +87,7 @@ class ApiForEndTrip {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
         // Handle DioError related to bad response
-        print(e.message);
+        log(e.message.toString());
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||

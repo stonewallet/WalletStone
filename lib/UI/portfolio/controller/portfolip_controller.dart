@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
@@ -27,7 +29,7 @@ class PortfolioController extends GetxController {
   //         await _apiService.getDataForChart();
   //     categorizeData(categorizedData);
   //   } catch (e) {
-  //     print('Error fetching data for chart: $e');
+  //     log('Error fetching data for chart: $e');
   //   }
   // }
 
@@ -62,7 +64,7 @@ class PortfolioController extends GetxController {
       totalValue.value = calculateTotalValue();
       portfolios.refresh();
     } catch (e) {
-      print('Error fetching data: $e');
+      log('Error fetching data: $e');
     }
   }
 
@@ -74,7 +76,7 @@ class PortfolioController extends GetxController {
       totalValue.value = calculateTotalValue();
       portfolios.refresh();
     } catch (e) {
-      print('Error fetching data: $e');
+      log('Error fetching data: $e');
     }
   }
 
@@ -92,7 +94,7 @@ class PortfolioController extends GetxController {
 
       yield chartData;
     } catch (e) {
-      print('Error fetching chart data: $e');
+      log('Error fetching chart data: $e');
       yield [];
     }
   }

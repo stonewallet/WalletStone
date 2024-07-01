@@ -76,8 +76,8 @@ class _NewTripPageState extends State<NewTripPage> {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
-      print("travel2response ${travel2response.id}");
-      print(numbers);
+      log("travel2response ${travel2response.id}");
+      log(numbers);
     }
 
     double width = MediaQuery.of(context).size.width;
@@ -98,7 +98,7 @@ class _NewTripPageState extends State<NewTripPage> {
           : [];
     }
 
-    print("totalQuantity $totalQuantity");
+    log("totalQuantity $totalQuantity");
     List<DataRow> getRows() {
       return newData.map((Map<String, dynamic> rowData) {
         return DataRow(
@@ -225,7 +225,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                           _showDeleteConfirmationDialog(
                                               context);
                                           if (kDebugMode) {
-                                            print(travel2response.id!);
+                                            log(travel2response.id!);
                                           }
                                         },
                                         child: const Icon(
@@ -633,7 +633,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                         "${travel2response.tripName}.pdf";
                                                     String savePath =
                                                         "${dir}/$savename";
-                                                    print(savePath);
+                                                    log(savePath);
                                                     //output:  /storage/emulated/0/Download/banner.png
 
                                                     try {
@@ -644,13 +644,13 @@ class _NewTripPageState extends State<NewTripPage> {
                                                               (received,
                                                                   total) {
                                                         if (received != -1) {
-                                                          print(
+                                                          log(
                                                               "${(received / total * 100).toStringAsFixed(0)}%");
 
                                                           //you can build progressbar feature too
                                                         }
                                                       });
-                                                      print(
+                                                      log(
                                                           "File is saved to download folder.");
                                                       Get.snackbar(
                                                         "File Downloaded",
@@ -671,11 +671,11 @@ class _NewTripPageState extends State<NewTripPage> {
                                                                 .BOTTOM,
                                                       );
                                                     } on DioError catch (e) {
-                                                      print(e.message);
+                                                      log(e.message);
                                                     }
                                                   }
                                                 } else {
-                                                  print(
+                                                  log(
                                                       "No permission to read and write.");
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
@@ -1430,7 +1430,7 @@ class _EditTripPageState extends State<EditTripPage> {
                                         "user": widget.userid
                                       };
 
-                                      print(edit);
+                                      log(edit);
                                       var response = await ApiProvider().processTravelPut(
                                           widget.id, edit
                                           // widget.id, nameController.text, int.parse(quantityController.text),int.parse(pricePaidController.text),

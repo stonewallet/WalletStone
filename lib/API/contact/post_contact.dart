@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +16,7 @@ class ApiServiceForContact extends ChangeNotifier {
   Future<TravelPostResponse> addContact(String name) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         adddContact,
@@ -32,7 +33,7 @@ class ApiServiceForContact extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =
@@ -65,7 +66,7 @@ class ApiServiceForContact extends ChangeNotifier {
   Future<List<Contacts>> getContact() async {
     try {
       if (kDebugMode) {
-        print("Get contact api hit");
+        log("Get contact api hit");
       }
       Response response = await _dio.get(
         adddContact,
@@ -82,7 +83,7 @@ class ApiServiceForContact extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = response.data;
@@ -122,7 +123,7 @@ class ApiServiceForContact extends ChangeNotifier {
   }) async {
     try {
       if (kDebugMode) {
-        print("Get contact api hit");
+        log("Get contact api hit");
       }
       Response response = await _dio.put(
         "$adddContact/$iD/",
@@ -139,7 +140,7 @@ class ApiServiceForContact extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         return true;
@@ -169,7 +170,7 @@ class ApiServiceForContact extends ChangeNotifier {
   Future<bool> deleteContact(int iD) async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.delete(
         "$adddContact/$iD/",
@@ -185,7 +186,7 @@ class ApiServiceForContact extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
 
       if (response.statusCode == 200 || response.statusCode == 204) {

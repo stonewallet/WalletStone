@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
 
@@ -96,7 +98,7 @@ class LocalDatabase {
   static Future<List<Map<String, dynamic>>> getSaveTime() async {
     var db = await createDatabase();
     var data = await db.query("saved_time");
-    print(data);
+    log(data.toString());
     return data;
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/UI/Model/portfolio/portfolio_model.dart';
@@ -25,7 +27,7 @@ class PortfolioControllerTrip extends GetxController {
       tripPortfolios.refresh();
       dataMap.value = getDataMap();
     } catch (e) {
-      print('Error fetching data: $e');
+      log('Error fetching data: $e');
     }
   }
 
@@ -52,7 +54,7 @@ class PortfolioControllerTrip extends GetxController {
 
       yield chartData;
     } catch (e) {
-      print('Error fetching chart data: $e');
+      log('Error fetching chart data: $e');
       yield []; // Return an empty list if there's an error
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +80,7 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -207,7 +209,7 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
           itemCount: searchList.length,
           itemBuilder: (context, index) {
             final product = searchList[index];
-            print(product);
+            log(product.toString());
             return buildSearchDetails(product, index, width);
           },
         ),

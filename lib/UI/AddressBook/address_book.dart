@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/API/contact/post_contact.dart';
 import 'package:walletstone/API/settingwallet/get_setting_wallet.dart';

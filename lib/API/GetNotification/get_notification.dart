@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +34,7 @@ class ApiServiceForNotification {
         List<NotificationModel> notificationModels =
             data.map((item) => NotificationModel.fromJson(item)).toList();
 
-        print(notificationModels);
+        log(notificationModels.toString());
         return notificationModels;
       } else {
         throw Exception('Failed to load data');
@@ -77,7 +78,7 @@ class ApiServiceForNotification {
       );
       if (response.statusCode == 200) {
         final responseData = response.data;
-        print(responseData);
+        log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -88,7 +89,7 @@ class ApiServiceForNotification {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
         // Handle DioError related to bad response
-        print(e.message);
+        log(e.message.toString());
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||
@@ -124,7 +125,7 @@ class ApiServiceForNotification {
       );
       if (response.statusCode == 200) {
         final responseData = response.data;
-        print(responseData);
+        log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -135,7 +136,7 @@ class ApiServiceForNotification {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
         // Handle DioError related to bad response
-        print(e.message);
+        log(e.message.toString());
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||
@@ -172,7 +173,7 @@ class ApiServiceForNotification {
       if (response.statusCode == 200) {
         NotificationResponse notificationResponse =
             NotificationResponse.fromJson(json.decode(response.toString()));
-        print(notificationResponse.message);
+        log(notificationResponse.message.toString());
         return notificationResponse;
       } else {
         throw Exception('Failed to load data');
@@ -216,7 +217,7 @@ class ApiServiceForNotification {
       );
       if (response.statusCode == 200) {
         final responseData = response.data;
-        print(responseData);
+        log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -227,7 +228,7 @@ class ApiServiceForNotification {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {
         // Handle DioError related to bad response
-        print(e.message);
+        log(e.message.toString());
         throw Exception(
             "Error: ${e.response!.statusCode} - ${e.response!.statusMessage}");
       } else if (e.type == DioExceptionType.connectionTimeout ||

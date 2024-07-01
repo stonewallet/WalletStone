@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +14,7 @@ class ApiForSendWallet extends ChangeNotifier {
       String name, String password, String address, double amount1) async {
     try {
       if (kDebugMode) {
-        print("send wallet api hit");
+        log("send wallet api hit");
       }
       Response response = await _dio.post(
         sendWallet,
@@ -35,7 +36,7 @@ class ApiForSendWallet extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =
@@ -46,7 +47,7 @@ class ApiForSendWallet extends ChangeNotifier {
             TravelPostResponse.fromJson(json.decode(response.toString()));
         return travelPostResponse;
       } else {
-        print(response.statusCode);
+        log(response.statusCode.toString());
       }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {

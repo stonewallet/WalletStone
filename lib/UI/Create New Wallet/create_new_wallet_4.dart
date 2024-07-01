@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -39,7 +41,7 @@ class _CreateNewWalletPage4State extends State<CreateNewWalletPage4> {
   @override
   void initState() {
     // setState(() {
-    //   print(widget.seed);
+    //   log(widget.seed);
     //   seed = widget.seed.join("  ");
     //   mixed_seeds = widget.seed;
     //   mixed_seeds!.shuffle(Random());
@@ -84,7 +86,7 @@ class _CreateNewWalletPage4State extends State<CreateNewWalletPage4> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateNewWalletPage3()),
+                        builder: (context) => const CreateNewWalletPage3()),
                   );
                 },
               ),
@@ -114,7 +116,7 @@ class _CreateNewWalletPage4State extends State<CreateNewWalletPage4> {
                       height: height * 0.07,
                     ),
                     // mixed_seeds == null ? Container() :
-                    Container(
+                    SizedBox(
                         height: height * 0.55,
                         width: width * 0.95,
                         child: GridView.count(
@@ -168,10 +170,10 @@ class _CreateNewWalletPage4State extends State<CreateNewWalletPage4> {
                                     setState(() {
                                       tapedIndex = index;
                                       if (kDebugMode) {
-                                        print(tapedIndex);
-                                        print(mixed_seeds![tapedIndex!]);
+                                        log(tapedIndex.toString());
+                                        log(mixed_seeds![tapedIndex!]);
                                       }
-                                      // print(widget.seed[tapedIndex!]);
+                                      // log(widget.seed[tapedIndex!]);
                                       for (int i = 0;
                                           i < mixed_seeds!.length;
                                           i++) {

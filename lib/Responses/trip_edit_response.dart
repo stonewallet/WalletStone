@@ -6,12 +6,12 @@ class TripEditResponse {
 
   TripEditResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -34,29 +34,29 @@ class Data {
     if (json['product'] != null) {
       product = <Product>[];
       json['product'].forEach((v) {
-        product!.add(new Product.fromJson(v));
+        product!.add(Product.fromJson(v));
       });
     }
     if (json['expenses'] != null) {
       expenses = <Expenses>[];
       json['expenses'].forEach((v) {
-        expenses!.add(new Expenses.fromJson(v));
+        expenses!.add(Expenses.fromJson(v));
       });
     }
     createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['trip_name'] = this.tripName;
-    if (this.product != null) {
-      data['product'] = this.product!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['trip_name'] = tripName;
+    if (product != null) {
+      data['product'] = product!.map((v) => v.toJson()).toList();
     }
-    if (this.expenses != null) {
-      data['expenses'] = this.expenses!.map((v) => v.toJson()).toList();
+    if (expenses != null) {
+      data['expenses'] = expenses!.map((v) => v.toJson()).toList();
     }
-    data['created_at'] = this.createdAt;
+    data['created_at'] = createdAt;
     return data;
   }
 }
@@ -87,13 +87,13 @@ class Product {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['product_name'] = this.productName;
-    data['quantity'] = this.quantity;
-    data['price_paid'] = this.pricePaid;
-    data['price_sold'] = this.priceSold;
-    data['total_price_paid'] = this.totalPricePaid;
-    data['total_price_sold'] = this.totalPriceSold;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['product_name'] = productName;
+    data['quantity'] = quantity;
+    data['price_paid'] = pricePaid;
+    data['price_sold'] = priceSold;
+    data['total_price_paid'] = totalPricePaid;
+    data['total_price_sold'] = totalPriceSold;
     return data;
   }
 }
@@ -110,9 +110,9 @@ class Expenses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['expense_name'] = this.expenseName;
-    data['expense_amount'] = this.expenseAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['expense_name'] = expenseName;
+    data['expense_amount'] = expenseAmount;
     return data;
   }
 }

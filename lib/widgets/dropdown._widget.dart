@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -87,7 +89,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
       //   searchList = data;
       // });
     } catch (error) {
-      print('Error fetching suggestions: $error');
+      log('Error fetching suggestions: $error');
       // Handle error
     }
   }
@@ -96,7 +98,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -177,8 +179,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                     .id;
                 _showSelectedWalletAlert(suggestionText);
                 if (kDebugMode) {
-                  print(
-                      "input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
+                  log("input - :${searchController.text} get user: $selectedUserName get id :$selectedUserId");
                 }
               }
               focus.unfocus();
@@ -201,7 +202,7 @@ class _DropDownTextFieldWidgetState extends State<DropDownTextFieldWidget> {
                 style: RegularTextStyle.regular18600(whiteColor),
               ),
               content: Text(
-                "You have selected: ${wallet}",
+                "You have selected: $wallet",
                 style: RegularTextStyle.regular16bold(whiteColor),
               ),
               actions: [

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -419,10 +421,8 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                             final String? userName =
                                                 sharedPref.getString('name');
 
-                                            print(
-                                                "name that for user${userNameController.text}");
-                                            print(
-                                                "nnn ${widget.travel2response.product!.length}");
+                                            log("name that for user${userNameController.text}");
+                                            log("nnn ${widget.travel2response.product!.length}");
                                             for (int i = 0;
                                                 i <=
                                                     widget.travel2response
@@ -493,7 +493,7 @@ class _AddNewPurchasePageState extends State<AddNewPurchasePage> {
                                                   .travel2response.userOrder,
                                             };
 
-                                            print(addEvents);
+                                            log(addEvents.toString());
                                             setState(() {
                                               isLoading = true;
                                             });

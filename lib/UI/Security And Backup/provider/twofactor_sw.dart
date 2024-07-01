@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +20,7 @@ class TwoFactorProvider extends ChangeNotifier {
   Future<dynamic> checkAuthStatus() async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.get(
         checkAuthStatusValue,
@@ -34,7 +36,7 @@ class TwoFactorProvider extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         // CheckAuthStatus travelPostResponse =

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
@@ -505,7 +506,7 @@ class _SettingPageState extends State<SettingPage> {
                                 // InkWell(
                                 //   onTap: () {
                                 //     if (kDebugMode) {
-                                //       print("Generate the Key");
+                                //       log("Generate the Key");
                                 //     }
                                 //     // showBottomSheetText(context);
                                 //   },
@@ -717,7 +718,7 @@ class _SettingPageState extends State<SettingPage> {
                 child: InkWell(
                   onTap: () {
                     // Handle onTap event here
-                    print('Tooltip icon tapped');
+                    log('Tooltip icon tapped');
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -820,7 +821,7 @@ class _SettingPageState extends State<SettingPage> {
 
                         String savename = "$fileName.keys";
                         String savePath = "$dir/$savename";
-                        print(savePath);
+                        log(savePath);
                         //output:  /storage/emulated/0/Download/banner.png
                         setState(() {
                           _isLoading = true;
@@ -830,11 +831,10 @@ class _SettingPageState extends State<SettingPage> {
                               .download("$baseUrl${keyUrl.message}", savePath,
                                   onReceiveProgress: (received, total) {
                             if (received != -1) {
-                              print(
-                                  "${(received / total * 100).toStringAsFixed(0)}%");
+                              log("${(received / total * 100).toStringAsFixed(0)}%");
                             }
                           });
-                          print("File is saved to download folder.");
+                          log("File is saved to download folder.");
                           Get.snackbar(
                             "File Downloaded",
                             '',
@@ -845,11 +845,11 @@ class _SettingPageState extends State<SettingPage> {
                             snackPosition: SnackPosition.BOTTOM,
                           );
                         } on DioException catch (e) {
-                          print(e.message);
+                          log(e.message.toString());
                         }
                       }
                     } else {
-                      print("No permission to read and write.");
+                      log("No permission to read and write.");
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("Permission Denied !"),
                       ));

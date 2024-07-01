@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -47,7 +49,7 @@ class _TabBarScreenTwoState extends State<TabBarScreenTwo> {
           .getSearchData(searchController.text.trim(), _portfolio);
     } catch (error) {
       // Handle error
-      print('Error in _getSearch: $error');
+      log('Error in _getSearch: $error');
     }
   }
 
@@ -55,7 +57,7 @@ class _TabBarScreenTwoState extends State<TabBarScreenTwo> {
     _getSearch();
     setState(() {
       isSearchidle = searchController.text.isEmpty;
-      print(isSearchidle);
+      log(isSearchidle.toString());
     });
   }
 
@@ -175,7 +177,7 @@ class _TabBarScreenTwoState extends State<TabBarScreenTwo> {
           itemCount: searchList.length,
           itemBuilder: (context, index) {
             final product = searchList[index];
-            print(product);
+            log(product.toString());
             return buildSearchDetails(product, index, width);
           },
         ),

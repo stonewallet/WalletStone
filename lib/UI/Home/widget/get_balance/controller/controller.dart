@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,15 +23,7 @@ class GetBalanceController extends GetxController {
     startTimer();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void startTimer() async {
     await Future.delayed(const Duration(seconds: 5));
@@ -42,7 +36,7 @@ class GetBalanceController extends GetxController {
         pass: settingwalletpassController.text,
       );
       if (kDebugMode) {
-        print(walletResponse.mnemonicSeed);
+        log(walletResponse.mnemonicSeed);
       }
 
       if (walletResponse.mnemonicSeed.isNotEmpty) {
@@ -59,7 +53,7 @@ class GetBalanceController extends GetxController {
         duration: const Duration(milliseconds: 4000),
         snackPosition: SnackPosition.BOTTOM,
       );
-      print('Error creating wallet: $e');
+      log('Error creating wallet: $e');
       // Stop the controller or perform any other necessary actions here
     }
   }

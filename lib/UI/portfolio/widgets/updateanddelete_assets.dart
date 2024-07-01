@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,9 +61,9 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
     }
 
     // if (widget.index < widget.portfolios.length) {
-    //   print(widget.portfolios[widget.index].quantity);
-    //   print(widget.portfolios[widget.index].coinName);
-    //   print(widget.index);
+    //   log(widget.portfolios[widget.index].quantity);
+    //   log(widget.portfolios[widget.index].coinName);
+    //   log(widget.index);
     // }
 
     final selectedPortfolio = widget.portfolios;
@@ -71,16 +73,16 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
     expenseController[1].text = selectedPortfolio.quantity.toString();
     expenseController[2].text = selectedPortfolio.subCat.toString();
 
-    print(selectedPortfolio.quantity);
-    // print(widget.portfolios[widget.index].quantity);
+    log(selectedPortfolio.quantity.toString());
+    // log(widget.portfolios[widget.index].quantity);
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(widget.index);
-    print(widget.portfolios);
+    log(widget.index.toString());
+    log(widget.portfolios.toString());
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -312,7 +314,7 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
                                               isLoading = false;
                                             });
                                             Get.back();
-                                           alert(response.message!);
+                                            alert(response.message!);
                                           } else {
                                             setState(() {
                                               isLoading = false;
@@ -390,7 +392,7 @@ class UpdateAssetsScreenState extends State<UpdateAssetsScreen> {
                       isLoading = false;
                     });
                     Get.back();
-                   alert(response.message!);
+                    alert(response.message!);
                     // var snackBar = SnackBar(
                     //     content: Text(
                     //         "Assets created successfully"));

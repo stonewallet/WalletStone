@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +13,7 @@ class ApiCreateAuth extends ChangeNotifier {
   Future<Uint8List?> create2FAuth() async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.get(
         create2Factor,
@@ -29,7 +30,7 @@ class ApiCreateAuth extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         return response.data as Uint8List?;
@@ -59,7 +60,7 @@ class ApiCreateAuth extends ChangeNotifier {
   Future<TravelPostResponse> authEnablePost() async {
     try {
       if (kDebugMode) {
-        print("Add Enable Post api hit");
+        log("Add Enable Post api hit");
       }
       Response response = await _dio.post(
         authEnable,
@@ -75,7 +76,7 @@ class ApiCreateAuth extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =
@@ -107,7 +108,7 @@ class ApiCreateAuth extends ChangeNotifier {
   Future<TravelPostResponse> authDisablePost() async {
     try {
       if (kDebugMode) {
-        print("Add disable Post api hit");
+        log("Add disable Post api hit");
       }
       Response response = await _dio.post(
         authDisable,
@@ -123,7 +124,7 @@ class ApiCreateAuth extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =
@@ -156,7 +157,7 @@ class ApiCreateAuth extends ChangeNotifier {
   Future<TravelPostResponse> deleteAuthDevice() async {
     try {
       if (kDebugMode) {
-        print("Add Post api hit");
+        log("Add Post api hit");
       }
       Response response = await _dio.post(
         deleteAuth,
@@ -172,7 +173,7 @@ class ApiCreateAuth extends ChangeNotifier {
         ),
       );
       if (kDebugMode) {
-        print("addUser ${response.data}");
+        log("addUser ${response.data}");
       }
       if (response.statusCode == 200) {
         TravelPostResponse travelPostResponse =

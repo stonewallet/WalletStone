@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +11,7 @@ class ApiServiceForCreateWallet {
   Future<WalletResponse> createWallet({String? name, String? pass}) async {
     try {
       if (kDebugMode) {
-        print("Create wallet api hit");
+        log("Create wallet api hit");
       }
       Response response = await _dio.post(
         createwallet,
@@ -26,7 +28,7 @@ class ApiServiceForCreateWallet {
         ),
       );
       if (kDebugMode) {
-        print("wallet next ${response.data}");
+        log("wallet next ${response.data}");
       }
 
       if (response.statusCode == 200) {

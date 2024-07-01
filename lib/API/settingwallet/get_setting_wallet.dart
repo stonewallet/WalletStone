@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +27,7 @@ class ApiServiceForGetSettingWallets {
         ),
       );
       if (kDebugMode) {
-        print("response is : ${response.data}");
+        log("response is : ${response.data}");
       }
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
