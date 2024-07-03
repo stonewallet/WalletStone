@@ -20,22 +20,22 @@ class TermsOfPage extends StatefulWidget {
 }
 
 class _TermsOfPageState extends State<TermsOfPage> {
-  bool permissionGranted = false;
-  bool isBiometric = false;
+  // bool permissionGranted = false;
+  // bool isBiometric = false;
 
-  Future<bool> authenticateWithBiometrics() async {
-    final LocalAuthentication localAuthentication = LocalAuthentication();
-    final bool isBiometricSupported =
-        await localAuthentication.isDeviceSupported();
-    final bool canCheckBiometric = await localAuthentication.canCheckBiometrics;
+  // Future<bool> authenticateWithBiometrics() async {
+  //   final LocalAuthentication localAuthentication = LocalAuthentication();
+  //   final bool isBiometricSupported =
+  //       await localAuthentication.isDeviceSupported();
+  //   final bool canCheckBiometric = await localAuthentication.canCheckBiometrics;
 
-    bool isAuthentificated = false;
-    if (isBiometricSupported && canCheckBiometric) {
-      isAuthentificated = await localAuthentication.authenticate(
-          localizedReason: 'please complete the biometrics to proceed');
-    }
-    return isAuthentificated;
-  }
+  //   bool isAuthentificated = false;
+  //   if (isBiometricSupported && canCheckBiometric) {
+  //     isAuthentificated = await localAuthentication.authenticate(
+  //         localizedReason: 'please complete the biometrics to proceed');
+  //   }
+  //   return isAuthentificated;
+  // }
   // _launchURL(String webUrl) async {
   //   if (await canLaunch(webUrl)) {
   //     await launch(webUrl);
@@ -73,79 +73,79 @@ class _TermsOfPageState extends State<TermsOfPage> {
   //   }
   // }
 
-  Future<void> getStoragePermission() async {
-    if (Platform.isAndroid) {
-      DeviceInfoPlugin plugin = DeviceInfoPlugin();
-      AndroidDeviceInfo? android = await plugin.androidInfo;
-      if (android.version.sdkInt < 33) {
-        if (await Permission.storage.request().isGranted &&
-            await Permission.manageExternalStorage.request().isGranted) {
-          setState(() {
-            permissionGranted = true;
-          });
-        } else if (await Permission.storage.request().isPermanentlyDenied) {
-          await getStoragePermission();
-        } else if (await Permission.audio.request().isDenied) {
-          setState(() {
-            permissionGranted = false;
-          });
-        }
-      } else {
-        if (await Permission.photos.request().isGranted &&
-            await Permission.videos.request().isGranted &&
-            await Permission.audio.request().isGranted) {
-          setState(() {
-            permissionGranted = true;
-          });
-        } else if (await Permission.photos.request().isPermanentlyDenied) {
-          await getStoragePermission();
-        } else if (await Permission.photos.request().isDenied &&
-            await Permission.microphone.request().isDenied &&
-            await Permission.mediaLibrary.request().isDenied &&
-            await Permission.storage.request().isDenied) {
-          setState(() {
-            permissionGranted = false;
-          });
-        }
-      }
-    } else if (Platform.isIOS) {
-      if (await Permission.photos.request().isGranted &&
-          await Permission.microphone.request().isGranted &&
-          await Permission.mediaLibrary.request().isGranted &&
-          await Permission.storage.request().isGranted) {
-        setState(() {
-          permissionGranted = true;
-        });
-      } else if (await Permission.photos.request().isPermanentlyDenied &&
-          await Permission.microphone.request().isDenied &&
-          await Permission.mediaLibrary.request().isDenied &&
-          await Permission.storage.request().isDenied) {
-        await getStoragePermission();
-      } else if (await Permission.photos.request().isDenied &&
-          await Permission.microphone.request().isDenied &&
-          await Permission.mediaLibrary.request().isDenied &&
-          await Permission.storage.request().isDenied) {
-        setState(
-          () {
-            getStoragePermission();
-          },
-        );
-      }
-    }
-  }
+  // Future<void> getStoragePermission() async {
+  //   if (Platform.isAndroid) {
+  //     DeviceInfoPlugin plugin = DeviceInfoPlugin();
+  //     AndroidDeviceInfo? android = await plugin.androidInfo;
+  //     if (android.version.sdkInt < 33) {
+  //       if (await Permission.storage.request().isGranted &&
+  //           await Permission.manageExternalStorage.request().isGranted) {
+  //         setState(() {
+  //           permissionGranted = true;
+  //         });
+  //       } else if (await Permission.storage.request().isPermanentlyDenied) {
+  //         await getStoragePermission();
+  //       } else if (await Permission.audio.request().isDenied) {
+  //         setState(() {
+  //           permissionGranted = false;
+  //         });
+  //       }
+  //     } else {
+  //       if (await Permission.photos.request().isGranted &&
+  //           await Permission.videos.request().isGranted &&
+  //           await Permission.audio.request().isGranted) {
+  //         setState(() {
+  //           permissionGranted = true;
+  //         });
+  //       } else if (await Permission.photos.request().isPermanentlyDenied) {
+  //         await getStoragePermission();
+  //       } else if (await Permission.photos.request().isDenied &&
+  //           await Permission.microphone.request().isDenied &&
+  //           await Permission.mediaLibrary.request().isDenied &&
+  //           await Permission.storage.request().isDenied) {
+  //         setState(() {
+  //           permissionGranted = false;
+  //         });
+  //       }
+  //     }
+  //   } else if (Platform.isIOS) {
+  //     if (await Permission.photos.request().isGranted &&
+  //         await Permission.microphone.request().isGranted &&
+  //         await Permission.mediaLibrary.request().isGranted &&
+  //         await Permission.storage.request().isGranted) {
+  //       setState(() {
+  //         permissionGranted = true;
+  //       });
+  //     } else if (await Permission.photos.request().isPermanentlyDenied &&
+  //         await Permission.microphone.request().isDenied &&
+  //         await Permission.mediaLibrary.request().isDenied &&
+  //         await Permission.storage.request().isDenied) {
+  //       await getStoragePermission();
+  //     } else if (await Permission.photos.request().isDenied &&
+  //         await Permission.microphone.request().isDenied &&
+  //         await Permission.mediaLibrary.request().isDenied &&
+  //         await Permission.storage.request().isDenied) {
+  //       setState(
+  //         () {
+  //           getStoragePermission();
+  //         },
+  //       );
+  //     }
+  //   }
+  // }
 
-  Future<void> loadBiometricState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      isBiometricEnabled = prefs.getBool('biometricEnabled') ?? false;
-    });
-  }
+  // Future<void> loadBiometricState() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     isBiometricEnabled = prefs.getBool('biometricEnabled') ?? false;
+  //   });
+  // }
 
   @override
   void initState() {
-    getStoragePermission();
+    // getStoragePermission();
     super.initState();
-    loadBiometricState();
+    // loadBiometricState();
   }
 
   @override

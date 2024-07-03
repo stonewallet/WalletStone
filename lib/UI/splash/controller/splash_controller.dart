@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -10,16 +14,18 @@ class SplashController extends GetxController {
   final _loading = true.obs;
   bool get loading => _loading.value;
   final count = 0.obs;
+  bool permissionGranted = false;
 
   @override
   void onInit() {
     super.onInit();
     super.onInit();
+    getStoragePermission();
     startTimer();
   }
 
   void startTimer() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 4));
 
     _loading.value = false;
     checkLoginStatus();
@@ -31,9 +37,7 @@ class SplashController extends GetxController {
 
   Future<void> loadBiometricState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // setState(() {
     isBiometricEnabled = prefs.getBool('biometricEnabled') ?? false;
-    // });
   }
 
   Future<bool> authenticateWithBiometrics() async {
@@ -69,6 +73,67 @@ class SplashController extends GetxController {
       }
     } else {
       Get.off(() => const WelcomePage());
+    }
+  }
+
+  Future<void> getStoragePermission() async {
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin plugin = DeviceInfoPlugin();
+      AndroidDeviceInfo? android = await plugin.androidInfo;
+      if (android.version.sdkInt < 33) {
+        if (await Permission.storage.request().isGranted &&
+            await Permission.manageExternalStorage.request().isGranted) {
+          // setState(() {
+          permissionGranted = true;
+          // });
+        } else if (await Permission.storage.request().isPermanentlyDenied) {
+          await getStoragePermission();
+        } else if (await Permission.audio.request().isDenied) {
+          // setState(() {
+          permissionGranted = false;
+          // });
+        }
+      } else {
+        if (await Permission.photos.request().isGranted &&
+            await Permission.videos.request().isGranted &&
+            await Permission.audio.request().isGranted) {
+          // setState(() {
+          permissionGranted = true;
+          // });
+        } else if (await Permission.photos.request().isPermanentlyDenied) {
+          await getStoragePermission();
+        } else if (await Permission.photos.request().isDenied &&
+            await Permission.microphone.request().isDenied &&
+            await Permission.mediaLibrary.request().isDenied &&
+            await Permission.storage.request().isDenied) {
+          // setState(() {
+          permissionGranted = false;
+          // });
+        }
+      }
+    } else if (Platform.isIOS) {
+      if (await Permission.photos.request().isGranted &&
+          await Permission.microphone.request().isGranted &&
+          await Permission.mediaLibrary.request().isGranted &&
+          await Permission.storage.request().isGranted) {
+        // setState(() {
+        permissionGranted = true;
+        // });
+      } else if (await Permission.photos.request().isPermanentlyDenied &&
+          await Permission.microphone.request().isDenied &&
+          await Permission.mediaLibrary.request().isDenied &&
+          await Permission.storage.request().isDenied) {
+        await getStoragePermission();
+      } else if (await Permission.photos.request().isDenied &&
+          await Permission.microphone.request().isDenied &&
+          await Permission.mediaLibrary.request().isDenied &&
+          await Permission.storage.request().isDenied) {
+        // setState(
+        //   () {
+        getStoragePermission();
+        // },
+        // );
+      }
     }
   }
 }
