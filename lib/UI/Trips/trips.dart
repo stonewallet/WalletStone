@@ -387,7 +387,7 @@ class _TripsPageState extends State<TripsPage> {
                   )),
             ]);
       }),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDockedS,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(
           Icons.add,
