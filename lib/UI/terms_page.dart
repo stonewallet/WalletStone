@@ -1,14 +1,7 @@
-import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
-import 'package:walletstone/UI/Home/home_page.dart';
-import 'package:walletstone/UI/Security%20And%20Backup/security_and_backup.dart';
-import 'package:walletstone/UI/welcome_page.dart';
 import 'Constants/colors.dart';
 import 'login/createwallet_register.dart';
 

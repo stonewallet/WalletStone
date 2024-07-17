@@ -236,7 +236,8 @@ class _NewTripPageState extends State<NewTripPage> {
                                                 context, value);
 
                                             if (kDebugMode) {
-                                              log(value.travel2response.id!.toString());
+                                              log(value.travel2response.id!
+                                                  .toString());
                                             }
                                           },
                                           child: const Icon(
@@ -441,7 +442,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                                             "\$ ${value.travel2response.expenses![index].expenseAmount!.toString()}",
                                                             style: RegularTextStyle
                                                                 .regular16600(
-                                                                    whiteColor))
+                                                                    whiteColor)),
                                                       ],
                                                     ),
                                                     const SizedBox(

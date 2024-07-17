@@ -182,7 +182,7 @@ class _InnerAssetsScreenState extends State<InnerAssetsScreen> {
                     color: Colors.black.withOpacity(0.2),
                     endIndent: 10,
                   ),
-                  body
+                  body,
                 ],
               );
             },
