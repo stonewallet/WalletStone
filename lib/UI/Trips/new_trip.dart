@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +27,7 @@ import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/Trips/widgets/invite_trip.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:walletstone/widgets/global.dart';
+import '../../API/createNotification/createnotification.dart';
 import '../Constants/colors.dart';
 import 'edit_trip.dart';
 
@@ -62,6 +64,7 @@ class _NewTripPageState extends State<NewTripPage> {
     provider.setTravelData(travel2response);
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     userName = sharedPref.getString('name');
+    log("insideFetch:${travel2response.tripName}");
   }
 
   // trip.Travel2Response travel2response = trip.Travel2Response();
@@ -291,76 +294,168 @@ class _NewTripPageState extends State<NewTripPage> {
                                       SizedBox(
                                         height: 150,
                                         child: ListView(
-                                          // padding: EdgeInsets.symmetric(horizontal: 10),
-                                          // physics:,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
                                           children: [
-                                            DataTable(
-                                              headingRowHeight: 30,
-                                              dataRowMaxHeight: double.infinity,
-                                              dataRowMinHeight: 30,
-                                              columnSpacing: 5,
-                                              border: TableBorder.all(
-                                                color: lineColor2,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              columns: value.newData.isNotEmpty
-                                                  ? value.newData.first.keys
-                                                      .where((key) =>
-                                                          key != 'Colour Code')
-                                                      .map<DataColumn>(
-                                                          (String key) {
-                                                      return DataColumn(
-                                                        label: SizedBox(
-                                                          width: 75,
-                                                          child: Center(
-                                                            child: Text(
-                                                              key,
-                                                              style: RegularTextStyle
-                                                                  .regular14600(
-                                                                      whiteColor),
+                                            value.newData.isNotEmpty
+                                                ? DataTable(
+                                                    horizontalMargin: 7,
+                                                    headingRowHeight: 40,
+                                                    dataRowMaxHeight: 40,
+                                                    dataRowMinHeight: 30,
+                                                    columnSpacing: 0,
+                                                    border: TableBorder.all(
+                                                      color: lineColor2,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    columns: [
+                                                      ...value.newData
+                                                              .isNotEmpty
+                                                          ? value.newData.first
+                                                              .keys
+                                                              .where((key) =>
+                                                                  key !=
+                                                                  'Colour Code')
+                                                              .map<DataColumn>(
+                                                                  (String key) {
+                                                              return DataColumn(
+                                                                label:
+                                                                    FittedBox(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 70,
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        key,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          color:
+                                                                              whiteColor,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }).toList()
+                                                          : [],
+                                                      const DataColumn(
+                                                        label: Center(
+                                                          child: Text(
+                                                            '',
+                                                            style: TextStyle(
+                                                              color: whiteColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                    rows: value.newData
+                                                        .where((rowData) =>
+                                                            rowData[
+                                                                'Colour Code'] !=
+                                                            null)
+                                                        .map<DataRow>(
+                                                            (rowData) {
+                                                      List<DataCell>
+                                                          cells = rowData
+                                                              .keys
+                                                              .where((key) =>
+                                                                  key !=
+                                                                  'Colour Code')
+                                                              .map<DataCell>(
+                                                                  (String key) {
+                                                        Color color =
+                                                            hexToColor(rowData[
+                                                                    'Colour Code']
+                                                                .toString());
+                                                        return DataCell(
+                                                          SizedBox(
+                                                            width: 70,
+                                                            child: Center(
+                                                              child: Text(
+                                                                rowData[key]
+                                                                    .toString(),
+                                                                style: RegularTextStyle
+                                                                    .regular14600(
+                                                                        color),
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }).toList();
+
+                                                      // Add delete icon cell
+                                                      cells.add(
+                                                        DataCell(
+                                                          Center(
+                                                            child: IconButton(
+                                                              icon: const Icon(
+                                                                Icons
+                                                                    .delete_outline,
+                                                                color: redColor,
+                                                                size: 23,
+                                                              ),
+                                                              onPressed: () {
+                                                                // log(value
+                                                                //     .travel2response
+                                                                //     .id!
+                                                                //     .toString());
+                                                                // log(rowData[
+                                                                //     'Item Name']);
+                                                                _showDeleteConfirmationDialogForEntry(
+                                                                  context:
+                                                                      context,
+                                                                  provider:
+                                                                      provider,
+                                                                  itemName: rowData[
+                                                                      'Item Name'],
+                                                                  isProduct:
+                                                                      true,
+                                                                );
+                                                              },
                                                             ),
                                                           ),
                                                         ),
                                                       );
-                                                    }).toList()
-                                                  : [],
-                                              rows: value.newData
-                                                  .where((rowData) =>
-                                                      rowData['Colour Code'] !=
-                                                      null)
-                                                  .map<DataRow>((rowData) {
-                                                List<DataCell> cells = rowData
-                                                    .keys
-                                                    .where((key) =>
-                                                        key != 'Colour Code')
-                                                    .map<DataCell>(
-                                                        (String key) {
-                                                  Color color = hexToColor(
-                                                      rowData['Colour Code']
-                                                          .toString());
-                                                  return DataCell(
-                                                    SizedBox(
-                                                      width: 75,
-                                                      child: Center(
-                                                        child: Text(
-                                                          rowData[key]
-                                                              .toString(),
-                                                          style:
-                                                              RegularTextStyle
-                                                                  .regular14600(
-                                                                      color),
+
+                                                      return DataRow(
+                                                          cells: cells);
+                                                    }).toList(),
+                                                  )
+                                                : Container(
+                                                    padding:
+                                                        EdgeInsets.all(15.w),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.r),
+                                                      border: Border.all(
+                                                        color: greyColor,
+                                                      ),
+                                                    ),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        'No Data',
+                                                        style: TextStyle(
+                                                          color: whiteColor,
                                                         ),
                                                       ),
                                                     ),
-                                                  );
-                                                }).toList();
-
-                                                return DataRow(cells: cells);
-                                              }).toList(),
-                                            ),
+                                                  ),
                                           ],
                                         ),
                                       ),
@@ -400,66 +495,134 @@ class _NewTripPageState extends State<NewTripPage> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            height: 150,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 10),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                border: Border.all(
-                                                    color: lineColor2)),
-                                            child: ListView.builder(
-                                              itemCount: value.travel2response
-                                                  .expenses!.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                hexColor = value
-                                                    .travel2response
-                                                    .expenses![index]
-                                                    .colourCode!;
-                                                Color color =
-                                                    hexToColor(hexColor!);
-                                                return Column(
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                            value
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 150,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  border: Border.all(
+                                                      color: lineColor2)),
+                                              child:
+                                                  value.travel2response
+                                                          .expenses!.isEmpty
+                                                      ? const Center(
+                                                          child: Text(
+                                                            'No data',
+                                                            style: TextStyle(
+                                                              color: whiteColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : ListView.separated(
+                                                          separatorBuilder:
+                                                              (context,
+                                                                      index) =>
+                                                                  const Divider(
+                                                            color: greyColor,
+                                                          ),
+                                                          itemCount: value
+                                                              .travel2response
+                                                              .expenses!
+                                                              .length,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            hexColor = value
                                                                 .travel2response
                                                                 .expenses![
                                                                     index]
-                                                                .expenseName!,
-                                                            style: TextStyle(
-                                                                color: color)),
-                                                        Text(
-                                                            "\$ ${value.travel2response.expenses![index].expenseAmount!.toString()}",
-                                                            style: RegularTextStyle
-                                                                .regular16600(
-                                                                    whiteColor)),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                  ],
-                                                );
-                                              },
+                                                                .colourCode!;
+                                                            Color color =
+                                                                hexToColor(
+                                                                    hexColor!);
+                                                            return Column(
+                                                              children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Flexible(
+                                                                      child:
+                                                                          Text(
+                                                                        value
+                                                                            .travel2response
+                                                                            .expenses![index]
+                                                                            .expenseName!,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              color,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "\$ ${value.travel2response.expenses![index].expenseAmount!.toString()}",
+                                                                          style:
+                                                                              RegularTextStyle.regular16600(
+                                                                            whiteColor,
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          width:
+                                                                              5,
+                                                                        ),
+                                                                        GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            log(
+                                                                              value.travel2response.expenses![index].expenseName!.toString(),
+                                                                            );
+                                                                            _showDeleteConfirmationDialogForEntry(
+                                                                              context: context,
+                                                                              provider: provider,
+                                                                              itemName: value.travel2response.expenses![index].expenseName!.toString(),
+                                                                              isProduct: false,
+                                                                            );
+                                                                          },
+                                                                          child:
+                                                                              const Icon(
+                                                                            Icons.delete_outline,
+                                                                            color:
+                                                                                redColor,
+                                                                            size:
+                                                                                22,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
-                                            child: Row(
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 InkWell(
                                                     onTap: () {
@@ -498,8 +661,8 @@ class _NewTripPageState extends State<NewTripPage> {
                                                 //     )),
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 15,
@@ -532,7 +695,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                         ),
                                       ),
                                       const SizedBox(
-                                        height: 30,
+                                        height: 15,
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -784,7 +947,7 @@ class _NewTripPageState extends State<NewTripPage> {
                                         ],
                                       ),
                                       const SizedBox(
-                                        height: 30,
+                                        height: 12,
                                       ),
                                     ],
                                   ),
@@ -894,6 +1057,65 @@ class _NewTripPageState extends State<NewTripPage> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
                 Navigator.pop(context);
+              },
+              child: Text(
+                'Delete',
+                style: RegularTextStyle.regular14600(dotColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDeleteConfirmationDialogForEntry(
+      {context, provider, itemName, isProduct = false}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Delete',
+            style: RegularTextStyle.regular14600(blackColor),
+          ),
+          content: Text(
+            'Are you sure you want to Delete?',
+            style: RegularTextStyle.regular14600(blackColor),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: RegularTextStyle.regular14600(blackColor),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                var response =
+                    await Provider.of<ApiServiceForCreateNotification>(context,
+                            listen: false)
+                        .deleteSingleTravelEntry(
+                  tripId: provider.travel2response.id!,
+                  isProduct: isProduct,
+                  itemName: itemName,
+                );
+                if (response) {
+                  fetch();
+                  Navigator.pop(context);
+                  var snackBar = SnackBar(
+                      content: Text(
+                          '$itemName deleted successfully from ${isProduct ? 'product' : 'expense'}'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                } else {
+                  Navigator.pop(context);
+                  var snackBar =
+                      const SnackBar(content: Text("Something went wrong"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               },
               child: Text(
                 'Delete',

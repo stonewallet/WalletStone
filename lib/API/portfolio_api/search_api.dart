@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/shared_preferences.dart';
@@ -24,6 +26,7 @@ class SearchApi {
 
       List<SearchData> searchDataList = [];
       if (response.statusCode == 200) {
+        log("inside search data:::${response.data}");
         final List<dynamic> dataList = response.data;
         for (var searchData in dataList) {
           SearchData searchItem = SearchData.fromJson(searchData);

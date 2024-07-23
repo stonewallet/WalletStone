@@ -135,7 +135,7 @@ class _TripsPageState extends State<TripsPage> {
                                   )
                                 else
                                   SizedBox(
-                                    height: 530.h,
+                                    height: 470.h,
                                     child: ListView.builder(
                                         shrinkWrap: true,
                                         physics:

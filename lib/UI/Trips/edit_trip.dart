@@ -788,9 +788,9 @@ class _EditTripPageState extends State<EditTripPage> {
                                                         );
                                                 value.fetch();
                                                 if (response.message != null) {
-                                                  setState(() {
+                                                  // setState(() {
                                                     isLoading = false;
-                                                  });
+                                                  // });
                                                   Navigator.pop(context);
                                                   var snackBar = SnackBar(
                                                       content: Text(

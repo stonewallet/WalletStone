@@ -27,8 +27,8 @@ class ApiForEndTrip {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        // final responseData = response.data;
+        // log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));
@@ -75,8 +75,8 @@ class ApiForEndTrip {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        // final responseData = response.data;
+        // log(responseData);
 
         TravelPostResponse travelPostResponse =
             TravelPostResponse.fromJson(json.decode(response.toString()));

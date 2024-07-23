@@ -31,8 +31,8 @@ class ApiForGetKey {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        // final responseData = response.data;
+        // log(responseData);
 
         GetKeyUrl travelPostResponse =
             GetKeyUrl.fromJson(json.decode(response.toString()));

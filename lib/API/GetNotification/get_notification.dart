@@ -30,6 +30,7 @@ class ApiServiceForNotification {
       );
 
       if (response.statusCode == 200) {
+        log("response::::${jsonEncode(response.data)}");
         final List<dynamic> data = response.data;
         List<NotificationModel> notificationModels =
             data.map((item) => NotificationModel.fromJson(item)).toList();
@@ -58,7 +59,7 @@ class ApiServiceForNotification {
     }
   }
 
-  Future<TravelPostResponse> readMessage(int iD) async {
+  Future<NotificationResponseModel> readMessage(int iD) async {
     final Dio dio = Dio();
 
     try {
@@ -77,11 +78,14 @@ class ApiServiceForNotification {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        log("readResponse:::${response.data}");
+        // final responseData = response.data;
+        // log(responseData);
 
-        TravelPostResponse travelPostResponse =
-            TravelPostResponse.fromJson(json.decode(response.toString()));
+        NotificationResponseModel travelPostResponse =
+            NotificationResponseModel.fromJson(
+                json.decode(response.toString()));
+        log("instance::$travelPostResponse");
         return travelPostResponse;
       } else {
         throw Exception('Failed to load PDF data');
@@ -106,7 +110,7 @@ class ApiServiceForNotification {
     }
   }
 
-  Future<TravelPostResponse> deleteMessage(int iD) async {
+  Future<NotificationResponseModel> deleteMessage(int iD) async {
     final Dio dio = Dio();
 
     try {
@@ -124,11 +128,12 @@ class ApiServiceForNotification {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        // final responseData = response.data;
+        // log(responseData);
 
-        TravelPostResponse travelPostResponse =
-            TravelPostResponse.fromJson(json.decode(response.toString()));
+        NotificationResponseModel travelPostResponse =
+            NotificationResponseModel.fromJson(
+                json.decode(response.toString()));
         return travelPostResponse;
       } else {
         throw Exception('Failed to load PDF data');
@@ -197,7 +202,7 @@ class ApiServiceForNotification {
     }
   }
 
-  Future<TravelPostResponse> acceptMessage(int iD) async {
+  Future<NotificationResponseModel> acceptMessage(int iD) async {
     final Dio dio = Dio();
 
     try {
@@ -216,11 +221,12 @@ class ApiServiceForNotification {
         ),
       );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        log(responseData);
+        // final responseData = response.data;
+        // log(responseData);
 
-        TravelPostResponse travelPostResponse =
-            TravelPostResponse.fromJson(json.decode(response.toString()));
+        NotificationResponseModel travelPostResponse =
+            NotificationResponseModel.fromJson(
+                json.decode(response.toString()));
         return travelPostResponse;
       } else {
         throw Exception('Failed to load PDF data');

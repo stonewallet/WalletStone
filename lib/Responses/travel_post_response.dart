@@ -8,8 +8,26 @@ class TravelPostResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     return data;
+  }
+}
+
+class NotificationResponseModel {
+  String? message;
+
+  NotificationResponseModel({this.message});
+
+  factory NotificationResponseModel.fromJson(Map<String, dynamic> json) {
+    return NotificationResponseModel(
+      message: json['message']?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'message': message,
+    };
   }
 }

@@ -101,13 +101,13 @@ class _NotificationPageState extends State<NotificationPage> {
             return ListView.builder(
               itemCount: value.notifications.length,
               itemBuilder: (BuildContext context, int index) {
-                String message = value.notifications[index].message;
+                String message = value.notifications[index].message!;
                 NotificationModel notification = value.notifications[index];
                 int maxLength = message.length ~/ 2;
                 String truncatedMessage = '${message.substring(0, maxLength)}.';
 
                 // Access metaData list from NotificationModel
-                List<MetaDatum> metaData = notification.metaData;
+                List<MetaDataNotification> metaData = notification.metaData!;
 
                 return Card(
                   elevation: 2,
@@ -127,7 +127,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         GestureDetector(
                           onTap: () async {
                             var response = await apiServiceForNotification
-                                .readMessage(value.notifications[index].id);
+                                .readMessage(value.notifications[index].id!);
                             if (response.message != null) {}
                             notificationProvider.toggleExpansion(index);
                             // setState(() {
@@ -150,7 +150,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   Icon(
                                     Entypo.message,
                                     color:
-                                        value.notifications[index].readMessage
+                                        value.notifications[index].readMessage!
                                             ? whiteColor.withOpacity(0.6)
                                             : Colors.white,
                                   ),
@@ -162,7 +162,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: RegularTextStyle.regular15600(
-                                        value.notifications[index].readMessage
+                                        value.notifications[index].readMessage!
                                             ? whiteColor.withOpacity(0.6)
                                             : Colors.white,
                                       ),
@@ -211,7 +211,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               .deleteMessage(value
                                                                   .notifications[
                                                                       index]
-                                                                  .id);
+                                                                  .id!);
                                                       setState(() {});
                                                       value.getNotification();
                                                       if (response.message !=
@@ -301,15 +301,19 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 
-  Widget readNotification(double width, NotificationModel notifications,
-      MetaDatum metaDatum, NotificationProvider notificationProvider, index) {
+  Widget readNotification(
+      double width,
+      NotificationModel notifications,
+      MetaDataNotification metaDatum,
+      NotificationProvider notificationProvider,
+      index) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            notifications.message,
+            notifications.message!,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -336,9 +340,9 @@ class _NotificationPageState extends State<NotificationPage> {
                   onTap: () async {
                     var tripprovider =
                         Provider.of<TripProvider>(context, listen: false);
-                    log(metaDatum.tripId);
+                    log(metaDatum.tripId!);
                     var response = await ApiProvider()
-                        .processAddUser(int.parse(metaDatum.tripId));
+                        .processAddUser(int.parse(metaDatum.tripId!));
                     value.getNotification();
                     tripprovider.fetch();
                     notificationProvider.toggleExpansion(index);

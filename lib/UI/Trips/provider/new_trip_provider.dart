@@ -28,16 +28,24 @@ class NewTripProvider extends ChangeNotifier {
     _newData.clear();
     _numbers.clear();
     for (int i = 0; i <= _events.length - 1; i++) {
-      _newData.add({
-        "Item Name": _events[i].productName,
-        "Quantity": _events[i].quantity,
-        "Bought": _events[i].pricePaid,
-        "Sold": _events[i].priceSold,
-        "Colour Code": _events[i].colourCode
-      });
-      _numbers.add(_events[i].quantity!);
+      if (_events[i].productName != null &&
+          _events[i].productName!.isNotEmpty) {
+        _newData.add({
+          "Item Name": _events[i].productName,
+          "Quantity": _events[i].quantity,
+          "Bought": _events[i].pricePaid,
+          "Sold": _events[i].priceSold,
+          "Colour Code": _events[i].colourCode
+        });
+        _numbers.add(_events[i].quantity!);
+      }
     }
-    _totalQuantity = _numbers.reduce((value, element) => value + element);
+    if (_numbers.isNotEmpty) {
+      _totalQuantity = _numbers.reduce((value, element) => value + element);
+    } else {
+      _totalQuantity = 0;
+      log('No valid quantities found.');
+    }
     notifyListeners();
   }
 

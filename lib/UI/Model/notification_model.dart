@@ -1,55 +1,67 @@
 class NotificationModel {
-    final int id;
-    final DateTime createdAt;
-    final bool readMessage;
-    final String message;
-    final String notificationType;
-    final List<MetaDatum> metaData;
-    final int user;
+  int? id;
+  String? createdAt;
+  bool? readMessage;
+  String? message;
+  String? notificationType;
+  List<MetaDataNotification>? metaData;
+  int? user;
 
-    NotificationModel({
-        required this.id,
-        required this.createdAt,
-        required this.readMessage,
-        required this.message,
-        required this.notificationType,
-        required this.metaData,
-        required this.user,
-    });
+  NotificationModel({
+    this.id,
+    this.createdAt,
+    this.readMessage,
+    this.message,
+    this.notificationType,
+    this.metaData,
+    this.user,
+  });
 
-    factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
-        id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        readMessage: json["read_message"],
-        message: json["message"],
-        notificationType: json["notification_type"],
-        metaData: List<MetaDatum>.from(json["meta_data"].map((x) => MetaDatum.fromJson(x))),
-        user: json["user"],
+  factory NotificationModel.fromJson(Map<String, dynamic> json) {
+    return NotificationModel(
+      id: json['id'] is int ? json['id'] : int.tryParse(json['id'].toString()),
+      createdAt: json['created_at']?.toString(),
+      readMessage: json['read_message'] == true,
+      message: json['message']?.toString(),
+      notificationType: json['notification_type']?.toString(),
+      metaData: json['meta_data'] != null
+          ? (json['meta_data'] as List)
+              .map((item) => MetaDataNotification.fromJson(item))
+              .toList()
+          : null,
+      user: json['user'] is int
+          ? json['user']
+          : int.tryParse(json['user'].toString()),
     );
+  }
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-        "read_message": readMessage,
-        "message": message,
-        "notification_type": notificationType,
-        "meta_data": List<dynamic>.from(metaData.map((x) => x.toJson())),
-        "user": user,
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created_at': createdAt,
+      'read_message': readMessage,
+      'message': message,
+      'notification_type': notificationType,
+      'meta_data': metaData?.map((item) => item.toJson()).toList(),
+      'user': user,
     };
+  }
 }
 
-class MetaDatum {
-    final String tripId;
+class MetaDataNotification {
+  String? tripId;
 
-    MetaDatum({
-        required this.tripId,
-    });
+  MetaDataNotification({this.tripId});
 
-    factory MetaDatum.fromJson(Map<String, dynamic> json) => MetaDatum(
-        tripId: json["trip_id"],
+  factory MetaDataNotification.fromJson(Map<String, dynamic> json) {
+    return MetaDataNotification(
+      tripId: json['trip_id']?.toString(),
     );
+  }
 
-    Map<String, dynamic> toJson() => {
-        "trip_id": tripId,
+  Map<String, dynamic> toJson() {
+    return {
+      'trip_id': tripId,
     };
+  }
 }

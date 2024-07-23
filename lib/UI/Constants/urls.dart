@@ -42,6 +42,7 @@ const deleteAuth = "$baseUrl/travel/delete/totp/device/";
 const restoreWallet = "$baseUrl/travel/restore/wallet/";
 const walletBalance = "$baseUrl/travel/get/wallet/balance/";
 const publicAddress = "$baseUrl/travel/get/wallet/public/address/";
+const deleteTravelEntry = "$baseUrl/travel/delete/entry/";
 
 late WalletResponse walletResponse;
 late String tripId;

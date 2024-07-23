@@ -128,7 +128,7 @@ class _TabBarScreenTwoState extends State<TabBarScreenTwo> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: height,
+                                  height: 1500,
                                   child: TabBarView(
                                     children: [
                                       InnerAssetsScreen(

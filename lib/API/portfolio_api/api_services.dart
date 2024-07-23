@@ -267,6 +267,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
+        log("inside trip portfolio:${response.data}");
         final List<dynamic> data = response.data;
 
         final filteredData =
