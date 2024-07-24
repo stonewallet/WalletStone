@@ -33,6 +33,7 @@ class SearchApi {
           searchDataList.add(searchItem);
         }
       }
+      log(searchDataList.length.toString());
       return searchDataList;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse && e.response != null) {

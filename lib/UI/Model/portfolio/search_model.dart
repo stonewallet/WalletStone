@@ -1,6 +1,6 @@
 class SearchData {
   String coinName;
-  double value;
+  num value;
   int subCat;
 
   SearchData({
