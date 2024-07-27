@@ -1,6 +1,6 @@
 import 'package:walletstone/API/createWallet/createnewwallet.dart';
 
-const baseUrl = "https://stonewallet.com/";
+const baseUrl = "https://api.stonewallet.com";
 
 const travelListUrl = "$baseUrl/travel/list/";
 const travelPostListUrl = "$baseUrl/travel/list/";
