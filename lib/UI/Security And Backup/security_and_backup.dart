@@ -284,62 +284,62 @@ class _SecurityAndBackupPageState extends State<SecurityAndBackupPage> {
               const SizedBox(
                 height: 10,
               ),
-              InkWell(
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Require PIN after",
-                            style: RegularTextStyle.regular15600(whiteColor),
-                          ),
-                          DropdownButton<String>(
-                            dropdownColor: drawerColor,
-                            value: selectedOption,
-                            items: dropdownOptions.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style:
-                                      RegularTextStyle.regular14600(whiteColor),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  selectedOption = newValue;
-                                  _saveSelectedOption(newValue);
-                                });
-                                if (kDebugMode) {
-                                  log("Selected option: $selectedOption");
-                                }
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: width,
-                      height: 1,
-                      color: drawerColor,
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              // InkWell(
+              //   onTap: () {},
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //         height: 40,
+              //         padding: const EdgeInsets.symmetric(horizontal: 20),
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Text(
+              //               "Require PIN after",
+              //               style: RegularTextStyle.regular15600(whiteColor),
+              //             ),
+              //             DropdownButton<String>(
+              //               dropdownColor: drawerColor,
+              //               value: selectedOption,
+              //               items: dropdownOptions.map((String value) {
+              //                 return DropdownMenuItem<String>(
+              //                   value: value,
+              //                   child: Text(
+              //                     value,
+              //                     style:
+              //                         RegularTextStyle.regular14600(whiteColor),
+              //                   ),
+              //                 );
+              //               }).toList(),
+              //               onChanged: (String? newValue) {
+              //                 if (newValue != null) {
+              //                   setState(() {
+              //                     selectedOption = newValue;
+              //                     _saveSelectedOption(newValue);
+              //                   });
+              //                   if (kDebugMode) {
+              //                     log("Selected option: $selectedOption");
+              //                   }
+              //                 }
+              //               },
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //       const SizedBox(
+              //         height: 10,
+              //       ),
+              //       Container(
+              //         width: width,
+              //         height: 1,
+              //         color: drawerColor,
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Consumer<TwoFactorProvider>(
                 builder: (context, value, child) => InkWell(
                   onTap: () {
