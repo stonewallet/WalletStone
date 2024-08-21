@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/API/portfolio_api/api_services.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
+import 'package:walletstone/UI/growth_chart_screen/growth_chart_screen.dart';
 import 'package:walletstone/UI/portfolio/controller/portfolip_controller.dart';
 import 'package:walletstone/UI/portfolio/widgets/subcat_value_widget/subcat_value.dart';
 import 'package:walletstone/UI/portfolio/widgets/tab_one.dart';
@@ -89,21 +91,36 @@ class _PortfolioPageState extends State<PortfolioPage>
                                     RegularTextStyle.regular15600(whiteColor)),
                           ],
                         ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Obx(
-                              () => Text(
-                                '\$${controller.totalValue.toStringAsFixed(3)}', // Display total value with 2 decimal places
-                                style: LargeTextStyle.large30400(whiteColor),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 14.w, vertical: 8.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Obx(
+                                () => Text(
+                                  '\$${controller.totalValue.toStringAsFixed(3)}',
+                                  style: LargeTextStyle.large30400(whiteColor),
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const GrowthChartScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/graph.png',
+                                  color: whiteColor,
+                                  scale: 15,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         // SizedBox(
                         //   height: height * 0.04,

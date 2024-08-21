@@ -31,6 +31,8 @@ import 'package:walletstone/widgets/session_listener.dart';
 import 'UI/Constants/colors.dart';
 import 'dart:io';
 
+import 'UI/growth_chart_screen/controller/growth_controller.dart';
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -118,6 +120,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AssetProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GrowthController(),
         ),
       ],
       child: ScreenUtilInit(

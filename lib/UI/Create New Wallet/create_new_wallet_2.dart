@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:walletstone/UI/Constants/colors.dart';
 import 'package:walletstone/UI/Constants/text_styles.dart';
@@ -226,7 +227,15 @@ class _CreateNewWalletPage2State extends State<CreateNewWalletPage2> {
                                   style: RegularTextStyle.regular18600(
                                       whiteColor))),
                       onTap: () async {
-                        Get.off(() => LoadingView());
+                        if (userController.text == '' &&
+                            passController.text == '') {
+                          Fluttertoast.showToast(
+                            msg: 'Please enter the credentials to continue',
+                            backgroundColor: redColor,
+                          );
+                        } else {
+                          Get.off(() => LoadingView());
+                        }
                         // setState(() {
                         //   isLoading = true;
                         // });

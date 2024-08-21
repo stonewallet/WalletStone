@@ -10,6 +10,7 @@ const travelRegisterUrl = "$baseUrl/travel/register/";
 const getWalletUrl = "$baseUrl/travel/get/wallet/";
 const addUserUrl = "$baseUrl/travel/add/user/trip/";
 const portfolio = "$baseUrl/travel/add/coins/";
+// const getLineChart = "$baseUrl/travel/get/charts/";
 const addPostAssets = "$baseUrl/travel/add/coins/";
 const updatePortfolio = "$baseUrl/travel/update/portfolio/";
 const createPortfolio = "$baseUrl/travel/add/portfolio/";
