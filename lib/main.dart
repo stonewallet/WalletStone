@@ -1,11 +1,8 @@
-import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletstone/API/Auth/auth_check.dart';
 import 'package:walletstone/API/Auth/auth_create.dart';
 import 'package:walletstone/API/Auth/auth_otp_login.dart';
@@ -13,7 +10,6 @@ import 'package:walletstone/API/change_password/change_user_password.dart';
 import 'package:walletstone/API/contact/post_contact.dart';
 import 'package:walletstone/API/createNotification/createnotification.dart';
 import 'package:walletstone/API/forget_password/forget_password.dart';
-import 'package:walletstone/API/logout/logout.dart';
 import 'package:walletstone/API/receive_address/receive_address.dart';
 import 'package:walletstone/API/restore/restore_wallet.dart';
 import 'package:walletstone/API/seed/key/get_seed_key.dart';
@@ -25,9 +21,7 @@ import 'package:walletstone/UI/Trips/provider/new_trip_provider.dart';
 import 'package:walletstone/UI/Trips/provider/trip_provider.dart';
 import 'package:walletstone/UI/portfolio/controller/asset_provider.dart';
 import 'package:walletstone/UI/splash/splash_view.dart/splash_view.dart';
-import 'package:walletstone/UI/welcome_page.dart';
 import 'package:walletstone/controller/local/local_database.dart';
-import 'package:walletstone/widgets/session_listener.dart';
 import 'UI/Constants/colors.dart';
 import 'dart:io';
 

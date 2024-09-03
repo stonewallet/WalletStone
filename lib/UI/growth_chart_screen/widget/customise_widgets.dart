@@ -17,7 +17,7 @@ class CustomiseDaysWidget extends StatelessWidget {
     final provider = Provider.of<GrowthController>(context);
     return Container(
       height: 45.w,
-      width: 234.w,
+      width: 250.w,
       padding: EdgeInsets.all(8.w),
       decoration: BoxDecoration(
         color: textfieldColor,

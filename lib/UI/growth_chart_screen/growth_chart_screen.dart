@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:walletstone/UI/growth_chart_screen/controller/growth_controller.dart';
 import '../Constants/colors.dart';
-import '../Constants/text_styles.dart';
+import 'widget/app_bar.dart';
 import 'widget/chart.dart';
 import 'widget/custom_dropwdown.dart';
 import 'widget/customise_widgets.dart';
@@ -29,24 +29,7 @@ class _GrowthChartScreenState extends State<GrowthChartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBarBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: appBarBackgroundColor,
-        elevation: 0,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-            color: whiteColor,
-          ),
-        ),
-        title: Text(
-          "Growth",
-          style: LargeTextStyle.large20700(whiteColor),
-        ),
-        centerTitle: true,
-      ),
+      appBar: const GrowthChartAppBar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
